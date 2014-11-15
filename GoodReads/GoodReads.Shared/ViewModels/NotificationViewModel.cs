@@ -11,11 +11,11 @@ namespace GoodReads.ViewModels
 
         public String Id { get { return notification.Id; } }
 
-        public Actors Actors { get { return notification.Actors; } }
+        public List<Actor> Actors { get { return notification.Actors; } }
 
         public bool New { get { return Boolean.Parse(notification.New); } }
 
-        public String ImageURL { get { return notification.Actors.User.Image_url; } }
+        public String ImageURL { get { return notification.Actors[0].User.Image_url; } }
 
         //public String CreatedAt { get; }
 

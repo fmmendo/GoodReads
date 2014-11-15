@@ -54,7 +54,7 @@ namespace GoodReads.ViewModels
 
         public String BookTitle { get { return Book.Title; } }
 
-        public String BookAuthorName { get { return Book.Authors.Author.Name; } }
+        public String BookAuthorName { get { return Book.Authors[0].Name; } }
 
         public String BookPages { get { return Book.Num_pages; } }
 
@@ -226,7 +226,7 @@ namespace GoodReads.ViewModels
         //{ }
         public async void AuthorClick()
         {
-            App.NavigationService.Navigate(typeof(AuthorPage), Book.Authors.Author.Id);
+            App.NavigationService.Navigate(typeof(AuthorPage), Book.Authors[0].Id);
         }
     }
 }

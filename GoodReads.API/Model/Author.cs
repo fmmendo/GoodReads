@@ -10,28 +10,28 @@ namespace GoodReads.API.Model
         public String About { get; set; }
         
         [XmlElement(ElementName = "author_program_at")]
-        public String Author_program_at { get; set; }
+        public String AuthorProgramAt { get; set; }
         
         [XmlElement(ElementName = "best_book_id")]
-        public String Best_book_id { get; set; }
+        public String BestBookId { get; set; }
         
         [XmlElement(ElementName = "books_count")]
-        public String Books_count { get; set; }
+        public String BooksCount { get; set; }
         
         [XmlElement(ElementName = "born_at")]
-        public String Born_at { get; set; }
+        public String BornAt { get; set; }
         
         [XmlElement(ElementName = "country_code")]
-        public String Country_code { get; set; }
+        public String CountryCode { get; set; }
         
         [XmlElement(ElementName = "created_at")]
-        public String Created_at { get; set; }
+        public String CreatedAt { get; set; }
         
         [XmlElement(ElementName = "died_at")]
-        public String Died_at { get; set; }
+        public String DiedAt { get; set; }
         
         [XmlElement(ElementName = "fanships_count")]
-        public String Fanships_count { get; set; }
+        public String FanshipsCount { get; set; }
         
         [XmlElement(ElementName = "gender")]
         public String Gender { get; set; }
@@ -52,10 +52,10 @@ namespace GoodReads.API.Model
         public String Id { get; set; }
         
         [XmlElement(ElementName = "image_copyright")]
-        public String Image_copyright { get; set; }
+        public String ImageCopyright { get; set; }
         
         [XmlElement(ElementName = "image_uploaded_at")]
-        public String Image_uploaded_at { get; set; }
+        public String ImageUploadedAt { get; set; }
         
         [XmlElement(ElementName = "influences")]
         public String Influences { get; set; }
@@ -64,31 +64,31 @@ namespace GoodReads.API.Model
         public String Name { get; set; }
         
         [XmlElement(ElementName = "name_language_code")]
-        public String Name_language_code { get; set; }
+        public String NameLanguageCode { get; set; }
         
         [XmlElement(ElementName = "postal_code")]
-        public String Postal_code { get; set; }
+        public String PostalCode { get; set; }
         
         [XmlElement(ElementName = "ratings_count")]
-        public String Ratings_count { get; set; }
+        public String RatingsCount { get; set; }
         
         [XmlElement(ElementName = "ratings_sum")]
-        public String Ratings_sum { get; set; }
+        public String RatingsSum { get; set; }
         
         [XmlElement(ElementName = "reviews_count")]
-        public String Reviews_count { get; set; }
+        public String ReviewsCount { get; set; }
         
         [XmlElement(ElementName = "s3_image_at")]
-        public String S3_image_at { get; set; }
+        public String S3ImageAt { get; set; }
         
         [XmlElement(ElementName = "searched_for_at")]
-        public String Searched_for_at { get; set; }
+        public String SearchedForAt { get; set; }
         
         [XmlElement(ElementName = "text_reviews_count")]
-        public String Text_reviews_count { get; set; }
+        public String TextReviewsCount { get; set; }
         
         [XmlElement(ElementName = "updated_at")]
-        public String Updated_at { get; set; }
+        public String UpdatedAt { get; set; }
         
         [XmlElement(ElementName = "uploader_user_id")]
         public String Uploader_user_id { get; set; }
@@ -97,25 +97,25 @@ namespace GoodReads.API.Model
         public String Url { get; set; }
         
         [XmlElement(ElementName = "user_id")]
-        public String User_id { get; set; }
+        public String UserId { get; set; }
         
         [XmlElement(ElementName = "works_count")]
-        public String Works_count { get; set; }
+        public String WorksCount { get; set; }
         
         [XmlElement(ElementName = "rating_dist")]
-        public String Rating_dist { get; set; }
+        public String RatingDist { get; set; }
         
         [XmlElement(ElementName = "image_url")]
-        public String Image_url { get; set; }
+        public String ImageUrl { get; set; }
         
         [XmlElement(ElementName = "small_image_url")]
-        public String Small_image_url { get; set; }
+        public String SmallImageUrl { get; set; }
         
         [XmlElement(ElementName = "link")]
         public String Link { get; set; }
         
         [XmlElement(ElementName = "average_rating")]
-        public String Average_rating { get; set; }
+        public String AverageRating { get; set; }
 
         [XmlElement(ElementName = "books")]
         public Books Books { get; set; }

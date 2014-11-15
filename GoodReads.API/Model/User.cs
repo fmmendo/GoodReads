@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace GoodReads.API.Model
@@ -50,9 +51,10 @@ namespace GoodReads.API.Model
         
         [XmlElement(ElementName = "favorite_books")]
         public String Favorite_books;
-        
-        [XmlElement(ElementName = "favorite_authors")]
-        public Authors Favorite_authors;
+
+        [XmlArray("favorite_authors")]
+        [XmlArrayItem("favorite_author")]
+        public List<Author> Favorite_authors;
         
         [XmlElement(ElementName = "updates_rss_url")]
         public String Updates_rss_url;

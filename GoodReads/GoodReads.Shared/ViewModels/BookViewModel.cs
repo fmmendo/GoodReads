@@ -26,10 +26,10 @@ namespace GoodReads.ViewModels
         {
             get
             {
-                if (book != null && book.Author != null && book.Author.Name != null)
-                    return book.Author.Name;
-                if (book != null && book.Authors != null && book.Authors.Author != null)
-                    return book.Authors.Author.Name;
+                //if (book != null && book.Authors != null && book.Authors.Author.Name != null)
+                //    return book.Authors.Author.Name;
+                if (book != null && book.Authors != null && book.Authors.Count > 0 && book.Authors[0] != null)
+                    return book.Authors[0].Name;
 
                 return String.Empty;
             }
@@ -237,7 +237,7 @@ namespace GoodReads.ViewModels
         /// <param name="args"></param>
         public async void AuthorClick(RoutedEventArgs args)
         {
-            var author = new AuthorViewModel(book.Authors.Author);
+            var author = new AuthorViewModel(book.Authors[0]);
 
             App.NavigationService.Navigate(typeof(AuthorPage), author);
         }
@@ -345,8 +345,8 @@ namespace GoodReads.ViewModels
                 Details.Add(new BookDetail { Key = "Original Title", Value = OriginalTitle });
             if (!String.IsNullOrEmpty(Isbn13))
                 Details.Add(new BookDetail { Key = "ISBN12", Value = Isbn13 });
-            if (book != null && book.SeriesWorks != null && book.SeriesWorks.Series_work != null && book.SeriesWorks.Series_work.Series != null && !String.IsNullOrEmpty(book.SeriesWorks.Series_work.Series.Title))
-                Details.Add(new BookDetail { Key = "Series", Value = book.SeriesWorks.Series_work.Series.Title.Replace("\n", "").Trim(' ') });
+            if (book != null && book.SeriesWorks != null && book.SeriesWorks.Count > 0 && book.SeriesWorks[0].Series != null && !String.IsNullOrEmpty(book.SeriesWorks[0].Series.Title))
+                Details.Add(new BookDetail { Key = "Series", Value = book.SeriesWorks[0].Series.Title.Replace("\n", "").Trim(' ') });
 
             Stats = String.Empty;
             if (!String.IsNullOrEmpty(book.Work.Ratings_count))

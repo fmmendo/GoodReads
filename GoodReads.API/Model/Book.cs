@@ -11,31 +11,31 @@ namespace GoodReads.API.Model
         public String Asin { get; set; }
 
         [XmlElement(ElementName = "asin_updater_user_id")]
-        public String Asin_updater_user_id { get; set; }
+        public String AsinUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "author_id")]
-        public String Author_id { get; set; }
+        public String AuthorId { get; set; }
 
         [XmlElement(ElementName = "author_id_updater_user_id")]
-        public String Author_id_updater_user_id { get; set; }
+        public String AuthorIdUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "author_role")]
-        public String Author_role { get; set; }
+        public String AuthorRole { get; set; }
 
         [XmlElement(ElementName = "author_role_updater_user_id")]
-        public String Author_role_updater_user_id { get; set; }
+        public String AuthorRoleUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "book_authors_count")]
-        public String Book_authors_count { get; set; }
+        public String BookAuthorsCount { get; set; }
 
         [XmlElement(ElementName = "created_at")]
-        public String Created_at { get; set; }
+        public String CreatedAt { get; set; }
 
         [XmlElement(ElementName = "description_language_code")]
-        public String Description_language_code { get; set; }
+        public String DescriptionLanguageCode { get; set; }
 
         [XmlElement(ElementName = "description_updater_user_id")]
-        public String Description_updater_user_id { get; set; }
+        public String DescriptionUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "edition_information")]
         public String Edition_information { get; set; }
@@ -139,8 +139,8 @@ namespace GoodReads.API.Model
         [XmlElement(ElementName = "work_id")]
         public String Work_id { get; set; }
 
-        [XmlElement(ElementName = "author")]
-        public Author Author { get; set; }
+        //[XmlElement(ElementName = "author")]
+        //public Author Author { get; set; }
 
         [XmlElement(ElementName = "description")]
         public String Description { get; set; }
@@ -154,8 +154,9 @@ namespace GoodReads.API.Model
         [XmlElement(ElementName = "link")]
         public String Link { get; set; }
 
-        [XmlElement(ElementName = "authors")]
-        public Authors Authors { get; set; }
+        [XmlArray("authors")]
+        [XmlArrayItem("author")]
+        public List<Author> Authors { get; set; }
 
         [XmlElement(ElementName = "reviews")]
         public Reviews Reviews { get; set; }
@@ -184,11 +185,13 @@ namespace GoodReads.API.Model
         [XmlElement(ElementName = "popular_shelves")]
         public PopularShelves PopularShelves { get; set; }
 
-        [XmlElement(ElementName = "book_links")]
-        public BookLinks BookLinks { get; set; }
+        [XmlArray("book_links")]
+        [XmlArrayItem("book_link")]
+        public List<BookLink> BookLinks { get; set; }
 
-        [XmlElement(ElementName = "series_works")]
-        public SeriesWorks SeriesWorks { get; set; }
+        [XmlArray("series_works")]
+        [XmlArrayItem("series_work")]
+        public List<SeriesWork> SeriesWorks { get; set; }
 
         [XmlElement(ElementName = "similar_books")]
         public SimilarBooks SimilarBooks { get; set; }

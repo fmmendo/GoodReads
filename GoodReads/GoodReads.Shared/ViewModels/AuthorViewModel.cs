@@ -18,20 +18,20 @@ namespace GoodReads.ViewModels
         private Author author;
 
         #region Bindable Properties
-        public String ImageUrl { get { return author != null ? author.Image_url : String.Empty; } }
+        public String ImageUrl { get { return author != null ? author.ImageUrl : String.Empty; } }
         public String Name { get { return author != null ? author.Name : String.Empty; } }
         public String Url { get { return author != null ? author.Url : String.Empty; } }
         public String Hometown { get { return author != null ? author.Hometown : String.Empty; } }
-        public String BornAt { get { return author != null ? author.Born_at : String.Empty; } }
-        public String DiedAt { get { return author != null ? author.Died_at : String.Empty; } }
+        public String BornAt { get { return author != null ? author.BornAt : String.Empty; } }
+        public String DiedAt { get { return author != null ? author.DiedAt : String.Empty; } }
         public String Genre { get { return author != null ? author.Genre1 : String.Empty; } }
         public String Gender { get { return author != null ? author.Gender : String.Empty; } }
         public String Link { get { return author != null ? author.Link : String.Empty; } }
-        public String CreatedAt { get { return author != null ? author.Created_at : String.Empty; } }
+        public String CreatedAt { get { return author != null ? author.CreatedAt : String.Empty; } }
         public String About { get { return author != null && !String.IsNullOrEmpty(author.About) ? HtmlUtilities.ConvertToText(author.About) : String.Empty; } }
-        public String Rating { get { return author != null ? author.Average_rating : String.Empty; } }
+        public String Rating { get { return author != null ? author.AverageRating : String.Empty; } }
         public String Influences { get { return author != null ? author.Influences : String.Empty; } }
-        public String WorksCount { get { return author != null ? author.Works_count : String.Empty; } }
+        public String WorksCount { get { return author != null ? author.WorksCount : String.Empty; } }
 
         private ObservableCollection<BookViewModel> books = new ObservableCollection<BookViewModel>();
         /// <summary>

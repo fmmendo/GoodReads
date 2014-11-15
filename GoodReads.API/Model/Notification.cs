@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace GoodReads.API.Model
@@ -8,9 +9,10 @@ namespace GoodReads.API.Model
     {
         [XmlElement(ElementName = "id")]
         public String Id { get; set; }
-        
-        [XmlElement(ElementName = "actors")]
-        public Actors Actors { get; set; }
+
+        [XmlArray("actors")]
+        [XmlArrayItem("actor")]
+        public List<Actor> Actors { get; set; }
         
         [XmlElement(ElementName = "new")]
         public String New { get; set; }
