@@ -1,0 +1,275 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="GoodReads.HubPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoodReads"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:controls="using:GoodReads.Controls"
+    xmlns:assets="using:GoodReads.Assets"
+    xmlns:data="using:GoodReads.Data"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <!-- Grid-appropriate 310 by 260 pixel item template as seen in section 4 -->
+        <DataTemplate x:Key="Standard310x260ItemTemplate">
+            <Grid Height="250" Width="310" Margin="5,10,5,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" Height="150">
+                    <Image Source="{Binding ImagePath}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                </Border>
+                <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="{Binding Description}" Style="{StaticResource BodyTextBlockStyle}" MaxHeight="60" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <!--
+    This grid acts as a root panel for the page.
+  -->
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/bookcase-wallpaper.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Hub>
+            <Hub.Header>
+                <assets:AppLogo Margin="0,-20,0,-30"/>
+                <!--<TextBlock x:Name="pageTitle" x:Uid="AppHeader" Text="my shelf" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        VerticalAlignment="Top" IsHitTestVisible="false" TextWrapping="NoWrap" />-->
+            </Hub.Header>
+            <HubSection Width="780" x:Uid="UpdatesHeader">
+                <HubSection.Header>
+                    <Grid Width="680">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock HorizontalAlignment="Stretch" Text="Recent Updates" Foreground="{StaticResource AlmostBlack}"/>
+                    </Grid>
+                </HubSection.Header>
+                <DataTemplate>
+                    <ListView ItemsSource="{Binding Updates}" Background="White" SelectedItem="{Binding SelectedUpdate, Mode=TwoWay}" SelectionMode="None" IsSwipeEnabled="False">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:StatusUpdateControl HorizontalAlignment="Stretch" Width="670"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Width="540" x:Uid="CurrentlyReadingHeader">
+                <HubSection.Header>
+                    <Grid Width="460">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock HorizontalAlignment="Stretch" Text="Currently Reading" Foreground="{StaticResource AlmostBlack}"/>
+                        <!--<Button BorderBrush="Transparent" BorderThickness="0" Padding="0" HorizontalAlignment="Right" Grid.Column="1" Height="40" Width="40" >
+                            <Path Width="20" Height="20" Stretch="Fill" Fill="White" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
+                        </Button>-->
+                    </Grid>
+                </HubSection.Header>
+                <DataTemplate>
+                    <ListView ItemsSource="{Binding CurrentlyReading}" SelectionMode="None" IsSwipeEnabled="False">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Background="White">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:InvokeCommandAction Command="{Binding EditCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="114" />
+                                        <ColumnDefinition Width="326" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Margin="8" Width="98" Height="147" Grid.Column="0" Source="{Binding BookImageURL}"/>
+
+                                    <HyperlinkButton Grid.Column="1"
+                                                     Grid.Row="0"
+                                                     Style="{StaticResource HyperlinkButtonBase}"
+                                                     Command="{Binding BookClickCommand}"
+                                                     HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding BookTitle}" 
+                                                   Style="{StaticResource TextBlockBookTitle}" 
+                                                   TextWrapping="WrapWholeWords"/>
+                                    </HyperlinkButton>
+                                    <HyperlinkButton Grid.Column="1"
+                                                    Grid.Row="1"
+                                                    Style="{StaticResource HyperlinkButtonBase}"
+                                                    Command="{Binding AuthorClickCommand}"
+                                                     VerticalAlignment="Top"
+                                                    HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding BookAuthorName}" Style="{StaticResource TextBlockSmall}" TextWrapping="WrapWholeWords"/>
+                                    </HyperlinkButton>
+
+
+                                    <!--<TextBlock Grid.Column="1" Grid.Row="2" Text="update" HorizontalAlignment="Right" Margin="8,0" VerticalAlignment="Bottom"/>-->
+                                    <!--<ProgressBar Grid.ColumnSpan="2" Grid.Row="3" Value="{Binding Progress}" HorizontalAlignment="Stretch" Margin="8" Height="24"/>-->
+                                    <ProgressBar Grid.ColumnSpan="2" Grid.Row="3" Minimum="0" Maximum="100" Height="20" Value="{Binding Progress, Mode=TwoWay}" IsHitTestVisible="{Binding IsEditing}" Margin="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+                                    <Grid Visibility="{Binding EditingVisibility}" Grid.Row="2" Margin="8" Grid.Column="0" Grid.ColumnSpan="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                            <TextBlock Text="I'm" Style="{StaticResource TextBlockSmall}" Margin="0,0,5,0"/>
+
+                                            <!--percent-->
+                                            <TextBox Text="{Binding UpdatePercent, Mode=TwoWay, FallbackValue={Binding Percent}}"
+                                                     Visibility="{Binding PercentVisibility}"
+                                                     VerticalAlignment="Center"
+                                                     Style="{StaticResource TextBoxDefaultStyle}"/>
+                                            <HyperlinkButton Visibility="{Binding PercentVisibility}" Command="{Binding EditModeCommand}">
+                                                <TextBlock Text="%" Margin="0,-10,0,0" Style="{StaticResource TextBlockSmall}"/>
+                                            </HyperlinkButton>
+                                            <TextBlock Text=" done" Visibility="{Binding PercentVisibility}" Style="{StaticResource TextBlockSmall}"/>
+
+                                            <!--page-->
+                                            <TextBlock Text="on" Visibility="{Binding PageVisibility}" Margin="0,0,5,0" Style="{StaticResource TextBlockSmall}"/>
+                                            <HyperlinkButton Visibility="{Binding PageVisibility}" Command="{Binding EditModeCommand}">
+                                                <TextBlock Text="page" Margin="0,-10,0,0" Style="{StaticResource TextBlockSmall}"/>
+                                            </HyperlinkButton>
+                                            <TextBox Text="{Binding UpdatePage, Mode=TwoWay,FallbackValue={Binding Page}}"
+                                                     Visibility="{Binding PageVisibility}" 
+                                                     VerticalAlignment="Center"
+                                                     Style="{StaticResource TextBoxDefaultStyle}"/>
+                                            <TextBlock Text="of" Visibility="{Binding PageVisibility}" Margin="5,0" Style="{StaticResource TextBlockSmall}"/>
+                                            <TextBlock Text="{Binding BookPages}" Visibility="{Binding PageVisibility}" Style="{StaticResource TextBlockSmall}"/>
+                                        </StackPanel>
+                                        <TextBox Grid.Row="1"
+                                                 Text="{Binding UpdateBody, Mode=TwoWay}"
+                                                 VerticalAlignment="Center"
+                                                 Style="{StaticResource TextBoxDefaultStyle}"/>
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <!--<HyperlinkButton Content="I'm finished"/>-->
+                                            <Button Content="Update" Style="{StaticResource ButtonDefaultStyle}" Command="{Binding PostUpdateCommand}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Width="700" x:Uid="MyBooksHeader" >
+                <HubSection.Header>
+                    <Grid Width="620">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock HorizontalAlignment="Stretch" Text="My Books" Foreground="{StaticResource AlmostBlack}"/>
+                        <!--<Button BorderBrush="Transparent" BorderThickness="0" Padding="0" HorizontalAlignment="Right" Grid.Column="1" Height="40" Width="40" >
+                            <Path Width="20" Height="20" Stretch="Fill" Fill="White" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
+                        </Button>-->
+                    </Grid>
+                </HubSection.Header>
+                <DataTemplate>
+                    <ScrollViewer>
+                        <GridView ItemsSource="{Binding FrontPageBooks}" IsItemClickEnabled="True" SelectedItem="{Binding SelectedBook, Mode=TwoWay}" SelectionMode="None" IsSwipeEnabled="False">
+                            <GridView.Background>
+                                <SolidColorBrush Color="White"/>
+                            </GridView.Background>
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="ItemClick">
+                                    <core:InvokeCommandAction Command="{Binding BookClickCommand}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapGrid Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid MaxWidth="150">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="161"/>
+                                            <RowDefinition Height="42"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.Row="0" Source="{Binding Book.BookImageURL}" Stretch="UniformToFill" VerticalAlignment="Top" Margin="8,16,8,8" HorizontalAlignment="Center" Width="98" Height="147"/>
+                                        <TextBlock Grid.Row="1" Text="{Binding Book.BookTitle}" Style="{StaticResource TextBlockSmall}" Width="140" TextAlignment="Center" VerticalAlignment="Top" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </ScrollViewer>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="48,48">
+            <assets:GoodreadsLogoLink Margin="0,-18,0,0"/>
+            <Button BorderBrush="Transparent" Click="Button_Click" Padding="0">
+                <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  x:Name="appbar_magnify" Width="50" Height="50">
+                    <Path Width="32"
+                          Height="32"
+                          Canvas.Left="9"
+                          Canvas.Top="9"
+                          Stretch="Fill"
+                          Fill="#FFFFFFFF"
+                          Data="F1 M 42.5,22C 49.4036,22 55,27.5964 55,34.5C 55,41.4036 49.4036,47 42.5,47C 40.1356,47 37.9245,46.3435 36,45.2426L 26.9749,54.2678C 25.8033,55.4393 23.9038,55.4393 22.7322,54.2678C 21.5607,53.0962 21.5607,51.1967 22.7322,50.0251L 31.7971,40.961C 30.6565,39.0755 30,36.8644 30,34.5C 30,27.5964 35.5964,22 42.5,22 Z M 42.5,26C 37.8056,26 34,29.8056 34,34.5C 34,39.1944 37.8056,43 42.5,43C 47.1944,43 51,39.1944 51,34.5C 51,29.8056 47.1944,26 42.5,26 Z "/>
+                </Canvas>
+            </Button>
+            <Grid>
+                <ComboBox Style="{StaticResource NotificationBox}" Margin="5" ItemsSource="{Binding Notifications}" Background="Transparent">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid IsHitTestVisible="False">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="*" MaxWidth="440"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Width="50" Height="66" Grid.Column="0" Margin="5" Source="{Binding ImageURL}" Stretch="UniformToFill"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Body}" Margin="0,5" MaxWidth="430" MinWidth="430" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Border Background="Orange" BorderBrush="Transparent" Visibility="{Binding NotificationsVisibility}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,30" CornerRadius="5">
+                    <TextBlock Text="{Binding NewNotifications}" FontSize="18" Margin="6,2,6,-2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+            <Image Source="{Binding UserSmallImageUrl}" Stretch="None" Margin="15,0,0,0">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding MyProfileClickCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </Image>
+        </StackPanel>
+    </Grid>
+</Page>

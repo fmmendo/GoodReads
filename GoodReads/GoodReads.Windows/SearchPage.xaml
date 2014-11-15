@@ -1,0 +1,109 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="GoodReads.SearchPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoodReads"
+    xmlns:common="using:GoodReads.Common"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"    
+    xmlns:callisto ="using:Callisto.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
+        <x:String x:Key="AppName">My Application</x:String>
+    </Page.Resources>
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/bookcase-wallpaper.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        VerticalAlignment="Top"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+            <TextBox x:Name="SearchField" Text="{Binding SearchTerm, Mode=TwoWay}" IsHitTestVisible="True" TextChanged="pageTitle_TextChanged" Grid.Column="1" TextWrapping="NoWrap" 
+                     Width="340" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,30,40"/>
+        </Grid>
+        <ScrollViewer Grid.Row="1">
+            <GridView x:Name="SearchResults" ItemsSource="{Binding Results}" IsItemClickEnabled="True" SelectedItem="{Binding SelectedBook, Mode=TwoWay}">
+                <!--<GridView.Background>
+                    <SolidColorBrush Color="#88444444"/>
+                </GridView.Background>-->
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="ItemClick">
+                        <core:InvokeCommandAction Command="{Binding BookClickCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapGrid Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="480" Height="179" Margin="8" Background="White">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                           
+                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Source="{Binding ImageURL}" Stretch="None" Margin="8" Width="98" Height="147"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="8,8,8,8"  Text="{Binding Title}" VerticalAlignment="Top" Style="{StaticResource TextBlockBookTitle}" TextTrimming="WordEllipsis"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="8,8,8,8"  Text="{Binding AuthorName}"  VerticalAlignment="Top" Style="{StaticResource TextBlockBase}" TextTrimming="WordEllipsis"/>
+                            <callisto:Rating Grid.Row="2" Grid.Column="1" ItemCount="5" Value="{Binding Rating}" Margin="0,0,0,0" IsHitTestVisible="False" Foreground="{StaticResource MyBlue}" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                                <callisto:Rating.ItemContainerStyle>
+                                    <Style TargetType="callisto:RatingItem">
+                                        <Setter Property="Margin" Value="1"/>
+                                    </Style>
+                                </callisto:Rating.ItemContainerStyle>
+                            </callisto:Rating>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="8,8,8,8" Style="{StaticResource TextBlockSubtle}" Grid.ColumnSpan="2"  VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+                                <!--<Run Text="{Binding Rating}"/>
+                                <Run Text="avr. rating - "/>-->
+                                <Run Text="{Binding RatingsCount}"/>
+                                <Run Text="ratings, "/>
+                                <Run Text="{Binding TextReviewsCount}"/>
+                                <Run Text="reviews"/>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </ScrollViewer>
+    </Grid>
+</Page>

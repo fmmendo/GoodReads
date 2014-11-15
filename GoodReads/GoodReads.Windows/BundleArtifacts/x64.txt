@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Filipe\Documents\GitHub\GoodReads\GoodReads\GoodReads.Windows\bin\x64\Release\GoodReads.Windows_0.5.0.0_Bundle\GoodReads.Windows_0.5.0.0_x64.appx
+SymbolPackage=C:\Users\Filipe\Documents\GitHub\GoodReads\GoodReads\GoodReads.Windows\AppPackages\GoodReads.Windows_0.5.0.0_Test\GoodReads.Windows_0.5.0.0_x64.appxsym

@@ -1,0 +1,4 @@
+MainPackage=C:\Users\Filipe\Documents\GitHub\GoodReads\GoodReads\GoodReads.Windows\bin\ARM\Release\GoodReads.Windows_0.5.0.0_Bundle\GoodReads.Windows_0.5.0.0_ARM.appx
+SymbolPackage=C:\Users\Filipe\Documents\GitHub\GoodReads\GoodReads\GoodReads.Windows\AppPackages\GoodReads.Windows_0.5.0.0_Test\GoodReads.Windows_0.5.0.0_ARM.appxsym
+ResourcePack=C:\Users\Filipe\Documents\GitHub\GoodReads\GoodReads\GoodReads.Windows\bin\ARM\Release\GoodReads.Windows_0.5.0.0_Bundle\GoodReads.Windows_0.5.0.0_scale-140.appx
+ResourcePack=C:\Users\Filipe\Documents\GitHub\GoodReads\GoodReads\GoodReads.Windows\bin\ARM\Release\GoodReads.Windows_0.5.0.0_Bundle\GoodReads.Windows_0.5.0.0_scale-180.appx

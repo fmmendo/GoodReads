@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CB29C540-229F-4C28-8CD4-9F904E825DB3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GoodReads.API</RootNamespace>
+    <AssemblyName>GoodReads.API</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+    <TargetPlatform Include="Windows, Version=8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\Update.cs" />
+    <Compile Include="GoodReadsAPI.cs" />
+    <Compile Include="GoodReadsService.cs" />
+    <Compile Include="Model\Action.cs" />
+    <Compile Include="Model\Actor.cs" />
+    <Compile Include="Model\Actors.cs" />
+    <Compile Include="Model\Author.cs" />
+    <Compile Include="Model\Authors.cs" />
+    <Compile Include="Model\BestBook.cs" />
+    <Compile Include="Model\Body.cs" />
+    <Compile Include="Model\Book.cs" />
+    <Compile Include="Model\BookLink.cs" />
+    <Compile Include="Model\BookLinks.cs" />
+    <Compile Include="Model\Books.cs" />
+    <Compile Include="Model\Friend.cs" />
+    <Compile Include="Model\GoodreadsResponse.cs" />
+    <Compile Include="Model\GroupResource.cs" />
+    <Compile Include="Model\Hash.cs" />
+    <Compile Include="Model\Notification.cs" />
+    <Compile Include="Model\Notifications.cs" />
+    <Compile Include="Model\Object.cs" />
+    <Compile Include="Model\PollVote.cs" />
+    <Compile Include="Model\PopularShelves.cs" />
+    <Compile Include="Model\ReadStatus.cs" />
+    <Compile Include="Model\Recommendation.cs" />
+    <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\Results.cs" />
+    <Compile Include="Model\Review.cs" />
+    <Compile Include="Model\Reviews.cs" />
+    <Compile Include="Model\Search.cs" />
+    <Compile Include="Model\Series.cs" />
+    <Compile Include="Model\SeriesWork.cs" />
+    <Compile Include="Model\SeriesWorks.cs" />
+    <Compile Include="Model\Shelf.cs" />
+    <Compile Include="Model\Shelves.cs" />
+    <Compile Include="Model\SimilarBooks.cs" />
+    <Compile Include="Model\Update.cs" />
+    <Compile Include="Model\Updates.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserChallenge.cs" />
+    <Compile Include="Model\UserShelf.cs" />
+    <Compile Include="Model\UserShelves.cs" />
+    <Compile Include="Model\UserStatus.cs" />
+    <Compile Include="Model\UserStatuses.cs" />
+    <Compile Include="Model\Work.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\IGoodReadsAuthenticator.cs" />
+    <Compile Include="Utilities\Urls.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="RestSharp">
+      <HintPath>..\RestSharp.winmd</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
