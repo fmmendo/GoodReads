@@ -38,19 +38,15 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Update.cs" />
     <Compile Include="GoodReadsAPI.cs" />
     <Compile Include="GoodReadsService.cs" />
     <Compile Include="Model\Action.cs" />
     <Compile Include="Model\Actor.cs" />
-    <Compile Include="Model\Actors.cs" />
     <Compile Include="Model\Author.cs" />
-    <Compile Include="Model\Authors.cs" />
     <Compile Include="Model\BestBook.cs" />
     <Compile Include="Model\Body.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\BookLink.cs" />
-    <Compile Include="Model\BookLinks.cs" />
     <Compile Include="Model\Books.cs" />
     <Compile Include="Model\Friend.cs" />
     <Compile Include="Model\GoodreadsResponse.cs" />
@@ -70,7 +66,6 @@
     <Compile Include="Model\Search.cs" />
     <Compile Include="Model\Series.cs" />
     <Compile Include="Model\SeriesWork.cs" />
-    <Compile Include="Model\SeriesWorks.cs" />
     <Compile Include="Model\Shelf.cs" />
     <Compile Include="Model\Shelves.cs" />
     <Compile Include="Model\SimilarBooks.cs" />
@@ -84,6 +79,7 @@
     <Compile Include="Model\UserStatuses.cs" />
     <Compile Include="Model\Work.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSettings.cs" />
     <Compile Include="Utilities\IGoodReadsAuthenticator.cs" />
     <Compile Include="Utilities\Urls.cs" />
   </ItemGroup>

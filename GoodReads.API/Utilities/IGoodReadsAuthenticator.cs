@@ -8,5 +8,4 @@ namespace GoodReads.API.Utilities
     {
         Task<WebAuthenticationResult> Authenticate(WebAuthenticationOptions webAuthenticationOptions, Uri url, Uri callback);
     }
-
 }
