@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoodReads.API.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,33 @@ using Windows.Storage;
 
 namespace GoodReads.API
 {
-    public static class UserSettings
+    public class UserSettings
     {
+        #region Singleton
+        private static UserSettings _settings;
+        public static UserSettings Settings
+        {
+            get
+            {
+                if (_settings == null)
+                    _settings = new UserSettings();
+
+                return _settings;
+            }
+        }
+
+        private UserSettings()
+        {
+            if (authSettings == null)
+            {
+                if (roamingSettings != null && roamingSettings.Values != null && roamingSettings.Values.ContainsKey(USER_AUTH_SETTINGS))
+                    authSettings = (ApplicationDataCompositeValue)roamingSettings.Values[USER_AUTH_SETTINGS];
+                else
+                    authSettings = new Windows.Storage.ApplicationDataCompositeValue();
+            }
+        }
+        #endregion
+
         private const string USER_AUTH_SETTINGS = "GoodReads.UserAuthenticationSettings";
 
         private const string ACCESS_TOKEN_SETTING = "accessToken";
@@ -20,90 +46,91 @@ namespace GoodReads.API
         private const string GOODREADS_USER_LINK_SETTING = "grUserLink";
         private const string GOODREADS_USER_IMAGE_SETTING = "grUserImage";
         private const string GOODREADS_USER_SMALLIMAGE_SETTING = "grUserSmallImage";
+        private const string GOODREADS_USER_INFO = "grUserInfo";
 
-        private static ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
+        private ApplicationDataContainer roamingSettings = ApplicationData.Current.RoamingSettings;
 
-        private static ApplicationDataCompositeValue settings;
+        private ApplicationDataCompositeValue authSettings;
         /// <summary>
         /// User settings storage file
         /// </summary>
-        public static ApplicationDataCompositeValue Settings
+        public ApplicationDataCompositeValue AuthSettings
         {
             get
             {
-                if (settings == null)
-                {
-                    if (roamingSettings != null && roamingSettings.Values != null && roamingSettings.Values.ContainsKey(USER_AUTH_SETTINGS))
-                        settings = (ApplicationDataCompositeValue)roamingSettings.Values[USER_AUTH_SETTINGS];
-                    else
-                        settings = new Windows.Storage.ApplicationDataCompositeValue();
-                }
-                return settings;
+
+                return authSettings;
             }
         }
 
-        public static string OAuthToken
+        public string OAuthToken
         {
-            get { return Settings[ACCESS_TOKEN_SETTING].ToString(); }
-            set { Settings[ACCESS_TOKEN_SETTING] = value;  }
+            get { return AuthSettings[ACCESS_TOKEN_SETTING] != null ? AuthSettings[ACCESS_TOKEN_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[ACCESS_TOKEN_SETTING] = value; StoreSettings(); }
         }
 
-        public static string OAuthTokenSecret
+        public string OAuthTokenSecret
         {
-            get { return Settings[ACCESS_TOKEN_SECRET_SETTING].ToString(); }
-            set { Settings[ACCESS_TOKEN_SECRET_SETTING] = value; }
+            get { return AuthSettings[ACCESS_TOKEN_SECRET_SETTING] != null ? AuthSettings[ACCESS_TOKEN_SECRET_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[ACCESS_TOKEN_SECRET_SETTING] = value; StoreSettings(); }
         }
 
-        public static string OAuthAccessToken
+        public string OAuthAccessToken
         {
-            get { return Settings[OAUTH_TOKEN_SETTING].ToString(); }
-            set { Settings[OAUTH_TOKEN_SETTING] = value; }
+            get { return AuthSettings[OAUTH_TOKEN_SETTING] != null ? AuthSettings[OAUTH_TOKEN_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[OAUTH_TOKEN_SETTING] = value; StoreSettings(); }
         }
 
-        public static string OAuthAccessTokenSecret
+        public string OAuthAccessTokenSecret
         {
-            get { return Settings[OAUTH_TOKEN_SECRET_SETTING].ToString(); }
-            set { Settings[OAUTH_TOKEN_SECRET_SETTING] = value; }
+            get { return AuthSettings[OAUTH_TOKEN_SECRET_SETTING] != null ? AuthSettings[OAUTH_TOKEN_SECRET_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[OAUTH_TOKEN_SECRET_SETTING] = value; StoreSettings(); }
         }
 
-        public static string GoodreadsUsername
+        public string GoodreadsUsername
         {
-            get { return Settings[GOODREADS_USER_NAME_SETTING].ToString(); }
-            set { Settings[GOODREADS_USER_NAME_SETTING] = value; }
+            get { return AuthSettings[GOODREADS_USER_NAME_SETTING] != null ? AuthSettings[GOODREADS_USER_NAME_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[GOODREADS_USER_NAME_SETTING] = value; StoreSettings(); }
         }
 
-        public static string GoodreadsUserID
+        public string GoodreadsUserID
         {
-            get { return Settings[GOODREADS_USER_ID_SETTING].ToString(); }
-            set { Settings[GOODREADS_USER_ID_SETTING] = value; }
+            get { return AuthSettings[GOODREADS_USER_ID_SETTING] != null ? AuthSettings[GOODREADS_USER_ID_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[GOODREADS_USER_ID_SETTING] = value; StoreSettings(); }
         }
 
-        public static string GoodreadsUserLink
+        public string GoodreadsUserLink
         {
-            get { return Settings[GOODREADS_USER_LINK_SETTING].ToString(); }
-            set { Settings[GOODREADS_USER_LINK_SETTING] = value; }
+            get { return AuthSettings[GOODREADS_USER_LINK_SETTING] != null ? AuthSettings[GOODREADS_USER_LINK_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[GOODREADS_USER_LINK_SETTING] = value; StoreSettings(); }
         }
 
-        public static string GoodreadsUserImageUrl
+        public string GoodreadsUserImageUrl
         {
-            get { return Settings[GOODREADS_USER_IMAGE_SETTING].ToString(); }
-            set { Settings[GOODREADS_USER_IMAGE_SETTING] = value; }
+            get { return AuthSettings[GOODREADS_USER_IMAGE_SETTING] != null ? AuthSettings[GOODREADS_USER_IMAGE_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[GOODREADS_USER_IMAGE_SETTING] = value; StoreSettings(); }
         }
 
-        public static string GoodreadsUserSmallImageUrl
+        public string GoodreadsUserSmallImageUrl
         {
-            get { return Settings[GOODREADS_USER_SMALLIMAGE_SETTING].ToString(); }
-            set { Settings[GOODREADS_USER_SMALLIMAGE_SETTING] = value; }
+            get { return AuthSettings[GOODREADS_USER_SMALLIMAGE_SETTING] != null ? AuthSettings[GOODREADS_USER_SMALLIMAGE_SETTING].ToString() : String.Empty; }
+            set { AuthSettings[GOODREADS_USER_SMALLIMAGE_SETTING] = value; StoreSettings(); }
         }
 
-        public static bool IsUserAuthenticated
+        public User UserInfo
         {
-            get { return !String.IsNullOrEmpty(OAuthAccessToken) && !String.IsNullOrEmpty(OAuthAccessTokenSecret); }
+            get { return AuthSettings[GOODREADS_USER_INFO] != null ? (User)AuthSettings[GOODREADS_USER_INFO] : null; }
+            set { AuthSettings[GOODREADS_USER_INFO] = value; StoreSettings(); }
         }
 
-        public static void StoreSettings()
+        public bool IsUserAuthenticated
         {
-            roamingSettings.Values[USER_AUTH_SETTINGS] = settings;
+            get { return false; }// !String.IsNullOrEmpty(OAuthAccessToken) && !String.IsNullOrEmpty(OAuthAccessTokenSecret); }
+        }
+
+        private void StoreSettings()
+        {
+            roamingSettings.Values[USER_AUTH_SETTINGS] = authSettings;
         }
     }
 }

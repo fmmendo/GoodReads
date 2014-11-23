@@ -44,7 +44,7 @@ namespace GoodReads.ViewModels
             get
             {
                 //return _gr.GoodreadsUserImageUrl;
-                return UserSettings.GoodreadsUserImageUrl;
+                return UserSettings.Settings.GoodreadsUserImageUrl;
             }
         }
 
@@ -56,7 +56,7 @@ namespace GoodReads.ViewModels
             get
             {
                 //return _gr.GoodreadsUserSmallImageUrl;
-                return UserSettings.GoodreadsUserSmallImageUrl;
+                return UserSettings.Settings.GoodreadsUserSmallImageUrl ?? String.Empty;
             }
         }
 
@@ -156,7 +156,7 @@ namespace GoodReads.ViewModels
         public void MyProfileTapped(TappedRoutedEventArgs args)
         {
             //App.NavigationService.Navigate(typeof(UserView), new UserViewModel(_gr.GoodreadsUserID));
-            App.NavigationService.Navigate(typeof(UserView), new UserViewModel(UserSettings.GoodreadsUserID));
+            App.NavigationService.Navigate(typeof(UserView), new UserViewModel(UserSettings.Settings.GoodreadsUserID));
         }
         #endregion
         
@@ -173,7 +173,7 @@ namespace GoodReads.ViewModels
         private async void PopulateData()
         {
             //if (!_gr.IsUserAuthenticated)
-            if (!UserSettings.IsUserAuthenticated)
+            if (!UserSettings.Settings.IsUserAuthenticated)
                 await _gr.Authenticate();
 
             NotifyPropertyChanged("UserSmallImageUrl");

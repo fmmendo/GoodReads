@@ -43,11 +43,11 @@ namespace GoodReads.API
         /// <summary>
         /// Authenticates the user using the Web Authentication Broker
         /// </summary>
-        public async Task Authenticate()
+        public async Task<bool> Authenticate()
         {
             // If we have an session key already no need to do anything
-            if (UserSettings.IsUserAuthenticated)
-                return;
+            if (UserSettings.Settings.IsUserAuthenticated)
+                return true;
 
             // set up get request tokens
             client.Authenticator = OAuth1Authenticator.ForRequestToken(API_KEY, OAUTH_SECRET);
@@ -60,21 +60,22 @@ namespace GoodReads.API
 
             // Parse oauth token and token secret
             var querystring = HttpUtility.ParseQueryString(requestResponse.Content);
-            if (querystring != null && querystring.Count > 0)
+            if (querystring != null && querystring.Count == 2)
             {
-                UserSettings.OAuthToken = querystring["oauth_token"];
-                UserSettings.OAuthTokenSecret = querystring["oauth_token_secret"];
+                UserSettings.Settings.OAuthToken = querystring["oauth_token"];
+                UserSettings.Settings.OAuthTokenSecret = querystring["oauth_token_secret"];
             }
+            else return false;
 
             // authenticate
-            string goodreadsURL = "https://www.goodreads.com/oauth/authorize?oauth_token=" + UserSettings.OAuthToken;
+            string goodreadsURL = "https://www.goodreads.com/oauth/authorize?oauth_token=" + UserSettings.Settings.OAuthToken;
             WebAuthenticationResult result = await authenticator.Authenticate(WebAuthenticationOptions.None, new Uri(goodreadsURL), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
 
             // success
             if (result != null && result.ResponseStatus == WebAuthenticationStatus.Success)
             {
                 // set up get 
-                client.Authenticator = OAuth1Authenticator.ForAccessToken(API_KEY, OAUTH_SECRET, UserSettings.OAuthToken, UserSettings.OAuthTokenSecret);
+                client.Authenticator = OAuth1Authenticator.ForAccessToken(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthToken, UserSettings.Settings.OAuthTokenSecret);
 
                 //request access token
                 await apiSemaphore.WaitAsync();
@@ -84,25 +85,26 @@ namespace GoodReads.API
 
                 // parse oauth access token and token secrets
                 querystring = HttpUtility.ParseQueryString(accessResponse.Content);
-                if (querystring != null && querystring.Count > 0)
+                if (querystring != null && querystring.Count == 2)
                 {
-                    UserSettings.OAuthAccessToken = querystring["oauth_token"];
-                    UserSettings.OAuthAccessTokenSecret = querystring["oauth_token_secret"];
+                    UserSettings.Settings.OAuthAccessToken = querystring["oauth_token"];
+                    UserSettings.Settings.OAuthAccessTokenSecret = querystring["oauth_token_secret"];
                 }
+                else return false;
 
                 // if we don't have a user ID yet, go fetch it
-                if (String.IsNullOrEmpty(UserSettings.GoodreadsUserID))
+                if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
                 {
                     var user = await GetUserID();
 
-                    UserSettings.GoodreadsUserID = user.Id;
-                    UserSettings.GoodreadsUserLink = user.Link;
-                    UserSettings.GoodreadsUsername = user.Name;
+                    UserSettings.Settings.GoodreadsUserID = user.Id;
+                    UserSettings.Settings.GoodreadsUserLink = user.Link;
+                    UserSettings.Settings.GoodreadsUsername = user.Name;
                 }
 
-                authenticatedUser = await GetUserInfo(UserSettings.GoodreadsUserID);
-                UserSettings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
-                UserSettings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
+                authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
+                UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
+                UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
                 justRefreshedUser = true;
 
                 GoodreadsUserShelves = await GetShelvesList();
@@ -111,9 +113,9 @@ namespace GoodReads.API
                 GoodreadsReviews = await GetShelfBooks();
                 justRefreshedReviews = true;
 
-                // store tokens and goodreads data
-                //StoreCredentials();
+                return true;
             }
+            return false;
         }
 
         /// <summary>
@@ -124,7 +126,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<User> GetUserID()
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -146,7 +148,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<Notifications> GetNotifications(int page = 1)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -168,9 +170,9 @@ namespace GoodReads.API
         public async Task<User> GetUserInfo(string userID = null)
         {
             if (String.IsNullOrEmpty(userID))
-                userID = UserSettings.GoodreadsUserID;
+                userID = UserSettings.Settings.GoodreadsUserID;
 
-            if (userID == UserSettings.GoodreadsUserID && justRefreshedUser)
+            if (userID == UserSettings.Settings.GoodreadsUserID && justRefreshedUser)
                 return authenticatedUser;
 
             await apiSemaphore.WaitAsync();
@@ -251,7 +253,7 @@ namespace GoodReads.API
 
             string url = Urls.UpdatesFriends;// BASEURL + UPDATES + FRIENDS;// +type + filter + "&max_updates=" + maxUpdates + "&access_token=" + OAuthAccessToken;
 
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
             var request = new RestRequest("updates/friends.xml", Method.GET);
@@ -275,8 +277,8 @@ namespace GoodReads.API
             {
                 Task.Run(async () =>
                 {
-                    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
-                    string url = "review/list/" + UserSettings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
+                    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+                    string url = "review/list/" + UserSettings.Settings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
 
                     //TODO: more params, probably enums
                     if (!String.IsNullOrEmpty(shelf))
@@ -297,8 +299,8 @@ namespace GoodReads.API
             else
             { 
 
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
-            string url = "review/list/" + UserSettings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+            string url = "review/list/" + UserSettings.Settings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
 
             //TODO: more params, probably enums
             if (!String.IsNullOrEmpty(shelf))
@@ -376,7 +378,7 @@ namespace GoodReads.API
         public async Task<UserStatus> GetReadStatus(string userID = null)
         {
             if (String.IsNullOrEmpty(userID))
-                userID = UserSettings.GoodreadsUserID;
+                userID = UserSettings.Settings.GoodreadsUserID;
 
             await apiSemaphore.WaitAsync();
             string results = await HttpGet(String.Format(Urls.ReadStatus, userID, API_KEY));
@@ -414,7 +416,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<String> PostStatusUpdate(string bookId, string page, string percent, string body)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -460,7 +462,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<Boolean> DeleteStatusUpdate(string id)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
             var request = new RestRequest("user_status/destroy/" + id + ".xml", Method.POST);
@@ -484,7 +486,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<Boolean> ShowFanship(string fanshipId)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -519,7 +521,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<Boolean> CreateFanship(string authorId)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -557,7 +559,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<Boolean> DeleteFanship(string fanshipId)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
             var request = new RestRequest("fanships/" + fanshipId + ".xml", Method.DELETE);
@@ -581,7 +583,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<Boolean> FollowUser(string userId)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -616,7 +618,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<Boolean> UnfollowUser(string userId)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -639,7 +641,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<String> AddComment(string id, string type, string comment)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -680,7 +682,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<bool> LikeResource(string resourceId, string resourceType)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -708,7 +710,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<String> UnlikeResource(string resourceId, string resourceType)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
@@ -750,7 +752,7 @@ namespace GoodReads.API
         /// <param name="maxUpdates"></param>
         public async Task<bool> AddBookToShelf(string shelfName, string bookId, bool remove = false)
         {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.OAuthAccessToken, UserSettings.OAuthAccessTokenSecret);
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
             await apiSemaphore.WaitAsync();
 
