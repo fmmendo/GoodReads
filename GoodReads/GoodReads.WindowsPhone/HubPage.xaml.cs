@@ -11,6 +11,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.Security.Authentication.Web;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -29,7 +30,7 @@ namespace GoodReads
     /// <summary>
     /// A page that displays a grouped collection of items.
     /// </summary>
-    public sealed partial class HubPage : Page
+    public sealed partial class HubPage : Page, IWebAuthenticationContinuable
     {
         public static HubPage Current;
 
@@ -41,8 +42,6 @@ namespace GoodReads
 
         public HubPage()
         {
-            GoodReads.API.GoodReadsAPI gr = new API.GoodReadsAPI(auth);
-
             this.InitializeComponent();
 
             Current = this;
@@ -51,12 +50,20 @@ namespace GoodReads
             DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-
+            this.DataContext = App.MainViewModel;
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+        }
 
-            gr.Authenticate();
+
+
+        public void ContinueWebAuthentication(Windows.ApplicationModel.Activation.WebAuthenticationBrokerContinuationEventArgs args)
+        {
+            if (args.WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+            {
+                App.Goodreads.CompleteAuthentication();
+            }
         }
 
         /// <summary>

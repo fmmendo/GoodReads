@@ -80,6 +80,7 @@
     <Compile Include="Model\Work.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserSettings.cs" />
+    <Compile Include="Utilities\AuthenticationEventArgs.cs" />
     <Compile Include="Utilities\IGoodReadsAuthenticator.cs" />
     <Compile Include="Utilities\Urls.cs" />
   </ItemGroup>

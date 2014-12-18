@@ -52,13 +52,13 @@
             </Hub.Header>
             <HubSection Width="780" x:Uid="UpdatesHeader">
                 <HubSection.Header>
-                    <Grid Width="680">
-                        <Grid.ColumnDefinitions>
+                    <!--<Grid Width="680">-->
+                        <!--<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions>-->
                         <TextBlock HorizontalAlignment="Stretch" Text="Recent Updates" Foreground="{StaticResource AlmostBlack}"/>
-                    </Grid>
+                    <!--</Grid>-->
                 </HubSection.Header>
                 <DataTemplate>
                     <ListView ItemsSource="{Binding Updates}" Background="White" SelectedItem="{Binding SelectedUpdate, Mode=TwoWay}" SelectionMode="None" IsSwipeEnabled="False">

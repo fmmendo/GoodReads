@@ -51,7 +51,7 @@ namespace GoodReads
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
 
-        public ContinuationManager continuationManager;
+        public ContinuationManager ContinuationManager { get; private set; }
 #endif
         /// <summary>
         /// Initializes the singleton instance of the <see cref="App"/> class. This is the first line of authored code
@@ -72,7 +72,7 @@ namespace GoodReads
         {
             base.OnActivated(e);
 
-            continuationManager = new ContinuationManager();
+            ContinuationManager = new ContinuationManager();
 
             Frame rootFrame = CreateRootFrame();
             await RestoreStatusAsync(e.PreviousExecutionState);
@@ -85,11 +85,11 @@ namespace GoodReads
             var continuationEventArgs = e as IContinuationActivatedEventArgs;
             if (continuationEventArgs != null)
             {
-                Frame scenarioFrame = HubPage.Current.FindName("ScenarioFrame") as Frame;
-                if (scenarioFrame != null)
+                //Frame scenarioFrame = HubPage.Current.FindName("ScenarioFrame") as Frame;
+                //if (scenarioFrame != null)
                 {
                     // Call ContinuationManager to handle continuation activation
-                    continuationManager.Continue(continuationEventArgs, scenarioFrame);
+                    ContinuationManager.Continue(continuationEventArgs/*, scenarioFrame*/);
                 }
             }
 

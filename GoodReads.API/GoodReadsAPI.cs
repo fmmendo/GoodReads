@@ -17,7 +17,6 @@ namespace GoodReads.API
 {
     public class GoodReadsAPI
     {
-
         private const int COOLDOWN_MILLISECONDS = 1000;
 
         private RestClient client;
@@ -35,7 +34,14 @@ namespace GoodReads.API
         public GoodReadsAPI(IGoodReadsAuthenticator authenticator)
         {
             this.authenticator = authenticator;
+
+            authenticator.AuthenticationCompleted += authenticator_AuthenticationCompleted;
             client = new RestClient(Urls.BaseUrl);
+        }
+
+        async void authenticator_AuthenticationCompleted(object sender, EventArgs e)
+        {
+            await CompleteAuthentication();
         }
 
         #region API Calls
@@ -74,48 +80,53 @@ namespace GoodReads.API
             // success
             if (result != null && result.ResponseStatus == WebAuthenticationStatus.Success)
             {
-                // set up get 
-                client.Authenticator = OAuth1Authenticator.ForAccessToken(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthToken, UserSettings.Settings.OAuthTokenSecret);
-
-                //request access token
-                await apiSemaphore.WaitAsync();
-                request = new RestRequest("oauth/access_token", Method.GET);
-                var accessResponse = await client.ExecuteAsync(request);
-                ApiCooldown();
-
-                // parse oauth access token and token secrets
-                querystring = HttpUtility.ParseQueryString(accessResponse.Content);
-                if (querystring != null && querystring.Count == 2)
-                {
-                    UserSettings.Settings.OAuthAccessToken = querystring["oauth_token"];
-                    UserSettings.Settings.OAuthAccessTokenSecret = querystring["oauth_token_secret"];
-                }
-                else return false;
-
-                // if we don't have a user ID yet, go fetch it
-                if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
-                {
-                    var user = await GetUserID();
-
-                    UserSettings.Settings.GoodreadsUserID = user.Id;
-                    UserSettings.Settings.GoodreadsUserLink = user.Link;
-                    UserSettings.Settings.GoodreadsUsername = user.Name;
-                }
-
-                authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
-                UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
-                UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
-                justRefreshedUser = true;
-
-                GoodreadsUserShelves = await GetShelvesList();
-                justRefreshedShelves = true;
-
-                GoodreadsReviews = await GetShelfBooks();
-                justRefreshedReviews = true;
-
-                return true;
+                return await CompleteAuthentication();
             }
             return false;
+        }
+
+        public async Task<bool> CompleteAuthentication()
+        {
+            // set up get 
+            client.Authenticator = OAuth1Authenticator.ForAccessToken(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthToken, UserSettings.Settings.OAuthTokenSecret);
+
+            //request access token
+            await apiSemaphore.WaitAsync();
+            var request = new RestRequest("oauth/access_token", Method.GET);
+            var accessResponse = await client.ExecuteAsync(request);
+            ApiCooldown();
+
+            // parse oauth access token and token secrets
+            var querystring = HttpUtility.ParseQueryString(accessResponse.Content);
+            if (querystring != null && querystring.Count == 2)
+            {
+                UserSettings.Settings.OAuthAccessToken = querystring["oauth_token"];
+                UserSettings.Settings.OAuthAccessTokenSecret = querystring["oauth_token_secret"];
+            }
+            else return false;
+
+            // if we don't have a user ID yet, go fetch it
+            if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
+            {
+                var user = await GetUserID();
+
+                UserSettings.Settings.GoodreadsUserID = user.Id;
+                UserSettings.Settings.GoodreadsUserLink = user.Link;
+                UserSettings.Settings.GoodreadsUsername = user.Name;
+            }
+
+            authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
+            UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
+            UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
+            justRefreshedUser = true;
+
+            GoodreadsUserShelves = await GetShelvesList();
+            justRefreshedShelves = true;
+
+            GoodreadsReviews = await GetShelfBooks();
+            justRefreshedReviews = true;
+
+            return true;
         }
 
         /// <summary>

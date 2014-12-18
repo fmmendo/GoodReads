@@ -50,6 +50,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\UserStatusViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\UserViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkViewModel.cs" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\bookcase-wallpaper.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\LightGray.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\MediumGray.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\DarkGray.png" />

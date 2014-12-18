@@ -1,12 +1,15 @@
 ﻿using GoodReads.Utilities;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 
 namespace GoodReads.API.Utilities
 {
-    public class GoodReadsAuthenticator : IGoodReadsAuthenticator, IWebAuthenticationContinuable
+    public class GoodReadsAuthenticator : IGoodReadsAuthenticator
     {
+        public event EventHandler AuthenticationCompleted;
+
         public async Task<WebAuthenticationResult> Authenticate(WebAuthenticationOptions webAuthenticationOptions, Uri url, Uri callback)
         {
             WebAuthenticationBroker.AuthenticateAndContinue(url, callback, null, webAuthenticationOptions);
@@ -14,9 +17,5 @@ namespace GoodReads.API.Utilities
             return null;
         }
 
-        public void ContinueWebAuthentication(Windows.ApplicationModel.Activation.WebAuthenticationBrokerContinuationEventArgs args)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -172,13 +172,15 @@ namespace GoodReads.ViewModels
 
         private async void PopulateData()
         {
-            //if (!_gr.IsUserAuthenticated)
             if (!UserSettings.Settings.IsUserAuthenticated)
                 await _gr.Authenticate();
 
-            NotifyPropertyChanged("UserSmallImageUrl");
+            while (!UserSettings.Settings.IsUserAuthenticated)
+            {
+                await Task.Delay(1000);
+            }
 
-            await GetNotifications();
+            NotifyPropertyChanged("UserSmallImageUrl");
 
             //these work!
             //var statusid = await _gr.PostUserStatus("", "", "", "test post from app");
@@ -191,6 +193,8 @@ namespace GoodReads.ViewModels
             await GetShelfBooks();
 
             await GetUserProfile();
+
+            await GetNotifications();
         }
 
         #region API calls
