@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GoodReads", "GoodReads", "{4337FDB0-8A33-4D29-86C4-83A6711A627E}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodReads.WindowsPhone", "GoodReads\GoodReads.WindowsPhone\GoodReads.WindowsPhone.csproj", "{92967367-E842-4F36-8157-1EC08E17A62F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodReads.API", "GoodReads.API\GoodReads.API.csproj", "{CB29C540-229F-4C28-8CD4-9F904E825DB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShelf", "MyShelf\MyShelf.csproj", "{F3A0D7F1-218D-4A7E-9427-2F3687E85297}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -102,6 +104,32 @@ Global
 		{CB29C540-229F-4C28-8CD4-9F904E825DB3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CB29C540-229F-4C28-8CD4-9F904E825DB3}.Release|x64.ActiveCfg = Release|Any CPU
 		{CB29C540-229F-4C28-8CD4-9F904E825DB3}.Release|x86.ActiveCfg = Release|Any CPU
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|ARM.Build.0 = Debug|ARM
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|ARM.Deploy.0 = Debug|ARM
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|x64.ActiveCfg = Debug|x64
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|x64.Build.0 = Debug|x64
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|x64.Deploy.0 = Debug|x64
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|x86.ActiveCfg = Debug|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|x86.Build.0 = Debug|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Debug|x86.Deploy.0 = Debug|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|Any CPU.ActiveCfg = Release|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|ARM.ActiveCfg = Release|ARM
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|ARM.Build.0 = Release|ARM
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|ARM.Deploy.0 = Release|ARM
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|Mixed Platforms.Deploy.0 = Release|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|x64.ActiveCfg = Release|x64
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|x64.Build.0 = Release|x64
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|x64.Deploy.0 = Release|x64
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|x86.ActiveCfg = Release|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|x86.Build.0 = Release|x86
+		{F3A0D7F1-218D-4A7E-9427-2F3687E85297}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
