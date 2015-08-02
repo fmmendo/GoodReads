@@ -26,6 +26,8 @@ namespace MyShelf.API.Services
             get;
         }
 
+        Task<bool> Authenticate();
+
         Task<IRestResponse> RequestToken();
 
         Task<IRestResponse> RequestAccessToken();

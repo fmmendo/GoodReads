@@ -136,6 +136,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Mendo\Mendo.UAP\Mendo.UAP.csproj">
+      <Project>{a6a64d0e-b444-493a-91d1-7815e3f8cef7}</Project>
+      <Name>Mendo.UAP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyShelf.API\MyShelf.API.csproj">
       <Project>{0c39a16f-6b2c-4947-b7bd-612ad0f32f7d}</Project>
       <Name>MyShelf.API</Name>

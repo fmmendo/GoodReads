@@ -1,6 +1,5 @@
 ﻿using MyShelf.API.Web;
 using RestSharp;
-using RestSharp.Authenticators;
 using RestSharp.Contrib;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace MyShelf.API.Services
         private AuthState _state;
 
         private string apiKey = "JRjTYygQzUjkodkHuqfOjg";
-            private string oauthSecret = "nEQ6pRIdWTY27jsIYHXW9regO4aCIPDuozjUls8FASk";
+        private string oauthSecret = "nEQ6pRIdWTY27jsIYHXW9regO4aCIPDuozjUls8FASk";
 
         //private Uri baseUri;
         //private Uri requestTokenUri;
@@ -26,8 +25,7 @@ namespace MyShelf.API.Services
         //private Uri accessTokenUri;
         //private Uri callbackUri;
 
-        private IApiClient _apiClient;
-        private RestClient client;
+        //private IApiClient _apiClient;
         private readonly SemaphoreSlim apiSemaphore = new SemaphoreSlim(1, 1);
 
         #region Auth Settings
@@ -55,7 +53,7 @@ namespace MyShelf.API.Services
                     if (roamingSettings != null && roamingSettings.Values != null && roamingSettings.Values.ContainsKey(AUTH_SETTINGS))
                         authSettings = (ApplicationDataCompositeValue)roamingSettings.Values[AUTH_SETTINGS];
                     else
-                        authSettings = new Windows.Storage.ApplicationDataCompositeValue();
+                        authSettings = new ApplicationDataCompositeValue();
                 }
 
                 return authSettings;
@@ -114,9 +112,6 @@ namespace MyShelf.API.Services
         {
             State = AuthState.NotAuthenticated;
 
-            _apiClient = apiClient;
-            client = new RestClient("http://www.goodreads.com");
-
             if (IsTokenAvailable && IsTokenSecretAvailable)
                 State = AuthState.Authenticated;
         }
@@ -146,25 +141,18 @@ namespace MyShelf.API.Services
             WebAuthenticationResult result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(goodreadsURL), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
 
             // success
-            if (result != null && result.ResponseStatus == WebAuthenticationStatus.Success)
-            {
-                return await CompleteAuthentication();
-            }
-            return false;
-        }
+            if (result == null || result.ResponseStatus != WebAuthenticationStatus.Success)
+                return false;
 
-        public async Task<bool> CompleteAuthentication()
-        {
             IRestResponse accessResponse = await RequestAccessToken();
 
             // parse oauth access token and token secrets
-            var querystring = HttpUtility.ParseQueryString(accessResponse.Content);
-            if (querystring != null && querystring.Count == 2)
-            {
-                OAuthAccessToken = querystring["oauth_token"];
-                OAuthAccessTokenSecret = querystring["oauth_token_secret"];
-            }
-            else return false;
+            var querystring2 = HttpUtility.ParseQueryString(accessResponse.Content);
+            if (querystring2 == null || querystring2.Count != 2)
+                return false;
+
+            OAuthAccessToken = querystring2["oauth_token"];
+            OAuthAccessTokenSecret = querystring2["oauth_token_secret"];
 
             //// if we don't have a user ID yet, go fetch it
             //if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
@@ -190,34 +178,59 @@ namespace MyShelf.API.Services
             return true;
         }
 
+        //public async Task<bool> CompleteAuthentication()
+        //{
+        //    IRestResponse accessResponse = await RequestAccessToken();
+
+        //    // parse oauth access token and token secrets
+        //    var querystring = HttpUtility.ParseQueryString(accessResponse.Content);
+        //    if (querystring != null && querystring.Count == 2)
+        //    {
+        //        OAuthAccessToken = querystring["oauth_token"];
+        //        OAuthAccessTokenSecret = querystring["oauth_token_secret"];
+        //    }
+        //    else return false;
+
+        //    //// if we don't have a user ID yet, go fetch it
+        //    //if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
+        //    //{
+        //    //    var user = await GetUserID();
+
+        //    //    UserSettings.Settings.GoodreadsUserID = user.Id;
+        //    //    UserSettings.Settings.GoodreadsUserLink = user.Link;
+        //    //    UserSettings.Settings.GoodreadsUsername = user.Name;
+        //    //}
+
+        //    //authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
+        //    //UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
+        //    //UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
+        //    //justRefreshedUser = true;
+
+        //    //GoodreadsUserShelves = await GetShelvesList();
+        //    //justRefreshedShelves = true;
+
+        //    //GoodreadsReviews = await GetShelfBooks();
+        //    //justRefreshedReviews = true;
+
+        //    return true;
+        //}
+
         public async Task<IRestResponse> RequestToken()
         {
             // set up get request tokens
-            client.Authenticator = OAuth1Authenticator.ForRequestToken(apiKey, oauthSecret);
+            ApiClient.Instance.Authenticator = ApiClient.GetRequestTokenAuthenticator(apiKey, oauthSecret);
 
             // Request token
-            await apiSemaphore.WaitAsync();
-            var request = new RestRequest("/oauth/request_token", Method.GET);
-            var requestResponse = await client.ExecuteAsync(request);
-
-            // Wait 1 second between calls
-            await Task.Delay(1000);
-            return requestResponse;
+            return await ApiClient.Instance.ExecuteAsync("/oauth/request_token", Method.GET);
         }
 
         public async Task<IRestResponse> RequestAccessToken()
         {
             // set up get 
-            client.Authenticator = OAuth1Authenticator.ForAccessToken(apiKey, oauthSecret, OAuthToken, OAuthTokenSecret);
+            ApiClient.Instance.Authenticator = ApiClient.GetAccessTokenAuthenticator(apiKey, oauthSecret, OAuthToken, OAuthTokenSecret);
 
             //request access token
-            await apiSemaphore.WaitAsync();
-            var request = new RestRequest("oauth/access_token", Method.GET);
-            var accessResponse = await client.ExecuteAsync(request);
-
-            // Wait 1 second between calls
-            await Task.Delay(1000);
-            return accessResponse;
+            return await ApiClient.Instance.ExecuteAsync("oauth/access_token", Method.GET);
         }
     }
 }
