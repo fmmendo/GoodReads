@@ -25,6 +25,9 @@ namespace MyShelf
         public MainPage()
         {
             this.InitializeComponent();
+
+            API.Services.AuthenticationService service = new API.Services.AuthenticationService(null);
+            service.Authenticate();
         }
     }
 }
