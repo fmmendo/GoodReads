@@ -115,10 +115,22 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\AuthorService.cs" />
+    <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\Interfaces\IAuthorService.cs" />
+    <Compile Include="Services\Interfaces\IBookService.cs" />
+    <Compile Include="Services\Interfaces\IAuthenticationService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Services\Interfaces\ServiceBase.cs" />
+    <Compile Include="Services\Interfaces\IShelfService.cs" />
+    <Compile Include="Services\ShelfService.cs" />
+    <Compile Include="Services\Urls.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Storage\Settings.cs" />
     <Compile Include="Web\ApiClient.cs" />
     <Compile Include="Web\IApiClient.cs" />
     <Compile Include="XML\Author.cs" />
+    <Compile Include="XML\GoodreadsResponse.cs" />
     <Compile Include="XML\NotificationBody.cs" />
     <Compile Include="XML\Book.cs" />
     <Compile Include="XML\BookLink.cs" />
@@ -143,7 +155,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="Storage\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GitHub\RestSharp\RestSharp.UAP\RestSharp.UAP.csproj">

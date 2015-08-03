@@ -3,13 +3,13 @@ using GoodReads.API.Utilities;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Contrib;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Net;
+//using System.Threading;
+//using System.Threading.Tasks;
+//using System.Xml.Serialization;
 using Windows.Security.Authentication.Web;
 using Windows.Storage;
 
@@ -17,139 +17,139 @@ namespace GoodReads.API
 {
     public class GoodReadsAPI
     {
-        private const int COOLDOWN_MILLISECONDS = 1000;
+        //private const int COOLDOWN_MILLISECONDS = 1000;
 
-        private RestClient client;
-        private IGoodReadsAuthenticator authenticator;
-        private readonly SemaphoreSlim apiSemaphore = new SemaphoreSlim(1, 1);
-        private User authenticatedUser;
-        private bool justRefreshedUser = false;
+        //private RestClient client;
+        //private IGoodReadsAuthenticator authenticator;
+        //private readonly SemaphoreSlim apiSemaphore = new SemaphoreSlim(1, 1);
+        //private User authenticatedUser;
+        //private bool justRefreshedUser = false;
 
-        public List<UserShelf> GoodreadsUserShelves { get; set; }
-        private bool justRefreshedShelves = false;
+        //public List<UserShelf> GoodreadsUserShelves { get; set; }
+        //private bool justRefreshedShelves = false;
 
-        public Reviews GoodreadsReviews { get; set; }
-        public bool justRefreshedReviews = false;
+        //public Reviews GoodreadsReviews { get; set; }
+        //public bool justRefreshedReviews = false;
 
-        public GoodReadsAPI(IGoodReadsAuthenticator authenticator)
-        {
-            this.authenticator = authenticator;
+        //public GoodReadsAPI(IGoodReadsAuthenticator authenticator)
+        //{
+        //    this.authenticator = authenticator;
 
-            authenticator.AuthenticationCompleted += authenticator_AuthenticationCompleted;
-            client = new RestClient(Urls.BaseUrl);
-        }
+        //    authenticator.AuthenticationCompleted += authenticator_AuthenticationCompleted;
+        //    client = new RestClient(Urls.BaseUrl);
+        //}
 
-        async void authenticator_AuthenticationCompleted(object sender, EventArgs e)
-        {
-            await CompleteAuthentication();
-        }
+        //async void authenticator_AuthenticationCompleted(object sender, EventArgs e)
+        //{
+        //    await CompleteAuthentication();
+        //}
 
         #region API Calls
 
-        /// <summary>
-        /// Authenticates the user using the Web Authentication Broker
-        /// </summary>
-        public async Task<bool> Authenticate()
-        {
-            // If we have an session key already no need to do anything
-            if (UserSettings.Settings.IsUserAuthenticated)
-                return true;
+        ///// <summary>
+        ///// Authenticates the user using the Web Authentication Broker
+        ///// </summary>
+        //public async Task<bool> Authenticate()
+        //{
+        //    // If we have an session key already no need to do anything
+        //    if (UserSettings.Settings.IsUserAuthenticated)
+        //        return true;
 
-            // set up get request tokens
-            client.Authenticator = OAuth1Authenticator.ForRequestToken(API_KEY, OAUTH_SECRET);
+        //    // set up get request tokens
+        //    client.Authenticator = OAuth1Authenticator.ForRequestToken(API_KEY, OAUTH_SECRET);
 
-            // Request token
-            await apiSemaphore.WaitAsync();
-            var request = new RestRequest("/oauth/request_token", Method.GET);
-            var requestResponse = await client.ExecuteAsync(request);
-            ApiCooldown();
+        //    // Request token
+        //    await apiSemaphore.WaitAsync();
+        //    var request = new RestRequest("/oauth/request_token", Method.GET);
+        //    var requestResponse = await client.ExecuteAsync(request);
+        //    ApiCooldown();
 
-            // Parse oauth token and token secret
-            var querystring = HttpUtility.ParseQueryString(requestResponse.Content);
-            if (querystring != null && querystring.Count == 2)
-            {
-                UserSettings.Settings.OAuthToken = querystring["oauth_token"];
-                UserSettings.Settings.OAuthTokenSecret = querystring["oauth_token_secret"];
-            }
-            else return false;
+        //    // Parse oauth token and token secret
+        //    var querystring = HttpUtility.ParseQueryString(requestResponse.Content);
+        //    if (querystring != null && querystring.Count == 2)
+        //    {
+        //        UserSettings.Settings.OAuthToken = querystring["oauth_token"];
+        //        UserSettings.Settings.OAuthTokenSecret = querystring["oauth_token_secret"];
+        //    }
+        //    else return false;
 
-            // authenticate
-            string goodreadsURL = "https://www.goodreads.com/oauth/authorize?oauth_token=" + UserSettings.Settings.OAuthToken;
-            WebAuthenticationResult result = await authenticator.Authenticate(WebAuthenticationOptions.None, new Uri(goodreadsURL), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
+        //    // authenticate
+        //    string goodreadsURL = "https://www.goodreads.com/oauth/authorize?oauth_token=" + UserSettings.Settings.OAuthToken;
+        //    WebAuthenticationResult result = await authenticator.Authenticate(WebAuthenticationOptions.None, new Uri(goodreadsURL), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
 
-            // success
-            if (result != null && result.ResponseStatus == WebAuthenticationStatus.Success)
-            {
-                return await CompleteAuthentication();
-            }
-            return false;
-        }
+        //    // success
+        //    if (result != null && result.ResponseStatus == WebAuthenticationStatus.Success)
+        //    {
+        //        return await CompleteAuthentication();
+        //    }
+        //    return false;
+        //}
 
-        public async Task<bool> CompleteAuthentication()
-        {
-            // set up get 
-            client.Authenticator = OAuth1Authenticator.ForAccessToken(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthToken, UserSettings.Settings.OAuthTokenSecret);
+        //public async Task<bool> CompleteAuthentication()
+        //{
+        //    // set up get 
+        //    client.Authenticator = OAuth1Authenticator.ForAccessToken(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthToken, UserSettings.Settings.OAuthTokenSecret);
 
-            //request access token
-            await apiSemaphore.WaitAsync();
-            var request = new RestRequest("oauth/access_token", Method.GET);
-            var accessResponse = await client.ExecuteAsync(request);
-            ApiCooldown();
+        //    //request access token
+        //    await apiSemaphore.WaitAsync();
+        //    var request = new RestRequest("oauth/access_token", Method.GET);
+        //    var accessResponse = await client.ExecuteAsync(request);
+        //    ApiCooldown();
 
-            // parse oauth access token and token secrets
-            var querystring = HttpUtility.ParseQueryString(accessResponse.Content);
-            if (querystring != null && querystring.Count == 2)
-            {
-                UserSettings.Settings.OAuthAccessToken = querystring["oauth_token"];
-                UserSettings.Settings.OAuthAccessTokenSecret = querystring["oauth_token_secret"];
-            }
-            else return false;
+        //    // parse oauth access token and token secrets
+        //    var querystring = HttpUtility.ParseQueryString(accessResponse.Content);
+        //    if (querystring != null && querystring.Count == 2)
+        //    {
+        //        UserSettings.Settings.OAuthAccessToken = querystring["oauth_token"];
+        //        UserSettings.Settings.OAuthAccessTokenSecret = querystring["oauth_token_secret"];
+        //    }
+        //    else return false;
 
-            // if we don't have a user ID yet, go fetch it
-            if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
-            {
-                var user = await GetUserID();
+        //    // if we don't have a user ID yet, go fetch it
+        //    if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
+        //    {
+        //        var user = await GetUserID();
 
-                UserSettings.Settings.GoodreadsUserID = user.Id;
-                UserSettings.Settings.GoodreadsUserLink = user.Link;
-                UserSettings.Settings.GoodreadsUsername = user.Name;
-            }
+        //        UserSettings.Settings.GoodreadsUserID = user.Id;
+        //        UserSettings.Settings.GoodreadsUserLink = user.Link;
+        //        UserSettings.Settings.GoodreadsUsername = user.Name;
+        //    }
 
-            authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
-            UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
-            UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
-            justRefreshedUser = true;
+        //    authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
+        //    UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
+        //    UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
+        //    justRefreshedUser = true;
 
-            GoodreadsUserShelves = await GetShelvesList();
-            justRefreshedShelves = true;
+        //    GoodreadsUserShelves = await GetShelvesList();
+        //    justRefreshedShelves = true;
 
-            GoodreadsReviews = await GetShelfBooks();
-            justRefreshedReviews = true;
+        //    GoodreadsReviews = await GetShelfBooks();
+        //    justRefreshedReviews = true;
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        /// <summary>
-        /// Returns the logged in User object
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="filter"></param>
-        /// <param name="maxUpdates"></param>
-        public async Task<User> GetUserID()
-        {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+        ///// <summary>
+        ///// Returns the logged in User object
+        ///// </summary>
+        ///// <param name="type"></param>
+        ///// <param name="filter"></param>
+        ///// <param name="maxUpdates"></param>
+        //public async Task<User> GetUserID()
+        //{
+        //    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
-            await apiSemaphore.WaitAsync();
+        //    await apiSemaphore.WaitAsync();
 
-            var request = new RestRequest("api/auth_user", Method.GET);
-            var response = await client.ExecuteAsync(request);
+        //    var request = new RestRequest("api/auth_user", Method.GET);
+        //    var response = await client.ExecuteAsync(request);
 
-            ApiCooldown();
+        //    ApiCooldown();
 
-            var result = DeserializeResponse(response.Content.ToString());
+        //    var result = DeserializeResponse(response.Content.ToString());
 
-            return result.User;
-        }
+        //    return result.User;
+        //}
 
         /// <summary>
         /// Returns a users notifications
@@ -173,27 +173,27 @@ namespace GoodReads.API
             return result.Notifications;
         }
 
-        /// <summary>
-        /// Returns info for the given user
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <returns></returns>
-        public async Task<User> GetUserInfo(string userID = null)
-        {
-            if (String.IsNullOrEmpty(userID))
-                userID = UserSettings.Settings.GoodreadsUserID;
+        ///// <summary>
+        ///// Returns info for the given user
+        ///// </summary>
+        ///// <param name="userID"></param>
+        ///// <returns></returns>
+        //public async Task<User> GetUserInfo(string userID = null)
+        //{
+        //    if (String.IsNullOrEmpty(userID))
+        //        userID = UserSettings.Settings.GoodreadsUserID;
 
-            if (userID == UserSettings.Settings.GoodreadsUserID && justRefreshedUser)
-                return authenticatedUser;
+        //    if (userID == UserSettings.Settings.GoodreadsUserID && justRefreshedUser)
+        //        return authenticatedUser;
 
-            await apiSemaphore.WaitAsync();
-            string results = await HttpGet(String.Format(Urls.UserShow, userID, API_KEY));
-            ApiCooldown();
+        //    await apiSemaphore.WaitAsync();
+        //    string results = await HttpGet(String.Format(Urls.UserShow, userID, API_KEY));
+        //    ApiCooldown();
 
-            var result = DeserializeResponse(results);
+        //    var result = DeserializeResponse(results);
 
-            return result.User;
-        }
+        //    return result.User;
+        //}
 
         /// <summary>
         /// Performs a GoodReads search for the given query
@@ -348,38 +348,38 @@ namespace GoodReads.API
             return result.Book;
         }
 
-        /// <summary>
-        /// Returns more complete author data
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<Author> GetAuthorInfo(string id)
-        {
-            await apiSemaphore.WaitAsync();
-            string results = await HttpGet(String.Format(Urls.AuthorShow, id, API_KEY));
-            ApiCooldown();
+        ///// <summary>
+        ///// Returns more complete author data
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //public async Task<Author> GetAuthorInfo(string id)
+        //{
+        //    await apiSemaphore.WaitAsync();
+        //    string results = await HttpGet(String.Format(Urls.AuthorShow, id, API_KEY));
+        //    ApiCooldown();
 
-            var result = DeserializeResponse(results);
+        //    var result = DeserializeResponse(results);
 
-            return result.Author;
-        }
+        //    return result.Author;
+        //}
 
-        /// <summary>
-        /// Returns an author's books
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="page"></param>
-        /// <returns></returns>
-        public async Task<Books> GetAuthorBooks(string id/*, int page = 1*/)
-        {
-            await apiSemaphore.WaitAsync();
-            string results = await HttpGet(String.Format(Urls.AuthorBooks, id, API_KEY/*, page.ToString()*/));
-            ApiCooldown();
+        ///// <summary>
+        ///// Returns an author's books
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="page"></param>
+        ///// <returns></returns>
+        //public async Task<Books> GetAuthorBooks(string id/*, int page = 1*/)
+        //{
+        //    await apiSemaphore.WaitAsync();
+        //    string results = await HttpGet(String.Format(Urls.AuthorBooks, id, API_KEY/*, page.ToString()*/));
+        //    ApiCooldown();
 
-            var result = DeserializeResponse(results);
+        //    var result = DeserializeResponse(results);
 
-            return result.Author.Books;
-        }
+        //    return result.Author.Books;
+        //}
 
         /// <summary>
         /// Returns infor for the given user
@@ -785,53 +785,53 @@ namespace GoodReads.API
         #endregion
 
         #region Request/Response Handling
-        /// <summary>
-        /// Deserializes the response XML
-        /// </summary>
-        /// <param name="results"></param>
-        /// <returns>GoodreadsResponse object</returns>
-        private static GoodreadsResponse DeserializeResponse(string results)
-        {
-            GoodreadsResponse response = null;
+        ///// <summary>
+        ///// Deserializes the response XML
+        ///// </summary>
+        ///// <param name="results"></param>
+        ///// <returns>GoodreadsResponse object</returns>
+        //private static GoodreadsResponse DeserializeResponse(string results)
+        //{
+        //    GoodreadsResponse response = null;
 
-            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(results)))
-            {
-                try
-                {
-                    var serializer = new XmlSerializer(typeof(GoodreadsResponse));
+        //    using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(results)))
+        //    {
+        //        try
+        //        {
+        //            var serializer = new XmlSerializer(typeof(GoodreadsResponse));
 
-                    response = (GoodreadsResponse)serializer.Deserialize(stream);
-                }
-                catch (Exception)
-                {
-                }
-            }
-            return response;
-        }
+        //            response = (GoodreadsResponse)serializer.Deserialize(stream);
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //    }
+        //    return response;
+        //}
 
-        /// <summary>
-        /// Deserializes the response XML
-        /// </summary>
-        /// <param name="results"></param>
-        /// <returns>GoodreadsResponse object</returns>
-        private static T DeserializeResponse<T>(string results)
-        {
-            T response = default(T);
+        ///// <summary>
+        ///// Deserializes the response XML
+        ///// </summary>
+        ///// <param name="results"></param>
+        ///// <returns>GoodreadsResponse object</returns>
+        //private static T DeserializeResponse<T>(string results)
+        //{
+        //    T response = default(T);
 
-            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(results)))
-            {
-                try
-                {
-                    var serializer = new XmlSerializer(typeof(T));
+        //    using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(results)))
+        //    {
+        //        try
+        //        {
+        //            var serializer = new XmlSerializer(typeof(T));
 
-                    response = (T)serializer.Deserialize(stream);
-                }
-                catch (Exception)
-                {
-                }
-            }
-            return response;
-        }
+        //            response = (T)serializer.Deserialize(stream);
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //    }
+        //    return response;
+        //}
 
         /// <summary>
         /// Deserializes the response XML
@@ -857,41 +857,41 @@ namespace GoodReads.API
         //    return response;
         //}
 
-        /// <summary>
-        /// Performs an HTTP GET request to the given URL and returns the result.
-        /// </summary>
-        /// <param name="url">Target URL.</param>
-        /// <returns>Text returned by the response.</returns>
-        private async static Task<string> HttpGet(string url)
-        {
-            string httpResponse = null;
+        ///// <summary>
+        ///// Performs an HTTP GET request to the given URL and returns the result.
+        ///// </summary>
+        ///// <param name="url">Target URL.</param>
+        ///// <returns>Text returned by the response.</returns>
+        //private async static Task<string> HttpGet(string url)
+        //{
+        //    string httpResponse = null;
 
-            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(url);
-            Request.Method = "GET";
-            Request.ContentType = "application/x-www-form-urlencoded";
+        //    HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(url);
+        //    Request.Method = "GET";
+        //    Request.ContentType = "application/x-www-form-urlencoded";
 
-            try
-            {
-                HttpWebResponse response = (HttpWebResponse)await Request.GetResponseAsync();
-                if (response != null)
-                {
-                    StreamReader data = new StreamReader(response.GetResponseStream());
-                    httpResponse = await data.ReadToEndAsync();
-                }
-            }
-            catch (WebException e) { }
-            return httpResponse;
-        }
+        //    try
+        //    {
+        //        HttpWebResponse response = (HttpWebResponse)await Request.GetResponseAsync();
+        //        if (response != null)
+        //        {
+        //            StreamReader data = new StreamReader(response.GetResponseStream());
+        //            httpResponse = await data.ReadToEndAsync();
+        //        }
+        //    }
+        //    catch (WebException e) { }
+        //    return httpResponse;
+        //}
 
         /// <summary>
         /// Adds a 1second delay before releasing the api call semaphore
         /// </summary>
         /// <returns></returns>
-        public async Task ApiCooldown()
-        {
-            await Task.Delay(COOLDOWN_MILLISECONDS);
-            apiSemaphore.Release();
-        }
+        //public async Task ApiCooldown()
+        //{
+        //    await Task.Delay(COOLDOWN_MILLISECONDS);
+        //    apiSemaphore.Release();
+        //}
         #endregion
 
         #region untested
