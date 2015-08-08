@@ -1,4 +1,4 @@
-﻿using GoodReads.API.Model;
+﻿using MyShelf.API.XML;
 using System;
 using System.IO;
 using System.Text;

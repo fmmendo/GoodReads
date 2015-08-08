@@ -77,7 +77,6 @@
                                     <VisualState.Setters>
                                         <Setter Target="tbIcon.Foreground" Value="Red" />
                                         <Setter Target="btnText.Foreground" Value="Red" />
-                                        <Setter Target="btnText2.Foreground" Value="Red" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -94,7 +93,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <Grid x:Name="IconPresenter" Width="48" Height="48" VerticalAlignment="Bottom">
+                                    <Grid x:Name="IconPresenter" Width="48" Height="48" VerticalAlignment="Center">
                                         <TextBlock x:Name="tbIcon"
                                                    Text="{TemplateBinding Icon}"
                                                    FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -115,14 +114,14 @@
                                               HorizontalAlignment="Center"/>-->
                                     </Grid>
                                     <TextBlock x:Name="btnText"
-                                                   VerticalAlignment="Center"
-                                                   Grid.Column="1"
-                                                   Foreground="{TemplateBinding Foreground}"
-                                                   Margin="4 0 0 4"
-                                                   Text="{TemplateBinding Text}" 
-                                                   FontSize="14"
-                                                   RelativePanel.RightOf="IconPresenter"
-                                                   RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                                               VerticalAlignment="Center"
+                                               Grid.Column="1"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               Margin="4 4 0 4"
+                                               Text="{TemplateBinding Text}" 
+                                               FontSize="14"
+                                               RelativePanel.RightOf="IconPresenter"
+                                               RelativePanel.AlignVerticalCenterWithPanel="True"/>
                                 </Grid>
                             </ContentPresenter>
                         </Border>

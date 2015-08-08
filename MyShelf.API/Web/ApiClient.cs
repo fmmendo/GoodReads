@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Utilities;
+﻿using Mendo.UAP.Common;
 using RestSharp;
 using System;
 using System.Collections.Generic;

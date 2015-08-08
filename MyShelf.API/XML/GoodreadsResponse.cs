@@ -1,6 +1,7 @@
-﻿using System.Xml.Serialization;
+﻿using MyShelf.API.XML;
+using System.Xml.Serialization;
 
-namespace GoodReads.API.Model
+namespace MyShelf.API.XML
 {
     [XmlRoot(ElementName = "GoodreadsResponse")]
     public class GoodreadsResponse

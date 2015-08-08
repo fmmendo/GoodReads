@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyShelf.ViewModels;
+using System;
 using System.Collections.Generic;
 //using System.IO;
 using System.Linq;
@@ -20,12 +21,16 @@ namespace MyShelf.Controls
 {
     public sealed partial class MainFrame : UserControl
     {
+        MainFrameViewModel ViewModel { get; set; }
+
         TaskCompletionSource<bool> _frameTcs = new TaskCompletionSource<bool>();
 
         public Task EnsureLoadedAsync { get; }
 
         public MainFrame()
         {
+            ViewModel = MainFrameViewModel.Instance;
+
             InitializeComponent();
 
             EnsureLoadedAsync = _frameTcs.Task;

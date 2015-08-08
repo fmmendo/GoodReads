@@ -140,6 +140,7 @@
     <Compile Include="XML\Notification.cs" />
     <Compile Include="XML\Notifications.cs" />
     <Compile Include="XML\ReadStatus.cs" />
+    <Compile Include="XML\Request.cs" />
     <Compile Include="XML\Review.cs" />
     <Compile Include="XML\Reviews.cs" />
     <Compile Include="XML\Search.cs" />
