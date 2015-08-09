@@ -121,7 +121,6 @@
     <Compile Include="Services\Interfaces\IBookService.cs" />
     <Compile Include="Services\Interfaces\IAuthenticationService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
-    <Compile Include="Services\Interfaces\ServiceBase.cs" />
     <Compile Include="Services\Interfaces\IShelfService.cs" />
     <Compile Include="Services\ShelfService.cs" />
     <Compile Include="Services\Urls.cs" />
@@ -129,6 +128,7 @@
     <Compile Include="Storage\Settings.cs" />
     <Compile Include="Web\ApiClient.cs" />
     <Compile Include="Web\IApiClient.cs" />
+    <Compile Include="XML\UpdateAction.cs" />
     <Compile Include="XML\Author.cs" />
     <Compile Include="XML\GoodreadsResponse.cs" />
     <Compile Include="XML\NotificationBody.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="XML\GroupResource.cs" />
     <Compile Include="XML\Notification.cs" />
     <Compile Include="XML\Notifications.cs" />
+    <Compile Include="XML\UpdateObject.cs" />
     <Compile Include="XML\ReadStatus.cs" />
     <Compile Include="XML\Request.cs" />
     <Compile Include="XML\Review.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="XML\User.cs" />
     <Compile Include="XML\UserShelf.cs" />
     <Compile Include="XML\UserStatus.cs" />
+    <Compile Include="XML\Utilities\GoodReadsSerializer.cs" />
     <Compile Include="XML\Work.cs" />
     <Content Include="Properties\MyShelf.API.rd.xml" />
   </ItemGroup>

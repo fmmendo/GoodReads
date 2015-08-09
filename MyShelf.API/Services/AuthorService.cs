@@ -1,12 +1,14 @@
-﻿using MyShelf.API.Storage;
+﻿using Mendo.UAP.Common;
+using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using MyShelf.API.XML;
+using MyShelf.API.XML.Utilities;
 using System;
 using System.Threading.Tasks;
 
 namespace MyShelf.API.Services
 {
-    public class AuthorService : ServiceBase, IAuthorService
+    public class AuthorService : Singleton<AuthorService>, IAuthorService
     {
         /// <summary>
         /// Returns more complete author data
@@ -17,7 +19,7 @@ namespace MyShelf.API.Services
         {
             string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorShow, id, Settings.Instance.ConsumerKey));
 
-            var result = DeserializeResponse(results);
+            var result = GoodReadsSerializer.DeserializeResponse(results);
 
             return result.Author;
         }
@@ -32,7 +34,7 @@ namespace MyShelf.API.Services
         {
             string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorBooks, id, Settings.Instance.ConsumerKey)); /*, page.ToString()*/
 
-            var result = DeserializeResponse(results);
+            var result = GoodReadsSerializer.DeserializeResponse(results);
 
             return result.Author.Books;
         }

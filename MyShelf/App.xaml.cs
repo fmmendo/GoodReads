@@ -1,4 +1,5 @@
 ﻿using MyShelf.Controls;
+using MyShelf.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -91,7 +92,7 @@ namespace MyShelf
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                RootFrame.Navigate(typeof(MainPage), args);
+                RootFrame.Navigate(typeof(HomePage), args);
             }
 
             // Ensure the current window is active

@@ -17,11 +17,7 @@ namespace MyShelf.API.Web
         private readonly SemaphoreSlim _apiSemaphore = new SemaphoreSlim(1, 1);
         private const int COOLDOWN = 1000;
 
-        public IAuthenticator Authenticator
-        {
-            get { return _client?.Authenticator; }
-            set { _client.Authenticator = value; }
-        }
+
 
         public ApiClient()
         {
@@ -34,9 +30,47 @@ namespace MyShelf.API.Web
         /// <param name="url"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public async Task<IRestResponse> ExecuteAsync(string url, Method method)
+        public async Task<IRestResponse> ExecuteForRequestTokenAsync(string url, Method method, string consumerKey, string consumerSecret)
         {
             await _apiSemaphore.WaitAsync();
+
+            _client.Authenticator = GetRequestTokenAuthenticator(consumerKey, consumerSecret);
+
+            var request = new RestRequest(url, method);
+            var requestResponse = await _client.ExecuteAsync(request);
+
+            ApiCooldown();
+
+            return requestResponse;
+        }        /// <summary>
+                 /// Executes a REST request.
+                 /// </summary>
+                 /// <param name="url"></param>
+                 /// <param name="method"></param>
+                 /// <returns></returns>
+        public async Task<IRestResponse> ExecuteForAccessTokenAsync(string url, Method method, string consumerKey, string consumerSecret, string token, string tokenSecret)
+        {
+            await _apiSemaphore.WaitAsync();
+
+            _client.Authenticator = GetAccessTokenAuthenticator(consumerKey, consumerSecret, token, tokenSecret);
+
+            var request = new RestRequest(url, method);
+            var requestResponse = await _client.ExecuteAsync(request);
+
+            ApiCooldown();
+
+            return requestResponse;
+        }        /// <summary>
+                 /// Executes a REST request.
+                 /// </summary>
+                 /// <param name="url"></param>
+                 /// <param name="method"></param>
+                 /// <returns></returns>
+        public async Task<IRestResponse> ExecuteForProtectedResourceAsync(string url, Method method, string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
+        {
+            await _apiSemaphore.WaitAsync();
+
+            _client.Authenticator = GetProtectedResourceAuthenticator(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
             var request = new RestRequest(url, method);
             var requestResponse = await _client.ExecuteAsync(request);
@@ -92,9 +126,9 @@ namespace MyShelf.API.Web
             _apiSemaphore.Release();
         }
 
-        public static OAuth1Authenticator GetRequestTokenAuthenticator(string consumerKey, string consumerSecret) => OAuth1Authenticator.ForRequestToken(consumerKey, consumerSecret);
-        public static OAuth1Authenticator GetAccessTokenAuthenticator(string consumerKey, string consumerSecret, string token, string tokenSecret) => OAuth1Authenticator.ForAccessToken(consumerKey, consumerSecret, token, tokenSecret);
-        public static OAuth1Authenticator GetProtectedResourceAuthenticator(string consumerKey, string consumerSecret, string token, string tokenSecret) => OAuth1Authenticator.ForProtectedResource(consumerKey, consumerSecret, token, tokenSecret);
+        private OAuth1Authenticator GetRequestTokenAuthenticator(string consumerKey, string consumerSecret) => OAuth1Authenticator.ForRequestToken(consumerKey, consumerSecret);
+        private OAuth1Authenticator GetAccessTokenAuthenticator(string consumerKey, string consumerSecret, string token, string tokenSecret) => OAuth1Authenticator.ForAccessToken(consumerKey, consumerSecret, token, tokenSecret);
+        private OAuth1Authenticator GetProtectedResourceAuthenticator(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret) => OAuth1Authenticator.ForProtectedResource(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
         private RestClient _client;
     }

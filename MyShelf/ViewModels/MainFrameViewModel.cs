@@ -1,4 +1,6 @@
 ﻿using Mendo.UAP.Common;
+using MyShelf.API.Services;
+using MyShelf.API.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,8 @@ namespace MyShelf.ViewModels
 {
     public class MainFrameViewModel : SingletonViewModelBase<MainFrameViewModel>
     {
+        IUserService userService = UserService.Instance;
+
         #region Hamburger Menu States
         private bool? _isHomeChecked;
         /// <summary>
@@ -90,6 +94,12 @@ namespace MyShelf.ViewModels
         }
         public void SettingsClick()
         {
+        }
+
+        public async Task RefreshUserId()
+        {
+            if (!userService.IsUserIdAvailable)
+                await userService.GetUserID();
         }
     }
 }

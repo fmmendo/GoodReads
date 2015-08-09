@@ -29,5 +29,7 @@ namespace MyShelf.API.Services
         /// </summary>
         public static string AuthorBooks => String.Format("{0}{1}", BaseUrl, "/author/list/{0}?format=xml&key={1}");  //&page={2}
         #endregion
+
+        //public static string UpdatesFriends { get { return BaseUrl + "/updates/friends.xml"; } }
     }
 }

@@ -21,7 +21,7 @@ namespace MyShelf.Controls
 {
     public sealed partial class MainFrame : UserControl
     {
-        MainFrameViewModel ViewModel { get; set; }
+        MainFrameViewModel ViewModel => MainFrameViewModel.Instance;
 
         TaskCompletionSource<bool> _frameTcs = new TaskCompletionSource<bool>();
 
@@ -29,8 +29,6 @@ namespace MyShelf.Controls
 
         public MainFrame()
         {
-            ViewModel = MainFrameViewModel.Instance;
-
             InitializeComponent();
 
             EnsureLoadedAsync = _frameTcs.Task;

@@ -253,28 +253,28 @@ namespace GoodReads.API
             return GoodreadsUserShelves;
         }
 
-        /// <summary>
-        /// Returns the friend update feed for the logged in user
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="filter"></param>
-        /// <param name="maxUpdates"></param>
-        public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates)
-        {
+        ///// <summary>
+        ///// Returns the friend update feed for the logged in user
+        ///// </summary>
+        ///// <param name="type"></param>
+        ///// <param name="filter"></param>
+        ///// <param name="maxUpdates"></param>
+        //public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates)
+        //{
 
-            string url = Urls.UpdatesFriends;// BASEURL + UPDATES + FRIENDS;// +type + filter + "&max_updates=" + maxUpdates + "&access_token=" + OAuthAccessToken;
+        //    string url = Urls.UpdatesFriends;// BASEURL + UPDATES + FRIENDS;// +type + filter + "&max_updates=" + maxUpdates + "&access_token=" + OAuthAccessToken;
 
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+        //    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
-            await apiSemaphore.WaitAsync();
-            var request = new RestRequest("updates/friends.xml", Method.GET);
-            var response = await client.ExecuteAsync(request);
-            ApiCooldown();
+        //    await apiSemaphore.WaitAsync();
+        //    var request = new RestRequest("updates/friends.xml", Method.GET);
+        //    var response = await client.ExecuteAsync(request);
+        //    ApiCooldown();
 
-            GoodreadsResponse result = DeserializeResponse(response.Content.ToString());
+        //    GoodreadsResponse result = DeserializeResponse(response.Content.ToString());
 
-            return result.Updates;
-        }
+        //    return result.Updates;
+        //}
 
         /// <summary>
         /// Returns the books for the logged in user

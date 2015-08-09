@@ -1,19 +1,18 @@
-﻿using MyShelf.API.XML;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace MyShelf.API.Services
+namespace MyShelf.API.XML.Utilities
 {
-    public class ServiceBase
+    public class GoodReadsSerializer
     {
         /// <summary>
         /// Deserializes a GoodReads response XML
         /// </summary>
         /// <param name="xml">xml data</param>
         /// <returns>GoodreadsResponse object</returns>
-        protected static GoodreadsResponse DeserializeResponse(string xml)
+        internal static GoodreadsResponse DeserializeResponse(string xml)
         {
             GoodreadsResponse response = null;
 

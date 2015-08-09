@@ -1,4 +1,5 @@
-﻿using MyShelf.API.Storage;
+﻿using Mendo.UAP.Common;
+using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using RestSharp;
 using RestSharp.Contrib;
@@ -13,7 +14,7 @@ using Windows.Storage;
 
 namespace MyShelf.API.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : Singleton<AuthenticationService>, IAuthenticationService
     {
         private AuthState _state;
 
@@ -30,8 +31,7 @@ namespace MyShelf.API.Services
         public bool IsTokenAvailable => !String.IsNullOrEmpty(Settings.Instance.OAuthAccessToken);
 
         public bool IsTokenSecretAvailable => !String.IsNullOrEmpty(Settings.Instance.OAuthAccessTokenSecret);
-
-
+        
         /// <summary>
         /// Contains the current authentication state of the user
         /// </summary>
@@ -42,7 +42,7 @@ namespace MyShelf.API.Services
         }
         #endregion
 
-        public AuthenticationService(IApiClient apiClient)
+        public AuthenticationService()
         {
             State = AuthState.NotAuthenticated;
 
@@ -152,19 +152,19 @@ namespace MyShelf.API.Services
         public async Task<IRestResponse> RequestToken()
         {
             // set up get request tokens
-            ApiClient.Instance.Authenticator = ApiClient.GetRequestTokenAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret);
+            //ApiClient.Instance.Authenticator = ApiClient.GetRequestTokenAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret);
 
             // Request token
-            return await ApiClient.Instance.ExecuteAsync("/oauth/request_token", Method.GET);
+            return await ApiClient.Instance.ExecuteForRequestTokenAsync("/oauth/request_token", Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret);
         }
 
         public async Task<IRestResponse> RequestAccessToken()
         {
             // set up get 
-            ApiClient.Instance.Authenticator = ApiClient.GetAccessTokenAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
+            //ApiClient.Instance.Authenticator = ApiClient.GetAccessTokenAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
 
             //request access token
-            return await ApiClient.Instance.ExecuteAsync("oauth/access_token", Method.GET);
+            return await ApiClient.Instance.ExecuteForAccessTokenAsync("oauth/access_token", Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
         }
     }
 }

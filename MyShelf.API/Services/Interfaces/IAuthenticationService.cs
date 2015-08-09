@@ -22,6 +22,11 @@ namespace MyShelf.API.Services
             get;
         }
 
+        AuthState State
+        {
+            get;
+        }
+
         Task<bool> Authenticate();
 
         Task<IRestResponse> RequestToken();

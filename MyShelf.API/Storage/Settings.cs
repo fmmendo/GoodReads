@@ -21,7 +21,9 @@ namespace MyShelf.API.Storage
         #region User Settings
         private const string SETTINGS_USER = "MyShelf.Settings.User";
 
-        private readonly string GOODREADS_USER_ID = $"{SETTINGS_USER}.AccessToken";
+        private readonly string GOODREADS_USER_ID = $"{SETTINGS_USER}.UserId";
+        private readonly string GOODREADS_USERNAME = $"{SETTINGS_USER}.UserName";
+        private readonly string GOODREADS_USERLINK = $"{SETTINGS_USER}.UserLink";
 
         private ApplicationDataCompositeValue userSettings;
         /// <summary>
@@ -43,11 +45,33 @@ namespace MyShelf.API.Storage
             }
         }
 
+        /// <summary>
+        /// User Identifier
+        /// </summary>
         public string GoodreadsUserID
         {
             get { return UserSettings[GOODREADS_USER_ID] != null ? UserSettings[GOODREADS_USER_ID].ToString() : String.Empty; }
             set { UserSettings[GOODREADS_USER_ID] = value; StoreRoamingSettings(SETTINGS_USER, userSettings); }
         }
+
+        /// <summary>
+        /// User name
+        /// </summary>
+        public string GoodreadsUsername
+        {
+            get { return UserSettings[GOODREADS_USERNAME] != null ? UserSettings[GOODREADS_USERNAME].ToString() : String.Empty; }
+            set { UserSettings[GOODREADS_USERNAME] = value; StoreRoamingSettings(SETTINGS_USER, userSettings); }
+        }
+
+        /// <summary>
+        /// Link to the user's profile (on goodreads website)
+        /// </summary>
+        public string GoodreadsUserLink
+        {
+            get { return UserSettings[GOODREADS_USERLINK] != null ? UserSettings[GOODREADS_USERLINK].ToString() : String.Empty; }
+            set { UserSettings[GOODREADS_USERLINK] = value; StoreRoamingSettings(SETTINGS_USER, userSettings); }
+        }
+
         #endregion
 
         #region Auth Settings
