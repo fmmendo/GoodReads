@@ -11,16 +11,16 @@ namespace MyShelf.API.XML
     public class UserShelf
     {
         [XmlElement(ElementName = "book_count")]
-        public string Book_count { get; set; }
+        public string BookCount { get; set; }
 
         [XmlElement(ElementName = "description")]
         public string Description { get; set; }
 
         [XmlElement(ElementName = "display_fields")]
-        public string Display_fields { get; set; }
+        public string DisplayFields { get; set; }
 
         [XmlElement(ElementName = "exclusive_flag")]
-        public string Exclusive_flag { get; set; }
+        public string ExclusiveFlag { get; set; }
 
         [XmlElement(ElementName = "featured")]
         public string Featured { get; set; }
@@ -35,10 +35,10 @@ namespace MyShelf.API.XML
         public string Order { get; set; }
 
         [XmlElement(ElementName = "per_page")]
-        public string Per_page { get; set; }
+        public string PerPage { get; set; }
 
         [XmlElement(ElementName = "recommend_for")]
-        public string Recommend_for { get; set; }
+        public string RecommendFor { get; set; }
 
         [XmlElement(ElementName = "sort")]
         public string Sort { get; set; }

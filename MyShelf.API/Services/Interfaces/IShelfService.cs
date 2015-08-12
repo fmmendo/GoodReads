@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyShelf.API.XML;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace MyShelf.API.Services
 {
     public interface IShelfService
     {
+        Task<List<UserShelf>> GetShelvesList();
     }
 }

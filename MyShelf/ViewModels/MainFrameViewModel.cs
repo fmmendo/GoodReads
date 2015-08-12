@@ -82,9 +82,11 @@ namespace MyShelf.ViewModels
 
         public void HomeClick()
         {
+            App.NavigationService.Navigate(typeof(Pages.HomePage));
         }
         public void MyBooksClick()
         {
+            App.NavigationService.Navigate(typeof(Pages.MyBooksPage));
         }
         public void FriendsClick()
         {

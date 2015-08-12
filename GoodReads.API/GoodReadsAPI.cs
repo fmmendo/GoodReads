@@ -219,39 +219,39 @@ namespace GoodReads.API
             return null;
         }
 
-        /// <summary>
-        /// Returns the shelves for the logged in user
-        /// </summary>
-        /// <param name="query">string to search for</param>
-        /// <returns>List of Work items</returns>
-        public async Task<List<UserShelf>> GetShelvesList()
-        {
-            if (justRefreshedShelves)
-            {
-                // update it in the background
-                Task.Run(async () =>
-                {
-                    await apiSemaphore.WaitAsync();
-                    string results = await HttpGet("https://www.goodreads.com/shelf/list.xml?key=" + API_KEY);
-                    ApiCooldown();
+        ///// <summary>
+        ///// Returns the shelves for the logged in user
+        ///// </summary>
+        ///// <param name="query">string to search for</param>
+        ///// <returns>List of Work items</returns>
+        //public async Task<List<UserShelf>> GetShelvesList()
+        //{
+        //    if (justRefreshedShelves)
+        //    {
+        //        // update it in the background
+        //        Task.Run(async () =>
+        //        {
+        //            await apiSemaphore.WaitAsync();
+        //            string results = await HttpGet("https://www.goodreads.com/shelf/list.xml?key=" + API_KEY);
+        //            ApiCooldown();
 
-                    var result = DeserializeResponse(results);
+        //            var result = DeserializeResponse(results);
 
-                    GoodreadsUserShelves = result.Shelves.UserShelf;
-                });
-            }
-            else
-            {
-                await apiSemaphore.WaitAsync();
-                string results = await HttpGet("https://www.goodreads.com/shelf/list.xml?key=" + API_KEY);
-                ApiCooldown();
+        //            GoodreadsUserShelves = result.Shelves.UserShelf;
+        //        });
+        //    }
+        //    else
+        //    {
+        //        await apiSemaphore.WaitAsync();
+        //        string results = await HttpGet("https://www.goodreads.com/shelf/list.xml?key=" + API_KEY);
+        //        ApiCooldown();
 
-                var result = DeserializeResponse(results);
+        //        var result = DeserializeResponse(results);
 
-                GoodreadsUserShelves = result.Shelves.UserShelf;
-            }
-            return GoodreadsUserShelves;
-        }
+        //        GoodreadsUserShelves = result.Shelves.UserShelf;
+        //    }
+        //    return GoodreadsUserShelves;
+        //}
 
         ///// <summary>
         ///// Returns the friend update feed for the logged in user
@@ -276,61 +276,61 @@ namespace GoodReads.API
         //    return result.Updates;
         //}
 
-        /// <summary>
-        /// Returns the books for the logged in user
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="filter"></param>
-        /// <param name="maxUpdates"></param>
-        public async Task<Reviews> GetShelfBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200")
-        {
-            if (shelf == null && justRefreshedReviews)
-            {
-                Task.Run(async () =>
-                {
-                    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-                    string url = "review/list/" + UserSettings.Settings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
+        ///// <summary>
+        ///// Returns the books for the logged in user
+        ///// </summary>
+        ///// <param name="type"></param>
+        ///// <param name="filter"></param>
+        ///// <param name="maxUpdates"></param>
+        //public async Task<Reviews> GetShelfBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200")
+        //{
+        //    if (shelf == null && justRefreshedReviews)
+        //    {
+        //        Task.Run(async () =>
+        //        {
+        //            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+        //            string url = "review/list/" + UserSettings.Settings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
 
-                    //TODO: more params, probably enums
-                    if (!String.IsNullOrEmpty(shelf))
-                        url += "&shelf=" + shelf;
-                    if (!String.IsNullOrEmpty(per_page))
-                        url += "&per_page=" + per_page;
+        //            //TODO: more params, probably enums
+        //            if (!String.IsNullOrEmpty(shelf))
+        //                url += "&shelf=" + shelf;
+        //            if (!String.IsNullOrEmpty(per_page))
+        //                url += "&per_page=" + per_page;
 
-                    await apiSemaphore.WaitAsync();
-                    var request = new RestRequest(url, Method.GET);
-                    var response = await client.ExecuteAsync(request);
+        //            await apiSemaphore.WaitAsync();
+        //            var request = new RestRequest(url, Method.GET);
+        //            var response = await client.ExecuteAsync(request);
 
-                    ApiCooldown();
+        //            ApiCooldown();
 
-                    var result = DeserializeResponse(response.Content.ToString());
-                    GoodreadsReviews = result.Reviews;
-                });
-            }
-            else
-            { 
+        //            var result = DeserializeResponse(response.Content.ToString());
+        //            GoodreadsReviews = result.Reviews;
+        //        });
+        //    }
+        //    else
+        //    { 
 
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-            string url = "review/list/" + UserSettings.Settings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
+        //    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+        //    string url = "review/list/" + UserSettings.Settings.GoodreadsUserID + ".xml?key=" + API_KEY + "&format=xml&v=2";
 
-            //TODO: more params, probably enums
-            if (!String.IsNullOrEmpty(shelf))
-                url += "&shelf=" + shelf;
-            if (!String.IsNullOrEmpty(per_page))
-                url += "&per_page=" + per_page;
+        //    //TODO: more params, probably enums
+        //    if (!String.IsNullOrEmpty(shelf))
+        //        url += "&shelf=" + shelf;
+        //    if (!String.IsNullOrEmpty(per_page))
+        //        url += "&per_page=" + per_page;
 
-            await apiSemaphore.WaitAsync();
-            var request = new RestRequest(url, Method.GET);
-            var response = await client.ExecuteAsync(request);
+        //    await apiSemaphore.WaitAsync();
+        //    var request = new RestRequest(url, Method.GET);
+        //    var response = await client.ExecuteAsync(request);
 
-            ApiCooldown();
+        //    ApiCooldown();
 
-            var result = DeserializeResponse(response.Content.ToString());
-            GoodreadsReviews = result.Reviews;
-            }
+        //    var result = DeserializeResponse(response.Content.ToString());
+        //    GoodreadsReviews = result.Reviews;
+        //    }
 
-            return GoodreadsReviews;
-        }
+        //    return GoodreadsReviews;
+        //}
 
         /// <summary>
         /// Returns more complete book data

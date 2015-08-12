@@ -1,4 +1,5 @@
-﻿using MyShelf.Controls;
+﻿using Mendo.UAP.Common;
+using MyShelf.Controls;
 using MyShelf.Pages;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,10 @@ namespace MyShelf
     sealed partial class App : Application
     {
         public MainFrame Root = null;
+
         public Frame RootFrame { get; private set; }
+
+        public static NavigationService NavigationService;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -77,7 +81,7 @@ namespace MyShelf
                 RootFrame = Root.RootFrame;
                 RootFrame.CacheSize = 6;
                 RootFrame.NavigationFailed += OnNavigationFailed;
-
+                NavigationService = new NavigationService(RootFrame);
 
                 if (executionState == ApplicationExecutionState.Terminated)
                 {
