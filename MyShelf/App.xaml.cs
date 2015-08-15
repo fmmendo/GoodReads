@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.ExtendedExecution;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -29,8 +30,6 @@ namespace MyShelf
         public MainFrame Root = null;
 
         public Frame RootFrame { get; private set; }
-
-        public static NavigationService NavigationService;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -81,11 +80,22 @@ namespace MyShelf
                 RootFrame = Root.RootFrame;
                 RootFrame.CacheSize = 6;
                 RootFrame.NavigationFailed += OnNavigationFailed;
-                NavigationService = new NavigationService(RootFrame);
+                NavigationService.SetFrame(RootFrame);
+
+                // Register this frame with the suspension manager
+                SuspensionManager.RegisterFrame(RootFrame, "appFrame");
 
                 if (executionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Load state from previously suspended application
+                    // Attempt to restore the navigation state if the application was terminated
+                    try
+                    {
+                        await SuspensionManager.RestoreAsync();
+                        await SuspensionManager.DeleteSavedStatesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
                 }
 
                 //Window.Current.Content = rootFrame;
@@ -120,10 +130,22 @@ namespace MyShelf
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+
+            //ExtendedExecutionSession session = new ExtendedExecutionSession();
+            //session.Description = "Persisting data and maintaining cache";
+            //session.Reason = ExtendedExecutionReason.SavingData;
+
+            //var result = await session.RequestExtensionAsync();
+
+            //await SuspensionManager.SaveAsync(); // Persists the per-page view models to file
+            ////session.PercentProgress = 50;
+
+            ////await FileCache.GzipCache.TrimAsync();
+            //session.PercentProgress = 100;
+
             deferral.Complete();
         }
     }

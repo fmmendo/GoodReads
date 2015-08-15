@@ -8,7 +8,7 @@ using Windows.Storage;
 
 namespace MyShelf.API.Storage
 {
-    public class Settings : Singleton<Settings>
+    public class MyShelfSettings : Singleton<MyShelfSettings>
     {
         public string ConsumerKey => "JRjTYygQzUjkodkHuqfOjg";
         public string ConsumerSecret => "nEQ6pRIdWTY27jsIYHXW9regO4aCIPDuozjUls8FASk";

@@ -232,6 +232,14 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "SharpSerializer/2.20.0": {
+        "compile": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -1839,6 +1847,14 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "SharpSerializer/2.20.0": {
+        "compile": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -3481,6 +3497,14 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "SharpSerializer/2.20.0": {
+        "compile": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -5130,6 +5154,14 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "SharpSerializer/2.20.0": {
+        "compile": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -6770,6 +6802,14 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "SharpSerializer/2.20.0": {
+        "compile": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -8419,6 +8459,14 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "SharpSerializer/2.20.0": {
+        "compile": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -10059,6 +10107,14 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "SharpSerializer/2.20.0": {
+        "compile": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -12132,6 +12188,32 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "package/services/metadata/core-properties/1d4eb9d0228b48b88d2df3822fba2d86.psmdcp",
+        "[Content_Types].xml"
+      ]
+    },
+    "SharpSerializer/2.20.0": {
+      "sha512": "taSfCYbQ5O8li6L4yPbwi3+Kqzsk/qXAKuGTLVW8Q2gUhmfrTpyLAmtcQi6Q2eyHQJMDRWEnJk+OTgkzRjUqAQ==",
+      "type": "Package",
+      "files": [
+        "_rels/.rels",
+        "SharpSerializer.nuspec",
+        "lib/net20/Polenter.SharpSerializer.dll",
+        "lib/net20/Polenter.SharpSerializer.XML",
+        "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll",
+        "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.XML",
+        "lib/sl3/Polenter.SharpSerializer.Silverlight.dll",
+        "lib/sl3/Polenter.SharpSerializer.Silverlight.xml",
+        "lib/sl3-wp/Polenter.SharpSerializer.Portable.dll",
+        "lib/sl3-wp/Polenter.SharpSerializer.Portable.XML",
+        "lib/sl4/Polenter.SharpSerializer.Silverlight.dll",
+        "lib/sl4/Polenter.SharpSerializer.Silverlight.xml",
+        "lib/sl4-windowsphone/Polenter.SharpSerializer.Portable.dll",
+        "lib/sl4-windowsphone/Polenter.SharpSerializer.Portable.XML",
+        "lib/sl4-windowsphone71/Polenter.SharpSerializer.Portable.dll",
+        "lib/sl4-windowsphone71/Polenter.SharpSerializer.Portable.XML",
+        "lib/sl5/Polenter.SharpSerializer.Silverlight.dll",
+        "lib/sl5/Polenter.SharpSerializer.Silverlight.xml",
+        "package/services/metadata/core-properties/0fb837c1922545b1a133ab8d3e30087c.psmdcp",
         "[Content_Types].xml"
       ]
     },

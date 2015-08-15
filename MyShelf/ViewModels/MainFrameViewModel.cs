@@ -82,21 +82,23 @@ namespace MyShelf.ViewModels
 
         public void HomeClick()
         {
-            App.NavigationService.Navigate(typeof(Pages.HomePage));
+            NavigationService.Navigate(typeof(Pages.HomePage));
         }
         public void MyBooksClick()
         {
-            App.NavigationService.Navigate(typeof(Pages.MyBooksPage));
+            NavigationService.Navigate(typeof(Pages.MyBooksPage));
         }
         public void FriendsClick()
         {
-            App.NavigationService.Navigate(typeof(Pages.FriendsPage));
+            NavigationService.Navigate(typeof(Pages.FriendsPage));
         }
         public void ProfileClick()
         {
+            NavigationService.Navigate(typeof(Pages.UserPage));
         }
         public void SettingsClick()
         {
+            NavigationService.Navigate(typeof(Pages.SettingsPage));
         }
 
         public async Task RefreshUserId()

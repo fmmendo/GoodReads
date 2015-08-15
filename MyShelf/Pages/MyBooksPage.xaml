@@ -1,5 +1,6 @@
-﻿<Page
+﻿<common:PageBase
     x:Class="MyShelf.Pages.MyBooksPage"
+    xmlns:common="using:Mendo.UAP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyShelf.Pages"
@@ -26,4 +27,4 @@
             </Pivot.ItemTemplate>
         </Pivot>
     </Grid>
-</Page>
+</common:PageBase>

@@ -125,7 +125,7 @@
     <Compile Include="Services\ShelfService.cs" />
     <Compile Include="Services\Urls.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Storage\Settings.cs" />
+    <Compile Include="Storage\MyShelfSettings.cs" />
     <Compile Include="Web\ApiClient.cs" />
     <Compile Include="Web\IApiClient.cs" />
     <Compile Include="XML\Friends.cs" />

@@ -1,5 +1,6 @@
-﻿<Page
-    x:Class="MyShelf.Pages.HomePage"
+﻿<common:PageBase
+    x:Class="MyShelf.Pages.HomePage"    
+    xmlns:common="using:Mendo.UAP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyShelf"
@@ -48,4 +49,4 @@
             </ListView.ItemTemplate>
         </ListView>
     </Grid>
-</Page>
+</common:PageBase>

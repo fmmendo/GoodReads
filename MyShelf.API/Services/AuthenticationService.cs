@@ -20,9 +20,9 @@ namespace MyShelf.API.Services
 
         #region Properties
 
-        public bool IsTokenAvailable => !String.IsNullOrEmpty(Settings.Instance.OAuthAccessToken);
+        public bool IsTokenAvailable => !String.IsNullOrEmpty(MyShelfSettings.Instance.OAuthAccessToken);
 
-        public bool IsTokenSecretAvailable => !String.IsNullOrEmpty(Settings.Instance.OAuthAccessTokenSecret);
+        public bool IsTokenSecretAvailable => !String.IsNullOrEmpty(MyShelfSettings.Instance.OAuthAccessTokenSecret);
         
         /// <summary>
         /// Contains the current authentication state of the user
@@ -59,11 +59,11 @@ namespace MyShelf.API.Services
             if (querystring == null || querystring.Count != 2)
                 return false;
 
-            Settings.Instance.OAuthToken = querystring["oauth_token"];
-            Settings.Instance.OAuthTokenSecret = querystring["oauth_token_secret"];
+            MyShelfSettings.Instance.OAuthToken = querystring["oauth_token"];
+            MyShelfSettings.Instance.OAuthTokenSecret = querystring["oauth_token_secret"];
 
             // authenticate
-            string goodreadsURL = String.Format(Urls.AuthUrl, Settings.Instance.OAuthToken);
+            string goodreadsURL = String.Format(Urls.AuthUrl, MyShelfSettings.Instance.OAuthToken);
             WebAuthenticationResult result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(goodreadsURL), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
 
             if (result == null || result.ResponseStatus != WebAuthenticationStatus.Success)
@@ -77,8 +77,8 @@ namespace MyShelf.API.Services
             if (querystring2 == null || querystring2.Count != 2)
                 return false;
 
-            Settings.Instance.OAuthAccessToken = querystring2["oauth_token"];
-            Settings.Instance.OAuthAccessTokenSecret = querystring2["oauth_token_secret"];
+            MyShelfSettings.Instance.OAuthAccessToken = querystring2["oauth_token"];
+            MyShelfSettings.Instance.OAuthAccessTokenSecret = querystring2["oauth_token_secret"];
 
             //// if we don't have a user ID yet, go fetch it
             //if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
@@ -108,12 +108,12 @@ namespace MyShelf.API.Services
         /// Requests a Token from the Api Client
         /// </summary>
         /// <returns></returns>
-        public async Task<IRestResponse> RequestToken() => await ApiClient.Instance.ExecuteForRequestTokenAsync(Urls.RequestToken, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret);
+        public async Task<IRestResponse> RequestToken() => await ApiClient.Instance.ExecuteForRequestTokenAsync(Urls.RequestToken, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret);
 
         /// <summary>
         /// Requests an Access Token from the ApiClient
         /// </summary>
         /// <returns></returns>
-        public async Task<IRestResponse> RequestAccessToken() => await ApiClient.Instance.ExecuteForAccessTokenAsync(Urls.AccessToken, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
+        public async Task<IRestResponse> RequestAccessToken() => await ApiClient.Instance.ExecuteForAccessTokenAsync(Urls.AccessToken, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthToken, MyShelfSettings.Instance.OAuthTokenSecret);
     }
 }

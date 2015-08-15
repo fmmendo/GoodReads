@@ -36,7 +36,7 @@ namespace MyShelf.API.Services
             //}
             //else
             //{
-                var results = await ApiClient.Instance.HttpGet(String.Format(Urls.ShelvesList, Settings.Instance.ConsumerKey));
+                var results = await ApiClient.Instance.HttpGet(String.Format(Urls.ShelvesList, MyShelfSettings.Instance.ConsumerKey));
                 //await apiSemaphore.WaitAsync();
                 //string results = await HttpGet("https://www.goodreads.com/shelf/list.xml?key=" + API_KEY);
                 //ApiCooldown();

@@ -17,7 +17,7 @@ namespace MyShelf.API.Services
         /// <returns></returns>
         public async Task<Author> GetAuthorInfo(string id)
         {
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorShow, id, Settings.Instance.ConsumerKey));
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorShow, id, MyShelfSettings.Instance.ConsumerKey));
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
@@ -32,7 +32,7 @@ namespace MyShelf.API.Services
         /// <returns></returns>
         public async Task<Books> GetAuthorBooks(string id/*, int page = 1*/)
         {
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorBooks, id, Settings.Instance.ConsumerKey)); /*, page.ToString()*/
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorBooks, id, MyShelfSettings.Instance.ConsumerKey)); /*, page.ToString()*/
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 

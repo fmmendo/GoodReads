@@ -1,4 +1,5 @@
-﻿using MyShelf.ViewModels;
+﻿using Mendo.UAP.Common;
+using MyShelf.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +22,7 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class FriendsPage : Page
+    public sealed partial class FriendsPage : PageBase
     {
         FriendsPageViewModel ViewModel => FriendsPageViewModel.Instance;
 

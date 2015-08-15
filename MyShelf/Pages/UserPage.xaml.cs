@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mendo.UAP.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UserPage : Page
+    public sealed partial class UserPage : PageBase
     {
         public UserPage()
         {

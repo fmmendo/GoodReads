@@ -12,7 +12,7 @@ namespace MyShelf.API.Services
 {
     public class UserService : Singleton<UserService>, IUserService
     {
-        public bool IsUserIdAvailable => !String.IsNullOrEmpty(Settings.Instance.GoodreadsUserID);
+        public bool IsUserIdAvailable => !String.IsNullOrEmpty(MyShelfSettings.Instance.GoodreadsUserID);
 
         public User _currentUser = null;
 
@@ -24,16 +24,16 @@ namespace MyShelf.API.Services
         {
             if (_currentUser == null || refresh == true)
             {
-                //ApiClient.Instance.Authenticator = ApiClient.GetProtectedResourceAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
+                //ApiClient.Instance.Authenticator = ApiClient.GetProtectedResourceAuthenticator(MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthToken, MyShelfSettings.Instance.OAuthTokenSecret);
 
-                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.AuthUser, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
+                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.AuthUser, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
                 //var response2 = await ApiClient.Instance.HttpGet(@"https://www.goodreads.com/api/auth_user");
 
-                //ApiClient.Instance.Authenticator = OAuth1Authenticator.ForProtectedResource(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
+                //ApiClient.Instance.Authenticator = OAuth1Authenticator.ForProtectedResource(MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthToken, MyShelfSettings.Instance.OAuthTokenSecret);
 
                 ////    await apiSemaphore.WaitAsync();
                 //RestClient _client = new RestClient("http://www.goodreads.com");
-                //_client.Authenticator = OAuth1Authenticator.ForProtectedResource(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
+                //_client.Authenticator = OAuth1Authenticator.ForProtectedResource(MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthToken, MyShelfSettings.Instance.OAuthTokenSecret);
 
                 //var request = new RestRequest("api/auth_user", Method.GET);
                 //    var response3 = await _client.ExecuteAsync(request);
@@ -43,9 +43,9 @@ namespace MyShelf.API.Services
 
                 _currentUser = result.User;
 
-                Settings.Instance.GoodreadsUserID = _currentUser.Id;
-                Settings.Instance.GoodreadsUsername = _currentUser.UserName;
-                Settings.Instance.GoodreadsUserLink = _currentUser.Link;
+                MyShelfSettings.Instance.GoodreadsUserID = _currentUser.Id;
+                MyShelfSettings.Instance.GoodreadsUsername = _currentUser.UserName;
+                MyShelfSettings.Instance.GoodreadsUserLink = _currentUser.Link;
             }
 
             return _currentUser;
@@ -64,7 +64,7 @@ namespace MyShelf.API.Services
                 //we want the logged in user
                 if (IsUserIdAvailable)
                 {
-                    userID = Settings.Instance.GoodreadsUserID;
+                    userID = MyShelfSettings.Instance.GoodreadsUserID;
                 }
                 else
                 {
@@ -76,10 +76,10 @@ namespace MyShelf.API.Services
             }
 
 
-            //if (userID == Settings.Instance.GoodreadsUserID)
+            //if (userID == MyShelfSettings.Instance.GoodreadsUserID)
             //    return authenticatedUser;
 
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.UserShow, userID, Settings.Instance.ConsumerKey));
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.UserShow, userID, MyShelfSettings.Instance.ConsumerKey));
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
@@ -94,7 +94,7 @@ namespace MyShelf.API.Services
         /// <param name="maxUpdates"></param>
         public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates)
         {
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.FriendUpdates, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.FriendUpdates, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
 
             GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
 
@@ -103,7 +103,7 @@ namespace MyShelf.API.Services
 
         public async Task<Friends> GetFriends(string page = null, string sort = null)
         {
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(String.Format(Urls.FriendList, Settings.Instance.GoodreadsUserID), Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(String.Format(Urls.FriendList, MyShelfSettings.Instance.GoodreadsUserID), Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
 
             GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
 
