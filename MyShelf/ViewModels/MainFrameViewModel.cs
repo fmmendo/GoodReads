@@ -90,6 +90,7 @@ namespace MyShelf.ViewModels
         }
         public void FriendsClick()
         {
+            App.NavigationService.Navigate(typeof(Pages.FriendsPage));
         }
         public void ProfileClick()
         {

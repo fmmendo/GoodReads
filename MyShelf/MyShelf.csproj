@@ -105,6 +105,9 @@
       <DependentUpon>MainFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SplitViewItem.cs" />
+    <Compile Include="Pages\FriendsPage.xaml.cs">
+      <DependentUpon>FriendsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,7 @@
       <DependentUpon>MyBooksPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\FriendsPageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\MainFrameViewModel.cs" />
     <Compile Include="ViewModels\MyBooksPageViewModel.cs" />
@@ -140,6 +144,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\MainFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FriendsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

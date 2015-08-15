@@ -48,7 +48,7 @@ namespace MyShelf.API.Services
             //else
             //{
                 //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-                string url = "review/list/" + Settings.Instance.GoodreadsUserID + ".xml?key=" + Settings.Instance.ConsumerKey + "&format=xml&v=2";
+                string url = Urls.ShelfBooks + Settings.Instance.GoodreadsUserID + ".xml?key=" + Settings.Instance.ConsumerKey + "&format=xml&v=2";
 
                 //TODO: more params, probably enums
                 if (!String.IsNullOrEmpty(shelf))
@@ -69,6 +69,20 @@ namespace MyShelf.API.Services
             //}
 
             return result.Reviews;
+        }
+
+        /// <summary>
+        /// Returns more complete book data
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<Book> GetBookInfo(string id)
+        {
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.BookShow, id, Settings.Instance.ConsumerKey));
+
+            var result = GoodReadsSerializer.DeserializeResponse(results);
+
+            return result.Book;
         }
     }
 }

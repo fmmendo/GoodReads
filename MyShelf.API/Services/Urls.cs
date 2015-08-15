@@ -9,6 +9,18 @@ namespace MyShelf.API.Services
         /// </summary>
         public static string BaseUrl => "http://www.goodreads.com";
 
+        #region Auth
+        /// <summary>
+        /// 1. OAuth Token
+        /// </summary>
+        public static string AuthUrl => "https://www.goodreads.com/oauth/authorize?oauth_token={0}";
+
+        public static string RequestToken => "/oauth/request_token";
+
+        public static string AccessToken => "oauth/access_token";
+        #endregion
+
+        public static string AuthUser => "api/auth_user";
         /// <summary>
         /// 1. User Id
         /// 2. API KEY
@@ -30,6 +42,19 @@ namespace MyShelf.API.Services
         public static string AuthorBooks => String.Format("{0}{1}", BaseUrl, "/author/list/{0}?format=xml&key={1}");  //&page={2}
         #endregion
 
+        /// <summary>
+        /// 1. Book Id
+        /// 2. API KEY
+        /// </summary>
+        public static string BookShow => String.Format("{0}{1}", BaseUrl, "/book/show/{0}?format=xml&key={1}");
+
+        public static string FriendUpdates => "updates/friends.xml";
+
+        public static string FriendList => "/friend/user/{0}.xml?";// => "friend/user.xml";
+
+        public static string ShelfBooks => "review/list/";
+
+        public static string ShelvesList => "https://www.goodreads.com/shelf/list.xml?key={0}";
         //public static string UpdatesFriends { get { return BaseUrl + "/updates/friends.xml"; } }
     }
 }

@@ -35,5 +35,8 @@ namespace MyShelf.API.XML
 
         [XmlElement(ElementName = "user_status")]
         public UserStatus UserStatus { get; set; }
+
+        [XmlElement(ElementName = "friends")]
+        public Friends Friends { get; set; }
     }
 }

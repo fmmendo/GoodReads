@@ -1,5 +1,4 @@
-﻿using MyShelf.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,19 +20,11 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MyBooksPage : Page
+    public sealed partial class AuthorPage : Page
     {
-        MyBooksPageViewModel ViewModel => MyBooksPageViewModel.Instance;
-
-        public MyBooksPage()
+        public AuthorPage()
         {
-            InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            ViewModel.GetUserShelves();
-            base.OnNavigatedTo(e);
+            this.InitializeComponent();
         }
     }
 }

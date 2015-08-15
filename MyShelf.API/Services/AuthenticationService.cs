@@ -18,14 +18,6 @@ namespace MyShelf.API.Services
     {
         private AuthState _state;
 
-        //private Uri baseUri;
-        //private Uri requestTokenUri;
-        //private Uri authorizeUri;
-        //private Uri accessTokenUri;
-        //private Uri callbackUri;
-
-        private readonly SemaphoreSlim apiSemaphore = new SemaphoreSlim(1, 1);
-
         #region Properties
 
         public bool IsTokenAvailable => !String.IsNullOrEmpty(Settings.Instance.OAuthAccessToken);
@@ -71,7 +63,7 @@ namespace MyShelf.API.Services
             Settings.Instance.OAuthTokenSecret = querystring["oauth_token_secret"];
 
             // authenticate
-            string goodreadsURL = String.Format("https://www.goodreads.com/oauth/authorize?oauth_token={0}", Settings.Instance.OAuthToken);
+            string goodreadsURL = String.Format(Urls.AuthUrl, Settings.Instance.OAuthToken);
             WebAuthenticationResult result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(goodreadsURL), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
 
             if (result == null || result.ResponseStatus != WebAuthenticationStatus.Success)
@@ -112,59 +104,16 @@ namespace MyShelf.API.Services
             return true;
         }
 
-        //public async Task<bool> CompleteAuthentication()
-        //{
-        //    IRestResponse accessResponse = await RequestAccessToken();
+        /// <summary>
+        /// Requests a Token from the Api Client
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IRestResponse> RequestToken() => await ApiClient.Instance.ExecuteForRequestTokenAsync(Urls.RequestToken, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret);
 
-        //    // parse oauth access token and token secrets
-        //    var querystring = HttpUtility.ParseQueryString(accessResponse.Content);
-        //    if (querystring != null && querystring.Count == 2)
-        //    {
-        //        OAuthAccessToken = querystring["oauth_token"];
-        //        OAuthAccessTokenSecret = querystring["oauth_token_secret"];
-        //    }
-        //    else return false;
-
-        //    //// if we don't have a user ID yet, go fetch it
-        //    //if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
-        //    //{
-        //    //    var user = await GetUserID();
-
-        //    //    UserSettings.Settings.GoodreadsUserID = user.Id;
-        //    //    UserSettings.Settings.GoodreadsUserLink = user.Link;
-        //    //    UserSettings.Settings.GoodreadsUsername = user.Name;
-        //    //}
-
-        //    //authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
-        //    //UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
-        //    //UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
-        //    //justRefreshedUser = true;
-
-        //    //GoodreadsUserShelves = await GetShelvesList();
-        //    //justRefreshedShelves = true;
-
-        //    //GoodreadsReviews = await GetShelfBooks();
-        //    //justRefreshedReviews = true;
-
-        //    return true;
-        //}
-
-        public async Task<IRestResponse> RequestToken()
-        {
-            // set up get request tokens
-            //ApiClient.Instance.Authenticator = ApiClient.GetRequestTokenAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret);
-
-            // Request token
-            return await ApiClient.Instance.ExecuteForRequestTokenAsync("/oauth/request_token", Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret);
-        }
-
-        public async Task<IRestResponse> RequestAccessToken()
-        {
-            // set up get 
-            //ApiClient.Instance.Authenticator = ApiClient.GetAccessTokenAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
-
-            //request access token
-            return await ApiClient.Instance.ExecuteForAccessTokenAsync("oauth/access_token", Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
-        }
+        /// <summary>
+        /// Requests an Access Token from the ApiClient
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IRestResponse> RequestAccessToken() => await ApiClient.Instance.ExecuteForAccessTokenAsync(Urls.AccessToken, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
     }
 }

@@ -21,18 +21,18 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MyBooksPage : Page
+    public sealed partial class FriendsPage : Page
     {
-        MyBooksPageViewModel ViewModel => MyBooksPageViewModel.Instance;
+        FriendsPageViewModel ViewModel => FriendsPageViewModel.Instance;
 
-        public MyBooksPage()
+        public FriendsPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.GetUserShelves();
+            ViewModel.RefreshFriends();
             base.OnNavigatedTo(e);
         }
     }

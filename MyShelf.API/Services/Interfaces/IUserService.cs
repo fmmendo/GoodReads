@@ -28,5 +28,7 @@ namespace MyShelf.API.Services
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
         Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates);
+
+        Task<Friends> GetFriends(string page = null, string sort = null);
     }
 }

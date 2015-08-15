@@ -26,7 +26,7 @@ namespace MyShelf.API.Services
             {
                 //ApiClient.Instance.Authenticator = ApiClient.GetProtectedResourceAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
 
-                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("api/auth_user", Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
+                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.AuthUser, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
                 //var response2 = await ApiClient.Instance.HttpGet(@"https://www.goodreads.com/api/auth_user");
 
                 //ApiClient.Instance.Authenticator = OAuth1Authenticator.ForProtectedResource(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthToken, Settings.Instance.OAuthTokenSecret);
@@ -94,16 +94,20 @@ namespace MyShelf.API.Services
         /// <param name="maxUpdates"></param>
         public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates)
         {
-
-            //string url = Urls.UpdatesFriends;// BASEURL + UPDATES + FRIENDS;// +type + filter + "&max_updates=" + maxUpdates + "&access_token=" + OAuthAccessToken;
-
-            //ApiClient.Instance.Authenticator = ApiClient.GetProtectedResourceAuthenticator(Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
-
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("updates/friends.xml", Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.FriendUpdates, Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
 
             GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
 
             return result.Updates;
+        }
+
+        public async Task<Friends> GetFriends(string page = null, string sort = null)
+        {
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(String.Format(Urls.FriendList, Settings.Instance.GoodreadsUserID), Method.GET, Settings.Instance.ConsumerKey, Settings.Instance.ConsumerSecret, Settings.Instance.OAuthAccessToken, Settings.Instance.OAuthAccessTokenSecret);
+
+            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
+
+            return result.Friends;
         }
     }
 }

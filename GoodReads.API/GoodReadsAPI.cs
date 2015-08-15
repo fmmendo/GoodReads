@@ -332,21 +332,21 @@ namespace GoodReads.API
         //    return GoodreadsReviews;
         //}
 
-        /// <summary>
-        /// Returns more complete book data
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<Book> GetBookInfo(string id)
-        {
-            await apiSemaphore.WaitAsync();
-            string results = await HttpGet(String.Format(Urls.BookShow, id, API_KEY));
-            ApiCooldown();
+        ///// <summary>
+        ///// Returns more complete book data
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //public async Task<Book> GetBookInfo(string id)
+        //{
+        //    await apiSemaphore.WaitAsync();
+        //    string results = await HttpGet(String.Format(Urls.BookShow, id, API_KEY));
+        //    ApiCooldown();
 
-            var result = DeserializeResponse(results);
+        //    var result = DeserializeResponse(results);
 
-            return result.Book;
-        }
+        //    return result.Book;
+        //}
 
         ///// <summary>
         ///// Returns more complete author data
