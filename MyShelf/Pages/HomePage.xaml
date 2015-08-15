@@ -16,27 +16,51 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"  SelectionMode="None">
-
+        <ListView ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}" Header="Updates" SelectionMode="None">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="data:UpdateViewModel">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Ellipse Height="50" Width="50">
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="None"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <TextBlock>
-                            <Hyperlink><Run Text="{x:Bind UserName, Mode=OneWay}"/></Hyperlink>
-                            <Run Text="{x:Bind ActionText, Mode=OneWay}"/>
-                            </TextBlock>
-                        </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Ellipse Height="50" Width="50" Grid.RowSpan="2" VerticalAlignment="Top">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="None"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Grid.Column="1" TextWrapping="WrapWholeWords">
+                                <Hyperlink><Run Text="{x:Bind UserName, Mode=OneWay}"/></Hyperlink>
+                                <Run Text="{x:Bind ActionText, Mode=OneWay}"/>
+                        </TextBlock>
 
-                        <StackPanel Orientation="Horizontal">
-                            
-                        </StackPanel>
-                    </StackPanel>
+                        <Grid Grid.Row="1" Grid.Column="1" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="{Binding BookImageUrl, Mode=OneWay, TargetNullValue='../Assets/placeholder.png'}" Grid.RowSpan="2"/>
+                            <TextBlock Grid.Column="1" TextWrapping="WrapWholeWords">
+                                <Hyperlink><Run Text="{x:Bind BookTitle, Mode=OneWay}"/></Hyperlink>
+                            </TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" TextWrapping="WrapWholeWords">
+                                <Hyperlink><Run Text="{x:Bind BookAuthor, Mode=OneWay}" /></Hyperlink>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
