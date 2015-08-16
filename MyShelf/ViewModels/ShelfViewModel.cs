@@ -1,6 +1,7 @@
 ﻿using Mendo.UAP.Common;
 using MyShelf.API.Services;
 using MyShelf.API.XML;
+using MyShelf.Pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,20 +13,36 @@ namespace MyShelf.ViewModels
 {
     public class ShelfViewModel : ViewModelBase
     {
-        public string BookCount { get; set; }
-        public string Description { get; set; }
-        public string DisplayFields { get; set; }
-        public string ExclusiveFlag { get; set; }
-        public string Featured { get; set; }
-        public string Id { get; set; }
         public string Name { get; set; }
-        public string Order { get; set; }
-        public string PerPage { get; set; }
-        public string RecommendFor { get; set; }
-        public string Sort { get; set; }
-        public string Sticky { get; set; }
+        //public string BookCount { get; set; }
+        //public string Description { get; set; }
+        //public string DisplayFields { get; set; }
+        //public string ExclusiveFlag { get; set; }
+        //public string Featured { get; set; }
+        //public string Id { get; set; }
+        //public string Order { get; set; }
+        //public string PerPage { get; set; }
+        //public string RecommendFor { get; set; }
+        //public string Sort { get; set; }
+        //public string Sticky { get; set; }
 
-        public ObservableCollection<Review> ShelfBooks { get; set; } = new ObservableCollection<Review>();
+        public ObservableCollection<BookViewModel> ShelfBooks { get; set; } = new ObservableCollection<BookViewModel>();
+
+        public BookViewModel SelectedBook
+        {
+            get { return selectedBook; }
+            set
+            {
+                if (value == null) return;
+
+                selectedBook = value;
+                OnPropertyChanged();
+
+                NavigationService.Navigate(typeof(BookPage), SelectedBook);
+            }
+        }
+
+        private BookViewModel selectedBook;
 
         public ShelfViewModel(UserShelf userShelf)
         {
@@ -36,9 +53,9 @@ namespace MyShelf.ViewModels
         {
             ShelfBooks.Clear();
 
-            var reviews  = await bookService.GetBooks(Name);
+            var reviews = await bookService.GetBooks(Name);
             foreach (var r in reviews.Review)
-                ShelfBooks.Add(r);
+                ShelfBooks.Add(new BookViewModel(r.Book));
         }
     }
 }

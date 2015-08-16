@@ -65,10 +65,29 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}" SelectionMode="None" Grid.Column="1">
-            <ListView.ItemTemplate>
+        <ListView ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}" Header="Currently Reading" SelectionMode="None" Grid.Column="1">
+            <ListView.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="data:UserStatusViewModel">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.RowSpan="3" Source="{Binding BookImageUrl}" />
+                        <TextBlock Grid.Column="1" Text="{x:Bind BookTitle, Mode=OneWay}"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind BookAuthor, Mode=OneWay}"/>
+                        <ProgressBar Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Value="{x:Bind Percent, Mode=OneWay}" />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

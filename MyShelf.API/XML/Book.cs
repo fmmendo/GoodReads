@@ -38,106 +38,106 @@ namespace MyShelf.API.XML
         public string DescriptionUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "edition_information")]
-        public string Edition_information { get; set; }
+        public string EditionInformation { get; set; }
 
         [XmlElement(ElementName = "edition_information_updater_user_id")]
-        public string Edition_information_updater_user_id { get; set; }
+        public string EditionInformationUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "format_updater_user_id")]
-        public string Format_updater_user_id { get; set; }
+        public string FormatUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "id")]
         public string Id { get; set; }
 
         [XmlElement(ElementName = "image_updater_user_id")]
-        public string Image_updater_user_id { get; set; }
+        public string ImageUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "image_uploaded_at")]
-        public string Image_uploaded_at { get; set; }
+        public string ImageUploadedAt { get; set; }
 
         [XmlElement(ElementName = "isbn13_updater_user_id")]
-        public string Isbn13_updater_user_id { get; set; }
+        public string Isbn13UpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "isbn_updater_user_id")]
-        public string Isbn_updater_user_id { get; set; }
+        public string IsbnUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "is_ebook")]
         public string IsEbook { get; set; }
 
         [XmlElement(ElementName = "language_code")]
-        public string Language_code { get; set; }
+        public string LanguageCode { get; set; }
 
         [XmlElement(ElementName = "language_updater_user_id")]
-        public string Language_updater_user_id { get; set; }
+        public string LanguageUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "num_pages")]
-        public string Num_pages { get; set; }
+        public string NumPages { get; set; }
 
         [XmlElement(ElementName = "num_pages_updater_user_id")]
-        public string Num_pages_updater_user_id { get; set; }
+        public string NumPagesUpdaterUserIid { get; set; }
 
         [XmlElement(ElementName = "publication_date_updater_user_id")]
-        public string Publication_date_updater_user_id { get; set; }
+        public string PublicationDateUupdaterUserId { get; set; }
 
         [XmlElement(ElementName = "publication_day")]
-        public string Publication_day { get; set; }
+        public string PublicationDay { get; set; }
 
         [XmlElement(ElementName = "publication_month")]
-        public string Publication_month { get; set; }
+        public string PublicationMonth { get; set; }
 
         [XmlElement(ElementName = "publication_year")]
-        public string Publication_year { get; set; }
+        public string PublicationYear { get; set; }
 
         [XmlElement(ElementName = "publisher")]
         public string Publisher { get; set; }
 
         [XmlElement(ElementName = "publisher_language_code")]
-        public string Publisher_language_code { get; set; }
+        public string PublisherLanguageCode { get; set; }
 
         [XmlElement(ElementName = "publisher_updater_user_id")]
-        public string Publisher_updater_user_id { get; set; }
+        public string Publisher_updaterUserId { get; set; }
 
         [XmlElement(ElementName = "ratings_count")]
-        public string Ratings_count { get; set; }
+        public string RatingsCount { get; set; }
 
         [XmlElement(ElementName = "ratings_sum")]
-        public string Ratings_sum { get; set; }
+        public string RatingsSum { get; set; }
 
         [XmlElement(ElementName = "reviews_count")]
-        public string Reviews_count { get; set; }
+        public string ReviewsCount { get; set; }
 
         [XmlElement(ElementName = "s3_image_at")]
-        public string S3_image_at { get; set; }
+        public string S3ImageAt { get; set; }
 
         [XmlElement(ElementName = "sort_by_title")]
-        public string Sort_by_title { get; set; }
+        public string SortByTitle { get; set; }
 
         [XmlElement(ElementName = "source_url")]
-        public string Source_url { get; set; }
+        public string SourceUrl { get; set; }
 
         [XmlElement(ElementName = "text_reviews_count")]
-        public string Text_reviews_count { get; set; }
+        public string TextReviewsCount { get; set; }
 
         [XmlElement(ElementName = "title")]
         public string Title { get; set; }
 
         [XmlElement(ElementName = "title_language_code")]
-        public string Title_language_code { get; set; }
+        public string TitleLanguageCode { get; set; }
 
         [XmlElement(ElementName = "title_updater_user_id")]
-        public string Title_updater_user_id { get; set; }
+        public string TitleUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "updated_at")]
-        public string Updated_at { get; set; }
+        public string UpdatedAt { get; set; }
 
         [XmlElement(ElementName = "url")]
         public string Url { get; set; }
 
         [XmlElement(ElementName = "url_updater_user_id")]
-        public string Url_updater_user_id { get; set; }
+        public string UrlUpdaterUserId { get; set; }
 
         [XmlElement(ElementName = "work_id")]
-        public string Work_id { get; set; }
+        public string WorkId { get; set; }
 
         //[XmlElement(ElementName = "author")]
         //public Author Author { get; set; }
@@ -165,16 +165,16 @@ namespace MyShelf.API.XML
         public string Format { get; set; }
 
         [XmlElement(ElementName = "image_url")]
-        public string Image_url { get; set; }
+        public string ImageUrl { get; set; }
 
         [XmlElement(ElementName = "small_image_url")]
-        public string Small_image_url { get; set; }
+        public string SmallImageUrl { get; set; }
 
         [XmlElement(ElementName = "large_image_url")]
-        public string Large_image_url { get; set; }
+        public string LargeImageUrl { get; set; }
 
         [XmlElement(ElementName = "average_rating")]
-        public string Average_rating { get; set; }
+        public string AverageRating { get; set; }
 
         [XmlElement(ElementName = "published")]
         public string Published { get; set; }

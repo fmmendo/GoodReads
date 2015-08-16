@@ -10,11 +10,15 @@ namespace MyShelf.ViewModels
 {
     public class BookViewModel : ViewModelBase
     {
-        private Book book;
+        public string BookTitle { get; set; }
+        public string BookAuthor { get; set; }
+        public string BookImageUrl { get; set; }
 
         public BookViewModel(Book book)
         {
-            this.book = book;
+            BookTitle = book.Title;
+            BookAuthor = string.Join(", ", book.Authors.Select(a => a.Name));
+            BookImageUrl = book.ImageUrl;
         }
     }
 }

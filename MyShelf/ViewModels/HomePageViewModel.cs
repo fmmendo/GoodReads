@@ -15,7 +15,7 @@ namespace MyShelf.ViewModels
         private IUserService userService = UserService.Instance;
 
         public ObservableCollection<UpdateViewModel> Updates { get; } = new ObservableCollection<UpdateViewModel>();
-        public ObservableCollection<string> CurrentlyReading { get; } = new ObservableCollection<string>();
+        public ObservableCollection<UserStatusViewModel> CurrentlyReading { get; } = new ObservableCollection<UserStatusViewModel>();
 
 
 
@@ -47,7 +47,7 @@ namespace MyShelf.ViewModels
 
                 foreach (var status in user.UserStatuses)
                 {
-                    CurrentlyReading.Add(status.Book.Title);
+                    CurrentlyReading.Add(new UserStatusViewModel(status));
                 }
             }
         }

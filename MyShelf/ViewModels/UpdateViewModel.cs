@@ -67,7 +67,7 @@ namespace MyShelf.ViewModels
         {
             var result = await BookService.Instance.GetBookInfo(book.Id);
 
-            BookImageUrl = result.Image_url;
+            BookImageUrl = result.ImageUrl;
             BookAuthor = result.Authors.FirstOrDefault().Name;//string.Join(", ", result.Authors.Select(a => a.Name));
             BookTitle = result.Title;
 

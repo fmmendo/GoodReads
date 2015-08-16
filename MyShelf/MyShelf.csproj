@@ -134,6 +134,7 @@
     <Compile Include="ViewModels\MyBooksPageViewModel.cs" />
     <Compile Include="ViewModels\ShelfViewModel.cs" />
     <Compile Include="ViewModels\UpdateViewModel.cs" />
+    <Compile Include="ViewModels\UserStatusViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

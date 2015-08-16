@@ -19,10 +19,22 @@
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
                 <DataTemplate x:DataType="datatype:ShelfViewModel">
-                    <Grid>
-                        <ListView ItemsSource="{x:Bind ShelfBooks}">
-                        </ListView>
-                    </Grid>
+                    <GridView ItemsSource="{x:Bind ShelfBooks}" SelectedItem="{Binding SelectedBook, Mode=TwoWay}">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="datatype:BookViewModel">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.RowSpan="3" Source="{Binding BookImageUrl}" Stretch="UniformToFill" Width="140"/>
+                                    <TextBlock Grid.Row="1" Text="{x:Bind BookTitle, Mode=OneWay}"/>
+                                    <TextBlock Grid.Row="2" Text="{x:Bind BookAuthor, Mode=OneWay}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>
