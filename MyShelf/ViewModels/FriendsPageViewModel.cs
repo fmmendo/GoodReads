@@ -13,7 +13,7 @@ namespace MyShelf.ViewModels
     {
         private IUserService userService = UserService.Instance;
 
-        public ObservableCollection<string> Friends { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<UserViewModel> Friends { get; set; } = new ObservableCollection<UserViewModel>();
 
         public async Task RefreshFriends()
         {
@@ -22,7 +22,7 @@ namespace MyShelf.ViewModels
             var result = await userService.GetFriends();
 
             foreach (var friend in result.User)
-                Friends.Add(friend.Name);
+                Friends.Add(new UserViewModel(friend));
         }
     }
 }

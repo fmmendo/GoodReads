@@ -6,16 +6,30 @@
     xmlns:local="using:MyShelf.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:MyShelf.ViewModels"
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{x:Bind ViewModel.Friends}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}"/>
+        <GridView ItemsSource="{x:Bind ViewModel.Friends}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="data:UserViewModel">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="50" Width="50" Grid.RowSpan="2" VerticalAlignment="Top">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <StackPanel>
+                            <HyperlinkButton Content="{x:Bind Name, Mode=OneWay}" Click="{x:Bind UserClick}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <HyperlinkButton Content="{x:Bind BooksCount, Mode=OneWay}" Click="{x:Bind BooksClick}"/>
+                                <HyperlinkButton Content="{x:Bind FriendsCount, Mode=OneWay}" Click="{x:Bind FriendsClick}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </common:PageBase>
