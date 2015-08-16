@@ -39,7 +39,7 @@
                             </Ellipse.Fill>
                         </Ellipse>
                         <TextBlock Grid.Column="1" TextWrapping="WrapWholeWords">
-                                <Hyperlink><Run Text="{x:Bind UserName, Mode=OneWay}"/></Hyperlink>
+                                <Hyperlink Click="{x:Bind UserClick, Mode=OneWay}"><Run Text="{x:Bind UserName, Mode=OneWay}"/></Hyperlink>
                                 <Run Text="{x:Bind ActionText, Mode=OneWay}"/>
                         </TextBlock>
 
@@ -54,10 +54,10 @@
                             </Grid.RowDefinitions>
                             <Image Source="{Binding BookImageUrl, Mode=OneWay, TargetNullValue='../Assets/placeholder.png'}" Grid.RowSpan="2"/>
                             <TextBlock Grid.Column="1" TextWrapping="WrapWholeWords">
-                                <Hyperlink><Run Text="{x:Bind BookTitle, Mode=OneWay}"/></Hyperlink>
+                                <Hyperlink Click="{x:Bind BookClick, Mode=OneWay}"><Run Text="{x:Bind BookTitle, Mode=OneWay}"/></Hyperlink>
                             </TextBlock>
                             <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" TextWrapping="WrapWholeWords">
-                                <Hyperlink><Run Text="{x:Bind BookAuthor, Mode=OneWay}" /></Hyperlink>
+                                <Hyperlink Click="{x:Bind AuthorClick, Mode=OneWay}"><Run Text="{x:Bind BookAuthor, Mode=OneWay}" /></Hyperlink>
                             </TextBlock>
                         </Grid>
                     </Grid>

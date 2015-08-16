@@ -106,7 +106,8 @@ namespace MyShelf
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                RootFrame.Navigate(typeof(HomePage), args);
+                NavigationService.Navigate(typeof(HomePage), args);
+                //RootFrame.Navigate(typeof(HomePage), args);
             }
 
             // Ensure the current window is active
@@ -140,10 +141,10 @@ namespace MyShelf
 
             //var result = await session.RequestExtensionAsync();
 
-            //await SuspensionManager.SaveAsync(); // Persists the per-page view models to file
-            ////session.PercentProgress = 50;
+            await SuspensionManager.SaveAsync(); // Persists the per-page view models to file
+            //session.PercentProgress = 50;
 
-            ////await FileCache.GzipCache.TrimAsync();
+            //await FileCache.GzipCache.TrimAsync();
             //session.PercentProgress = 100;
 
             deferral.Complete();

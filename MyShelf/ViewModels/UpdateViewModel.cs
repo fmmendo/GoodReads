@@ -1,6 +1,7 @@
 ﻿using Mendo.UAP.Common;
 using MyShelf.API.Services;
 using MyShelf.API.XML;
+using MyShelf.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,10 @@ namespace MyShelf.ViewModels
         public string BookAuthor { get; set; }
         public string BookTitle { get; set; }
 
+        private string BookId;
+        private string UserId;
+        private string AuthorId;
+
         public UpdateViewModel(Update update)
         {
             if (update == null)
@@ -36,6 +41,8 @@ namespace MyShelf.ViewModels
             ImageUrl = update.Actor?.ImageUrl;
             UserName = update.Actor?.Name;
             ActionText = update.ActionText.Contains("<") ? Regex.Replace(update.ActionText, "<.*?>", string.Empty) : update.ActionText;
+
+            UserId = update.Actor.Id;
 
             if (update.Type.Equals("review") && update.Object?.Book != null)
                 SetUpBookData(update.Object.Book);
@@ -61,12 +68,30 @@ namespace MyShelf.ViewModels
             var result = await BookService.Instance.GetBookInfo(book.Id);
 
             BookImageUrl = result.Image_url;
-            BookAuthor = string.Join(", ", result.Authors.Select(a => a.Name));
+            BookAuthor = result.Authors.FirstOrDefault().Name;//string.Join(", ", result.Authors.Select(a => a.Name));
             BookTitle = result.Title;
+
+            BookId = result.Id;
+            AuthorId = result.Authors.FirstOrDefault().Id;
 
             OnPropertyChanged("BookImageUrl");
             OnPropertyChanged("BookAuthor");
             OnPropertyChanged("BookTitle");
+        }
+
+        public void UserClick()
+        {
+            NavigationService.Navigate(typeof(UserPage), UserId);
+        }
+
+        public void BookClick()
+        {
+            NavigationService.Navigate(typeof(BookPage), BookId);
+        }
+
+        public void AuthorClick()
+        {
+            NavigationService.Navigate(typeof(AuthorPage), AuthorId);
         }
     }
 }
