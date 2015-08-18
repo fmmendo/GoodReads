@@ -644,115 +644,115 @@ namespace GoodReads.API
                 return false;
         }
 
-        /// <summary>
-        /// Likes a resource
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="filter"></param>
-        /// <param name="maxUpdates"></param>
-        public async Task<String> AddComment(string id, string type, string comment)
-        {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+        ///// <summary>
+        ///// Adds a Comment
+        ///// </summary>
+        ///// <param name="type"></param>
+        ///// <param name="filter"></param>
+        ///// <param name="maxUpdates"></param>
+        //public async Task<String> AddComment(string id, string type, string comment)
+        //{
+        //    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
-            await apiSemaphore.WaitAsync();
+        //    await apiSemaphore.WaitAsync();
 
-            var request = new RestRequest("comment.xml", Method.POST);
-            request.RequestFormat = DataFormat.Xml;
-            request.AddParameter("type", type);
-            request.AddParameter("id", id);
-            request.AddParameter("comment[body]", comment);
+        //    var request = new RestRequest("comment.xml", Method.POST);
+        //    request.RequestFormat = DataFormat.Xml;
+        //    request.AddParameter("type", type);
+        //    request.AddParameter("id", id);
+        //    request.AddParameter("comment[body]", comment);
 
-            var response = await client.ExecuteAsync(request);
+        //    var response = await client.ExecuteAsync(request);
 
-            ApiCooldown();
+        //    ApiCooldown();
 
-            //TODO: This is a quick workaround
-            if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
-            {
-                var result = response.Content.ToString();
-                var start = result.IndexOf("<id type=\"integer\">") + 19;
-                var end = result.IndexOf("</id>", start);
-                string commentId = result.Substring(start, end - start);
-                //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
+        //    //TODO: This is a quick workaround
+        //    if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
+        //    {
+        //        var result = response.Content.ToString();
+        //        var start = result.IndexOf("<id type=\"integer\">") + 19;
+        //        var end = result.IndexOf("</id>", start);
+        //        string commentId = result.Substring(start, end - start);
+        //        //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
 
-                //return status;
-
-
-                return commentId;
-            }
-            else return String.Empty;
-            //else
-            //    return false;
-        }
-
-        /// <summary>
-        /// Likes a resource
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="filter"></param>
-        /// <param name="maxUpdates"></param>
-        public async Task<bool> LikeResource(string resourceId, string resourceType)
-        {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-
-            await apiSemaphore.WaitAsync();
-
-            var request = new RestRequest("rating", Method.POST);
-            request.RequestFormat = DataFormat.Xml;
-            request.AddParameter("rating[rating]", 1);
-            request.AddParameter("rating[resource_id]", resourceId);
-            request.AddParameter("rating[resource_type]", resourceType);
-
-            var response = await client.ExecuteAsync(request);
-
-            ApiCooldown();
-
-            if (response.StatusCode == 200 && response.ResponseStatus == ResponseStatus.Completed)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Unlikes a resource
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="filter"></param>
-        /// <param name="maxUpdates"></param>
-        public async Task<String> UnlikeResource(string resourceId, string resourceType)
-        {
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-
-            await apiSemaphore.WaitAsync();
-
-            var request = new RestRequest("rating", Method.POST);
-            request.RequestFormat = DataFormat.Xml;
-            request.AddParameter("rating[rating]", 1);
-            request.AddParameter("rating[resource_id]", resourceId);
-            request.AddParameter("rating[resource_type]", resourceType);
-
-            var response = await client.ExecuteAsync(request);
-
-            ApiCooldown();
-
-            //TODO: This is a quick workaround
-            if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
-            {
-                var result = response.Content.ToString();
-                var start = result.IndexOf("<id type=\"integer\">") + 19;
-                var end = result.IndexOf("</id>", start);
-                string id = result.Substring(start, end - start);
-                //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
-
-                //return status;
+        //        //return status;
 
 
-                return id;
-            }
-            else return String.Empty;
-            //else
-            //    return false;
-        }
+        //        return commentId;
+        //    }
+        //    else return String.Empty;
+        //    //else
+        //    //    return false;
+        //}
+
+        ///// <summary>
+        ///// Likes a resource
+        ///// </summary>
+        ///// <param name="type"></param>
+        ///// <param name="filter"></param>
+        ///// <param name="maxUpdates"></param>
+        //public async Task<bool> LikeResource(string resourceId, string resourceType)
+        //{
+        //    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+
+        //    await apiSemaphore.WaitAsync();
+
+        //    var request = new RestRequest("rating", Method.POST);
+        //    request.RequestFormat = DataFormat.Xml;
+        //    request.AddParameter("rating[rating]", 1);
+        //    request.AddParameter("rating[resource_id]", resourceId);
+        //    request.AddParameter("rating[resource_type]", resourceType);
+
+        //    var response = await client.ExecuteAsync(request);
+
+        //    ApiCooldown();
+
+        //    if (response.StatusCode == 200 && response.ResponseStatus == ResponseStatus.Completed)
+        //        return true;
+        //    else
+        //        return false;
+        //}
+
+        ///// <summary>
+        ///// Unlikes a resource
+        ///// </summary>
+        ///// <param name="type"></param>
+        ///// <param name="filter"></param>
+        ///// <param name="maxUpdates"></param>
+        //public async Task<String> UnlikeResource(string resourceId, string resourceType)
+        //{
+        //    client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+
+        //    await apiSemaphore.WaitAsync();
+
+        //    var request = new RestRequest("rating", Method.POST);
+        //    request.RequestFormat = DataFormat.Xml;
+        //    request.AddParameter("rating[rating]", 1);
+        //    request.AddParameter("rating[resource_id]", resourceId);
+        //    request.AddParameter("rating[resource_type]", resourceType);
+
+        //    var response = await client.ExecuteAsync(request);
+
+        //    ApiCooldown();
+
+        //    //TODO: This is a quick workaround
+        //    if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
+        //    {
+        //        var result = response.Content.ToString();
+        //        var start = result.IndexOf("<id type=\"integer\">") + 19;
+        //        var end = result.IndexOf("</id>", start);
+        //        string id = result.Substring(start, end - start);
+        //        //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
+
+        //        //return status;
+
+
+        //        return id;
+        //    }
+        //    else return String.Empty;
+        //    //else
+        //    //    return false;
+        //}
 
 
         /// <summary>

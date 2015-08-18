@@ -6,6 +6,7 @@ using MyShelf.API.XML.Utilities;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyShelf.API.Services
@@ -14,7 +15,7 @@ namespace MyShelf.API.Services
     {
         public bool IsUserIdAvailable => !String.IsNullOrEmpty(MyShelfSettings.Instance.GoodreadsUserID);
 
-        public User _currentUser = null;
+        private User _currentUser = null;
 
         /// <summary>
         /// Returns the logged in User
@@ -24,22 +25,9 @@ namespace MyShelf.API.Services
         {
             if (_currentUser == null || refresh == true)
             {
-                //ApiClient.Instance.Authenticator = ApiClient.GetProtectedResourceAuthenticator(MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthToken, MyShelfSettings.Instance.OAuthTokenSecret);
-
                 var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.AuthUser, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
-                //var response2 = await ApiClient.Instance.HttpGet(@"https://www.goodreads.com/api/auth_user");
-
-                //ApiClient.Instance.Authenticator = OAuth1Authenticator.ForProtectedResource(MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthToken, MyShelfSettings.Instance.OAuthTokenSecret);
-
-                ////    await apiSemaphore.WaitAsync();
-                //RestClient _client = new RestClient("http://www.goodreads.com");
-                //_client.Authenticator = OAuth1Authenticator.ForProtectedResource(MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthToken, MyShelfSettings.Instance.OAuthTokenSecret);
-
-                //var request = new RestRequest("api/auth_user", Method.GET);
-                //    var response3 = await _client.ExecuteAsync(request);
 
                 var result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
-                //var result2 = GoodReadsSerializer.DeserializeResponse(response2);
 
                 _currentUser = result.User;
 
@@ -101,13 +89,142 @@ namespace MyShelf.API.Services
             return result.Updates;
         }
 
+        /// <summary>
+        /// Returns a user's friends
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
         public async Task<Friends> GetFriends(string page = null, string sort = null)
         {
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(String.Format(Urls.FriendList, MyShelfSettings.Instance.GoodreadsUserID), Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(string.Format(Urls.FriendList, MyShelfSettings.Instance.GoodreadsUserID), Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
 
             GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
 
             return result.Friends;
+        }
+
+        /// <summary>
+        /// Likes a resource
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <param name="maxUpdates"></param>
+        public async Task<bool> LikeResource(string resourceId, string resourceType)
+        {
+            //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+
+            //await apiSemaphore.WaitAsync();
+
+            //var request = new RestRequest("rating", Method.POST);
+            //request.RequestFormat = DataFormat.Xml;
+
+            var param = new Dictionary<string, object>();
+            param.Add("rating[rating]", 1);
+            param.Add("rating[resource_id]", resourceId);
+            param.Add("rating[resource_type]", resourceType);
+
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("rating", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+
+            //var response = await client.ExecuteAsync(request);
+
+            //ApiCooldown();
+
+            if (response.StatusCode == 200 && response.ResponseStatus == ResponseStatus.Completed)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Unlikes a resource
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <param name="maxUpdates"></param>
+        public async Task<bool> UnlikeResource(string resourceId/*, string resourceType*/)
+        {
+            var param = new Dictionary<string, object>();
+            //param.Add("rating[rating]", 1);
+            param.Add("id", resourceId);
+            //param.Add("rating[resource_type]", resourceType);
+
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("rating", Method.DELETE, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+
+            //var response = await client.ExecuteAsync(request);
+
+            //ApiCooldown();
+
+            if (response.StatusCode == 200 && response.ResponseStatus == ResponseStatus.Completed)
+                return true;
+            else
+                return false;
+
+            //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+
+            //await apiSemaphore.WaitAsync();
+
+            //var request = new RestRequest("rating", Method.POST);
+            //request.RequestFormat = DataFormat.Xml;
+            //request.AddParameter("rating[rating]", 1);
+            //request.AddParameter("rating[resource_id]", resourceId);
+            //request.AddParameter("rating[resource_type]", resourceType);
+
+            //var response = await client.ExecuteAsync(request);
+
+            //ApiCooldown();
+
+            ////TODO: This is a quick workaround
+            //if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
+            //{
+            //    var result = response.Content.ToString();
+            //    var start = result.IndexOf("<id type=\"integer\">") + 19;
+            //    var end = result.IndexOf("</id>", start);
+            //    string id = result.Substring(start, end - start);
+            //    //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
+
+            //    //return status;
+
+
+            //    return id;
+            //}
+            //else return String.Empty;
+            ////else
+            ////    return false;
+        }
+
+        /// <summary>
+        /// Adds a Comment
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <param name="maxUpdates"></param>
+        public async Task<string> AddComment(string id, string type, string comment)
+        {
+            var param = new Dictionary<string, object>();
+            param.Add("type", type);
+            param.Add("id", id);
+            param.Add("comment[body]", comment);
+
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("comment.xml", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+
+            //TODO: This is a quick workaround
+            if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
+            {
+                var result = response.Content.ToString();
+                var start = result.IndexOf("<id type=\"integer\">") + 19;
+                var end = result.IndexOf("</id>", start);
+                string commentId = result.Substring(start, end - start);
+                //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
+
+                //return status;
+
+
+                return commentId;
+            }
+            else return String.Empty;
+            //else
+            //    return false;
         }
     }
 }

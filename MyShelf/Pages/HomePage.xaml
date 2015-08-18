@@ -32,6 +32,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Ellipse Height="50" Width="50" Grid.RowSpan="2" VerticalAlignment="Top">
                             <Ellipse.Fill>
@@ -60,6 +61,10 @@
                                 <Hyperlink Click="{x:Bind AuthorClick, Mode=OneWay}"><Run Text="{x:Bind BookAuthor, Mode=OneWay}" /></Hyperlink>
                             </TextBlock>
                         </Grid>
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
+                            <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
+                            <Button Click="{x:Bind CommentClick}" Width="100">Comment</Button>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

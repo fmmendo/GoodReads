@@ -6,10 +6,10 @@ namespace MyShelf.API.XML
     public class UpdateObject
     {
         [XmlElement(ElementName = "read_status")]
-        public ReadStatus Read_status { get; set; }
+        public ReadStatus ReadStatus { get; set; }
 
         [XmlElement(ElementName = "user_status")]
-        public UserStatus User_status { get; set; }
+        public UserStatus UserStatus { get; set; }
 
         [XmlElement(ElementName = "book")]
         public Book Book { get; set; }

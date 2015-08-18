@@ -42,12 +42,14 @@ namespace MyShelf.API.Web
             ApiCooldown();
 
             return requestResponse;
-        }        /// <summary>
-                 /// Executes a REST request.
-                 /// </summary>
-                 /// <param name="url"></param>
-                 /// <param name="method"></param>
-                 /// <returns></returns>
+        }
+
+        /// <summary>
+        /// Executes a REST request.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public async Task<IRestResponse> ExecuteForAccessTokenAsync(string url, Method method, string consumerKey, string consumerSecret, string token, string tokenSecret)
         {
             await _apiSemaphore.WaitAsync();
@@ -60,19 +62,31 @@ namespace MyShelf.API.Web
             ApiCooldown();
 
             return requestResponse;
-        }        /// <summary>
-                 /// Executes a REST request.
-                 /// </summary>
-                 /// <param name="url"></param>
-                 /// <param name="method"></param>
-                 /// <returns></returns>
-        public async Task<IRestResponse> ExecuteForProtectedResourceAsync(string url, Method method, string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
+        }
+
+        /// <summary>
+        /// Executes a REST request.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public async Task<IRestResponse> ExecuteForProtectedResourceAsync(string url, Method method, string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret, Dictionary<string, object> parameters = null)
         {
             await _apiSemaphore.WaitAsync();
 
             _client.Authenticator = GetProtectedResourceAuthenticator(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
             var request = new RestRequest(url, method);
+
+            if (parameters != null)
+            {
+                request.RequestFormat = DataFormat.Xml;
+                foreach (var param in parameters)
+                {
+                    request.AddParameter(param.Key, param.Value);
+                }
+            }
+
             var requestResponse = await _client.ExecuteAsync(request);
 
             ApiCooldown();

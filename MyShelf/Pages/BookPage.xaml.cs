@@ -1,4 +1,5 @@
 ﻿using Mendo.UAP.Common;
+using MyShelf.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,9 +24,26 @@ namespace MyShelf.Pages
     /// </summary>
     public sealed partial class BookPage : PageBase
     {
+        public BookViewModel ViewModel { get; set; }
+
         public BookPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void LoadState(object parameter, Dictionary<string, object> pageState)
+        {
+            base.LoadState(parameter, pageState);
+
+            if (parameter != null)
+            {
+                if (parameter is string)
+                {
+                    ViewModel = new BookViewModel(parameter as string);
+                }
+                else if (parameter is BookViewModel)
+                    ViewModel = parameter as BookViewModel;
+            }
         }
     }
 }

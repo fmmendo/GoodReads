@@ -38,7 +38,7 @@ namespace MyShelf.ViewModels
                 selectedBook = value;
                 OnPropertyChanged();
 
-                NavigationService.Navigate(typeof(BookPage), SelectedBook);
+                NavigationService.Navigate(typeof(BookPage), SelectedBook.BookId);
             }
         }
 

@@ -13,6 +13,9 @@ namespace MyShelf.ViewModels
 {
     public class UpdateViewModel : ViewModelBase
     {
+        private string _resourceId;
+        private string _resourceType;
+
         public string ActionText { get; set; }
         public string UserName { get; set; }
         //public string Link { get; set; }
@@ -46,10 +49,22 @@ namespace MyShelf.ViewModels
 
             if (update.Type.Equals("review") && update.Object?.Book != null)
                 SetUpBookData(update.Object.Book);
-            else if (update.Type.Equals("readstatus") && update.Object?.Read_status?.Review?.Book != null)
-                SetUpBookData(update.Object.Read_status.Review.Book);
+            else if (update.Type.Equals("readstatus") && update.Object?.ReadStatus?.Review?.Book != null)
+                SetUpBookData(update.Object.ReadStatus.Review.Book);
             else
                 IsBook = false;
+
+            if (update.Object?.ReadStatus != null)
+            {
+                _resourceId = update.Object.ReadStatus.Id;
+                _resourceType = "ReadStatus";
+            }
+            if (update.Object?.UserStatus != null)
+            {
+                _resourceId = update.Object.UserStatus.Id;
+                _resourceType = "UserStatus";
+            }
+
         }
 
         private void SetUpBookData(Book book)
@@ -92,6 +107,15 @@ namespace MyShelf.ViewModels
         public void AuthorClick()
         {
             NavigationService.Navigate(typeof(AuthorPage), AuthorId);
+        }
+
+        public void LikeClick()
+        {
+            UserService.Instance.LikeResource(_resourceId, _resourceType);
+        }
+
+        public void CommentClick()
+        {
         }
     }
 }

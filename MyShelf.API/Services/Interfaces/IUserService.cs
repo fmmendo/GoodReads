@@ -30,5 +30,29 @@ namespace MyShelf.API.Services
         Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates);
 
         Task<Friends> GetFriends(string page = null, string sort = null);
+
+        /// <summary>
+        /// Likes a resource
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <param name="maxUpdates"></param>
+        Task<bool> LikeResource(string resourceId, string resourceType);
+
+        /// <summary>
+        /// Unlike a resource
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <param name="maxUpdates"></param>
+        Task<bool> UnlikeResource(string resourceId/*, string resourceType*/);
+
+        /// <summary>
+        /// Adds a Comment
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <param name="maxUpdates"></param>
+        Task<string> AddComment(string id, string type, string comment);
     }
 }
