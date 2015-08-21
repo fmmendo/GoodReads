@@ -190,9 +190,9 @@ namespace MyShelf.API.XML
         [XmlArrayItem("book_link")]
         public List<BookLink> BookLinks { get; set; }
 
-        //[XmlArray("series_works")]
-        //[XmlArrayItem("series_work")]
-        //public List<SeriesWork> SeriesWorks { get; set; }
+        [XmlArray("series_works")]
+        [XmlArrayItem("series_work")]
+        public List<SeriesWork> SeriesWorks { get; set; }
 
         [XmlArray("similar_books")]
         [XmlArrayItem("book")]

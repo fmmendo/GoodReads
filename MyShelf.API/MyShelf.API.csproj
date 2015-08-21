@@ -129,6 +129,8 @@
     <Compile Include="Web\ApiClient.cs" />
     <Compile Include="Web\IApiClient.cs" />
     <Compile Include="XML\Friends.cs" />
+    <Compile Include="XML\Series.cs" />
+    <Compile Include="XML\SeriesWork.cs" />
     <Compile Include="XML\UpdateAction.cs" />
     <Compile Include="XML\Author.cs" />
     <Compile Include="XML\GoodreadsResponse.cs" />

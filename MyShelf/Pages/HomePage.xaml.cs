@@ -29,6 +29,11 @@ namespace MyShelf.Pages
         public HomePage()
         {
             InitializeComponent();
+        }
+
+        protected override void LoadState(object parameter, Dictionary<string, object> pageState)
+        {
+            base.LoadState(parameter, pageState);
 
             ViewModel.RefreshUpdates();
             ViewModel.RefreshCurrentlyReading();

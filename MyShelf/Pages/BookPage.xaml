@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyShelf.Pages"
+    xmlns:data="using:MyShelf.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -17,14 +18,41 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Image Grid.RowSpan="2" Source="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, TargetNullValue=''}">
+        <Image Grid.RowSpan="2">
+            <Image.Source>
+                <BitmapImage UriSource="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, TargetNullValue=''}"></BitmapImage>
+            </Image.Source>
         </Image>
         <StackPanel Grid.Column="1">
             <TextBlock Text="{x:Bind ViewModel.BookTitle, Mode=OneWay}"/>
             <TextBlock Text="{x:Bind ViewModel.BookAuthor, Mode=OneWay}"/>
+            <TextBlock Text="{x:Bind ViewModel.Stats, Mode=OneWay}"/>
+            <ItemsControl ItemsSource="{x:Bind ViewModel.Details, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="data:Detail">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind Key, Mode=OneWay}"/>
+                            <TextBlock Text="{x:Bind Value, Mode=OneWay}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
 
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Description, Mode=OneWay}" TextWrapping="WrapWholeWords"/>
+
+        <ListView Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Reviews, Mode=OneWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="data:ReviewViewModel">
+                    <StackPanel>
+                        <TextBlock Text="{x:Bind UserName, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind DateAdded, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind Body, Mode=OneWay}" TextWrapping="WrapWholeWords"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </common:PageBase>

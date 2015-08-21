@@ -16,7 +16,7 @@ namespace MyShelf.ViewModels
         public string BookTitle { get; set; }
         public string BookAuthor { get; set; }
         public string BookImageUrlLarge { get; set; }
-        public string BookImageUrl { get; set; } = string.Empty;
+        public Uri BookImageUrl { get; set; } = new Uri(@"C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\Assets\placeholder.png");
         public string BookImageUrlSmall { get; set; }
         public string Stats { get; set; }
         public string Link { get; set; }
@@ -24,7 +24,7 @@ namespace MyShelf.ViewModels
         public double Rating { get; set; }
         public double MyRating { get; set; }
         public ObservableCollection<Detail> Details { get; set; } = new ObservableCollection<Detail>();
-        public ObservableCollection<Review> Reviews { get; set; } = new ObservableCollection<Review>();
+        public ObservableCollection<ReviewViewModel> Reviews { get; set; } = new ObservableCollection<ReviewViewModel>();
 
         public BookViewModel(Book book)
         {
@@ -32,7 +32,7 @@ namespace MyShelf.ViewModels
             BookTitle = book.Title;
             BookAuthor = string.Join(", ", book.Authors.Select(a => a.Name));
             BookImageUrlLarge = book.LargeImageUrl;
-            BookImageUrl = book.ImageUrl;
+            BookImageUrl = new Uri(book.ImageUrl);
             BookImageUrlSmall = book.SmallImageUrl;
 
             Link = book.Link;
@@ -51,7 +51,7 @@ namespace MyShelf.ViewModels
             BookTitle = book.Title;
             BookAuthor = string.Join(", ", book.Authors.Select(a => a.Name));
             BookImageUrlLarge = book.LargeImageUrl;
-            BookImageUrl = book.ImageUrl;
+            BookImageUrl = new Uri(book.ImageUrl);
             BookImageUrlSmall = book.SmallImageUrl;
 
             Link = book.Link;
@@ -64,6 +64,66 @@ namespace MyShelf.ViewModels
             OnPropertyChanged("BookImageUrlSmall");
             OnPropertyChanged("Link");
             OnPropertyChanged("Description");
+
+            BuildBookDetailsList(book);
+            OnPropertyChanged("Details");
+            OnPropertyChanged("Stats");
+
+            LoadReviews(book);
+        }
+
+        private void LoadReviews(Book book)
+        {
+            Reviews.Clear();
+            foreach (var review in book.Reviews.Review)
+            {
+                Reviews.Add(new ReviewViewModel(review));
+            }
+            OnPropertyChanged("Reviews");
+        }
+
+        private void BuildBookDetailsList(Book book)
+        {
+            Details.Clear();
+
+            #region Format
+            var format = new List<string>();
+            if (!string.IsNullOrEmpty(book.Format))
+                format.Add(book.Format);
+            if (string.IsNullOrEmpty(book.NumPages))
+                format.Add($"{book.NumPages} pages");
+            if (format.Count > 0)
+                Details.Add(new Detail { Key = "Format", Value = string.Join(", ", format) });
+            #endregion
+
+            #region Published
+            var published = new List<string>();
+            if (!string.IsNullOrEmpty(book.Publisher))
+                published.Add(book.Publisher);
+            if (string.IsNullOrEmpty(book.PublicationYear))
+                published.Add(book.PublicationYear);
+            if (published.Count > 0)
+                Details.Add(new Detail { Key = "Published", Value = string.Join(", ", published) });
+            #endregion
+
+            if (!string.IsNullOrEmpty(book.Work?.OriginalTitle))
+                Details.Add(new Detail { Key = "Original Title", Value = book.Work.OriginalTitle });
+
+            if (!string.IsNullOrEmpty(book.Isbn13))
+                Details.Add(new Detail { Key = "ISBN13", Value = book.Isbn13 });
+
+            if (book.SeriesWorks != null && book.SeriesWorks.Count > 0 && !string.IsNullOrEmpty(book.SeriesWorks?[0]?.Series?.Title))
+                Details.Add(new Detail { Key = "Series", Value = book.SeriesWorks[0].Series.Title.Replace("\n", "").Trim(' ') });
+
+            #region Stats
+            var stats = new List<string>();
+            if (!string.IsNullOrEmpty(book.Work.RatingsCount))
+                stats.Add($"{book.Work.RatingsCount} ratings");
+            if (!string.IsNullOrEmpty(book.Work.TextReviewsCount))
+                stats.Add($"{book.Work.TextReviewsCount} reviews");
+            if (stats.Count > 0)
+                Stats = string.Join(", ", stats);
+            #endregion
         }
     }
 

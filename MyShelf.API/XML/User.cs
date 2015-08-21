@@ -70,10 +70,11 @@ namespace MyShelf.API.XML
         
         [XmlElement(ElementName = "reviews_count")]
         public string ReviewsCount;
-        
-        //[XmlElement(ElementName = "user_shelves")]
-        //public UserShelves User_shelves;
-        
+
+        [XmlArray("user_shelves")]
+        [XmlArrayItem("user_shelf")]
+        public List<UserShelf> UserShelves;
+
         [XmlElement(ElementName = "updates")]
         public Updates Updates;
 
