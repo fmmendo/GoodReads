@@ -19,16 +19,8 @@ namespace MyShelf.ViewModels
 
         public HomePageViewModel()
         {
-            //authService.AuthStateChanged += AuthService_AuthStateChanged;
         }
-
-        //private void AuthService_AuthStateChanged(object sender, AuthState e)
-        //{
-        //    if (e == AuthState.Authenticated)
-        //    {
-        //        Refresh();
-        //    }
-        //}
+        
 
         public async Task Refresh()
         {

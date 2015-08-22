@@ -19,10 +19,17 @@ namespace MyShelf.Pages
             this.InitializeComponent();
         }
 
+        private void Instance_AuthStateChanged(object sender, API.Services.AuthState e)
+        {
+            if (IsCurrentPage)
+                ViewModel.RefreshFriends();
+        }
+
         protected override void LoadState(object parameter, Dictionary<string, object> pageState)
         {
             base.LoadState(parameter, pageState);
 
+            API.Services.AuthenticationService.Instance.AuthStateChanged += Instance_AuthStateChanged;
             ViewModel.RefreshFriends();
         }
 
@@ -30,6 +37,7 @@ namespace MyShelf.Pages
         {
             API.Web.ApiClient.Instance.ResetQueue();
 
+            API.Services.AuthenticationService.Instance.AuthStateChanged -= Instance_AuthStateChanged;
             base.SaveState(e, pageState);
         }
     }

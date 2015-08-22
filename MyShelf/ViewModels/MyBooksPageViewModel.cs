@@ -24,6 +24,13 @@ namespace MyShelf.ViewModels
 
         public async Task GetUserShelves()
         {
+            if (authService.State != AuthState.Authenticated)
+            {
+                authService.Authenticate();
+
+                return;
+            }
+
             Shelves.Clear();
             var shelves = await shelfService.GetShelvesList();
             foreach (var shelf in shelves)

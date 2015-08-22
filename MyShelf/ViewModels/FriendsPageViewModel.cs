@@ -17,6 +17,13 @@ namespace MyShelf.ViewModels
 
         public async Task RefreshFriends()
         {
+            if (authService.State != AuthState.Authenticated)
+            {
+                authService.Authenticate();
+
+                return;
+            }
+
             Friends.Clear();
 
             var result = await userService.GetFriends();
