@@ -4,7 +4,7 @@
     xmlns:controls="using:MyShelf.Controls">
 
     <Style TargetType="controls:SplitViewItem">
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -24,7 +24,7 @@
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition From="Pressed" To="PointerOver">
                                         <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="Border"/>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
@@ -32,12 +32,12 @@
                                     </VisualTransition>
                                     <VisualTransition From="PointerOver" To="Normal">
                                         <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="Border"/>
                                         </Storyboard>
                                     </VisualTransition>
                                     <VisualTransition From="Pressed" To="Normal">
                                         <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="Border"/>
                                         </Storyboard>
                                     </VisualTransition>
                                 </VisualStateGroup.Transitions>
@@ -51,10 +51,7 @@
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <PointerDownThemeAnimation Storyboard.TargetName="Grid"/>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
+                                        <PointerDownThemeAnimation Storyboard.TargetName="Border"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -75,8 +72,9 @@
                                 <VisualState x:Name="Unchecked"/>
                                 <VisualState x:Name="Checked">
                                     <VisualState.Setters>
-                                        <Setter Target="tbIcon.Foreground" Value="Red" />
-                                        <Setter Target="btnText.Foreground" Value="Red" />
+                                        <Setter Target="Border.Background" Value="{StaticResource GoodReadsLightBrown_Transparent}" />
+                                        <!--<Setter Target="tbIcon.Foreground" Value="Black" />
+                                        <Setter Target="btnText.Foreground" Value="Black" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -84,6 +82,7 @@
                         <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="0">
                             <ContentPresenter x:Name="ContentPresenter" 
                                               AutomationProperties.AccessibilityView="Raw" 
+                                              Background="{TemplateBinding Background}"
                                               Foreground="{TemplateBinding Foreground}" 
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                               Margin="{TemplateBinding Padding}" 

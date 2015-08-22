@@ -16,7 +16,7 @@ namespace MyShelf.ViewModels
         public string BookTitle { get; set; }
         public string BookAuthor { get; set; }
         public string BookImageUrlLarge { get; set; }
-        public Uri BookImageUrl { get; set; } = new Uri(@"C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\Assets\placeholder.png");
+        public Uri BookImageUrl { get; set; }
         public string BookImageUrlSmall { get; set; }
         public string Stats { get; set; }
         public string Link { get; set; }

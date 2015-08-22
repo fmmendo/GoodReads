@@ -11,40 +11,85 @@
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
-    <Grid Background="White">
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="cdReading.Width" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="MediumState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="lvReading.Visibility" Value="Visible"/>
+                        <Setter Target="lvReading.(Grid.Column)" Value="1"/>
+                        <Setter Target="lvUpdates.Padding" Value="12,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="lvReading.Visibility" Value="Visible"/>
+                        <Setter Target="lvReading.(Grid.Column)" Value="1"/>
+                        <Setter Target="lvUpdates.Padding" Value="12,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <!--<Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+                <RepositionThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*" MaxWidth="512" x:Name="cdReading"/>
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}" Header="Updates" SelectionMode="None">
+        <ListView x:Name="lvUpdates" ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}" ItemContainerStyle="{StaticResource ListViewStretchItemStyle}" Header="Updates" SelectionMode="None" Padding="0,0,0,24">
             <ListView.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}"/>
+                    <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
                 </DataTemplate>
             </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="data:UpdateViewModel">
-                    <Grid>
+                    <Grid Background="{StaticResource DarkGray}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" MaxHeight="120"/>
+                            <!--<RowDefinition Height="Auto"/>-->
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Ellipse Height="50" Width="50" Grid.RowSpan="2" VerticalAlignment="Top">
+
+                        <Ellipse Height="48" Width="48" VerticalAlignment="Top" Margin="12">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="None"/>
                             </Ellipse.Fill>
                         </Ellipse>
-                        <TextBlock Grid.Column="1" TextWrapping="WrapWholeWords">
-                                <Hyperlink Click="{x:Bind UserClick, Mode=OneWay}"><Run Text="{x:Bind UserName, Mode=OneWay}"/></Hyperlink>
-                                <Run Text="{x:Bind ActionText, Mode=OneWay}"/>
-                        </TextBlock>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <HyperlinkButton Content="{x:Bind UserName, Mode=OneWay}" Padding="0" Click="{x:Bind UserClick, Mode=OneWay}"/>
+                            <TextBlock Text="{x:Bind ActionText, Mode=OneWay}" Foreground="White" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
 
-                        <Grid Grid.Row="1" Grid.Column="1" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid Grid.Row="1" Grid.ColumnSpan="3" Height="120" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -53,44 +98,49 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Image Source="{Binding BookImageUrl, Mode=OneWay, TargetNullValue='../Assets/placeholder.png'}" Grid.RowSpan="2"/>
-                            <TextBlock Grid.Column="1" TextWrapping="WrapWholeWords">
-                                <Hyperlink Click="{x:Bind BookClick, Mode=OneWay}"><Run Text="{x:Bind BookTitle, Mode=OneWay}"/></Hyperlink>
-                            </TextBlock>
-                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" TextWrapping="WrapWholeWords">
-                                <Hyperlink Click="{x:Bind AuthorClick, Mode=OneWay}"><Run Text="{x:Bind BookAuthor, Mode=OneWay}" /></Hyperlink>
-                            </TextBlock>
+                            <Image Grid.RowSpan="2" MaxHeight="120" Margin="0" Stretch="Uniform" VerticalAlignment="Top">
+                                <Image.Source>
+                                    <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="120" DecodePixelType="Logical" />
+                                </Image.Source>
+                            </Image>
+                            <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="18" VerticalAlignment="Top" />
+                            <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,12,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top"/>
+
                         </Grid>
-                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
+                        <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
                             <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
                             <Button Click="{x:Bind CommentClick}" Width="100">Comment</Button>
-                        </StackPanel>
+                        </StackPanel>-->
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}" Header="Currently Reading" SelectionMode="None" Grid.Column="1">
+        <ListView x:Name="lvReading" Visibility="Collapsed" Background="{StaticResource GoodReadsBrown_Transparent}" ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}" Header="Currently Reading" SelectionMode="None" Grid.Column="0" Padding="0,0,0,24">
             <ListView.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}"/>
+                    <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
                 </DataTemplate>
             </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="data:UserStatusViewModel">
-                    <Grid>
+                    <Grid Padding="0,12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Image Grid.RowSpan="3" Source="{Binding BookImageUrl}" />
-                        <TextBlock Grid.Column="1" Text="{x:Bind BookTitle, Mode=OneWay}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind BookAuthor, Mode=OneWay}"/>
+                        <Image x:Name="imgReadingBook" Grid.RowSpan="3" MaxHeight="158" Stretch="Uniform" Margin="0,0,12,0">
+                            <Image.Source>
+                                <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Grid.Column="1" Text="{x:Bind BookTitle, Mode=OneWay}" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis" FontSize="18" />
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind BookAuthor, Mode=OneWay}" FontSize="14"/>
                         <ProgressBar Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Value="{x:Bind Percent, Mode=OneWay}" />
                     </Grid>
                 </DataTemplate>

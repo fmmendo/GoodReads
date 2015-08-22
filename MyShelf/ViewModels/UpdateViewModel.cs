@@ -22,13 +22,13 @@ namespace MyShelf.ViewModels
         public string ImageUrl { get; set; }
         public bool IsBook { get; set; } = false;
         //public User Actor { get; set; }
-        //public string UpdatedAt { get; set; }
+        public string UpdatedAt { get; set; }
         //public UpdateObject Object { get; set; }
         //public string Type { get; set; }
         //public UpdateAction Action { get; set; }
         //public string Body { get; set; }
 
-        public string BookImageUrl { get; set; }
+        public Uri BookImageUrl { get; set; }
         public string BookAuthor { get; set; }
         public string BookTitle { get; set; }
 
@@ -44,6 +44,11 @@ namespace MyShelf.ViewModels
             ImageUrl = update.Actor?.ImageUrl;
             UserName = update.Actor?.Name;
             ActionText = update.ActionText.Contains("<") ? Regex.Replace(update.ActionText, "<.*?>", string.Empty) : update.ActionText;
+
+            DateTime date;
+            if (DateTime.TryParse(update.UpdatedAt, out date))
+                UpdatedAt = date.ToString("dd MMM yyyy");
+                //UpdatedAt = date.ToString("ddd, dd MMM yyyy HH:mm:ss");
 
             UserId = update.Actor.Id;
 
@@ -82,7 +87,7 @@ namespace MyShelf.ViewModels
         {
             var result = await BookService.Instance.GetBookInfo(book.Id);
 
-            BookImageUrl = result.ImageUrl;
+            BookImageUrl = new Uri(result.ImageUrl);
             BookAuthor = result.Authors.FirstOrDefault().Name;//string.Join(", ", result.Authors.Select(a => a.Name));
             BookTitle = result.Title;
 

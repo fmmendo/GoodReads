@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <Image Grid.RowSpan="2">
             <Image.Source>
-                <BitmapImage UriSource="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, TargetNullValue=''}"></BitmapImage>
+                <BitmapImage UriSource="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"></BitmapImage>
             </Image.Source>
         </Image>
         <StackPanel Grid.Column="1">

@@ -12,6 +12,7 @@ namespace MyShelf.ViewModels
     public class FriendsPageViewModel : SingletonViewModelBase<FriendsPageViewModel>
     {
         private IUserService userService = UserService.Instance;
+        private IAuthenticationService authService = AuthenticationService.Instance;
 
         public ObservableCollection<UserViewModel> Friends { get; set; } = new ObservableCollection<UserViewModel>();
 

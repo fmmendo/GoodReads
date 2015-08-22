@@ -28,7 +28,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Image Grid.RowSpan="3" Source="{Binding BookImageUrl}" Stretch="UniformToFill" Width="140"/>
+                                    <Image Grid.RowSpan="3" Source="{Binding BookImageUrl, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" Stretch="UniformToFill" Width="140"/>
                                     <TextBlock Grid.Row="1" Text="{x:Bind BookTitle, Mode=OneWay}"/>
                                     <TextBlock Grid.Row="2" Text="{x:Bind BookAuthor, Mode=OneWay}"/>
                                 </Grid>

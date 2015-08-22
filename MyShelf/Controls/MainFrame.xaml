@@ -12,11 +12,45 @@
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="splitView.DisplayMode" Value="Overlay"/>
+                        <!--<Setter Target="splitView.IsPaneOpen" Value="False"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="MediumState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="splitView.DisplayMode" Value="CompactOverlay"/>
+                        <!--<Setter Target="splitView.IsPaneOpen" Value="False"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="splitView.DisplayMode" Value="CompactOverlay"/>
+                        <!--<Setter Target="splitView.IsPaneOpen" Value="True"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="gTitleBar"  Height="48" Canvas.ZIndex="1">
+        <Grid x:Name="gTitleBar" Background="{StaticResource GoodReadsBrown}" Height="48" Canvas.ZIndex="1">
             <Grid.ChildrenTransitions>
                 <TransitionCollection>
                     <RepositionThemeTransition />
@@ -29,23 +63,23 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="bMenu"
-                    Background="#C10B11"
+                    Background="{StaticResource GoodReadsBrown}"
                     Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                     Width="48"
                     VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                    MinHeight="32"
-                    Click="{x:Bind ViewModel.MenuClick}">
+                    MinHeight="48"
+                    Click="{x:Bind ViewModel.MenuClick}" Style="{StaticResource ChromelessButtonStyle}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE700;"/>
             </Button>
             <TextBlock Grid.Column="1" Text=" myShelf" VerticalAlignment="Center" FontSize="32" FontWeight="Light" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
             <Button x:Name="btnSearch"
+                    Background="{StaticResource GoodReadsBrown}"
                     Grid.Column="3"
                     Visibility="Visible"
                     Click="{x:Bind ViewModel.SearchClick}"
                     Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                     MinWidth="48"
                     VerticalAlignment="Stretch" HorizontalContentAlignment="Center" 
-                    Background="Transparent"
                     Height="48">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE094;"/>
             </Button>
@@ -55,10 +89,9 @@
             <SplitView x:Name="splitView"
                        CompactPaneLength="48"
                        OpenPaneLength="220"
-                       DisplayMode="CompactOverlay"
                        IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
-                    <Grid Background="White">
+                    <Grid Background="{StaticResource DarkGray}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
@@ -70,15 +103,15 @@
                             <!--<controls:SplitViewItem Text="Recomendations" Icon="&#xE1CE;"/>-->
                             <controls:SplitViewItem IsChecked="{x:Bind ViewModel.IsFriendsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.FriendsClick}" Text="Friends" Icon="&#xE716;"/>
                             <!--<controls:SplitViewItem Text="Reading Challenge" Icon="&#xE82D;"/>-->
-                            <!--</StackPanel>
-                        <StackPanel VerticalAlignment="Bottom">-->
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Bottom">
                             <controls:SplitViewItem IsChecked="{x:Bind ViewModel.IsProfileChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.ProfileClick}" Text="Profile" Icon="&#xE13D;"/>
                             <controls:SplitViewItem IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;"/>
                         </StackPanel>
                     </Grid>
                 </SplitView.Pane>
 
-                <Grid Background="Gray">
+                <Grid Background="#1C1C1C">
                     <Frame x:Name="RootFrame" x:FieldModifier="Public" Loaded="RootFrame_Loaded"/>
                 </Grid>
             </SplitView>

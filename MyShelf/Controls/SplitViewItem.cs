@@ -19,7 +19,6 @@ namespace MyShelf.Controls
             get { return (string)GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
-
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register("Icon", typeof(String), typeof(SplitViewItem), new PropertyMetadata("A"));
 
@@ -28,7 +27,6 @@ namespace MyShelf.Controls
         //    get { return (Geometry)GetValue(PathDataProperty); }
         //    set { SetValue(PathDataProperty, value); }
         //}
-
         //// Using a DependencyProperty as the backing store for PathData.  This enables animation, styling, binding, etc...
         //public static readonly DependencyProperty PathDataProperty =
         //    DependencyProperty.Register("PathData", typeof(Geometry), typeof(SplitViewItem), new PropertyMetadata(null));
@@ -38,7 +36,6 @@ namespace MyShelf.Controls
             get { return (String)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(String), typeof(SplitViewItem), new PropertyMetadata("SplitViewButton"));
 
@@ -47,7 +44,6 @@ namespace MyShelf.Controls
         //    get { return (bool)GetValue(UsePathProperty); }
         //    set { SetValue(UsePathProperty, value); }
         //}
-
         //// Using a DependencyProperty as the backing store for UsePath.  This enables animation, styling, binding, etc...
         //public static readonly DependencyProperty UsePathProperty =
         //    DependencyProperty.Register("UsePath", typeof(bool), typeof(SplitViewItem), new PropertyMetadata(false));
@@ -60,7 +56,6 @@ namespace MyShelf.Controls
             get { return (bool)GetValue(ClosesParentProperty); }
             set { SetValue(ClosesParentProperty, value); }
         }
-
         public static readonly DependencyProperty ClosesParentProperty =
             DependencyProperty.Register("ClosesParent", typeof(bool), typeof(SplitViewItem), new PropertyMetadata(true));
 
