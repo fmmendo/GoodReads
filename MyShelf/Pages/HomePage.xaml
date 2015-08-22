@@ -42,7 +42,7 @@
                     <VisualState.Setters>
                         <Setter Target="lvReading.Visibility" Value="Visible"/>
                         <Setter Target="lvReading.(Grid.Column)" Value="1"/>
-                        <Setter Target="lvUpdates.Padding" Value="12,0"/>
+                        <Setter Target="lvUpdates.Padding" Value="24,0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -89,7 +89,7 @@
                         </StackPanel>
                         <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
 
-                        <Grid Grid.Row="1" Grid.ColumnSpan="3" Height="120" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid Grid.Row="1" Grid.ColumnSpan="3" Height="120" Background="#07FFFFFF" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -116,7 +116,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView x:Name="lvReading" Visibility="Collapsed" Background="{StaticResource GoodReadsBrown_Transparent}" ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}" Header="Currently Reading" SelectionMode="None" Grid.Column="0" Padding="0,0,0,24">
+        <ListView x:Name="lvReading" Visibility="Collapsed" Background="{StaticResource DarkGray}" ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}" Header="Currently Reading" SelectionMode="None" Grid.Column="0" Padding="0,0,0,24">
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
