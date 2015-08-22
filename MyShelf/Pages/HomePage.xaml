@@ -26,12 +26,13 @@
 
                 <VisualState x:Name="MediumState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720"/>
+                        <AdaptiveTrigger MinWindowWidth="768"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="lvReading.Visibility" Value="Visible"/>
                         <Setter Target="lvReading.(Grid.Column)" Value="1"/>
                         <Setter Target="lvUpdates.Padding" Value="12,0"/>
+                        <Setter Target="lvReading.Padding" Value="12,0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -43,6 +44,7 @@
                         <Setter Target="lvReading.Visibility" Value="Visible"/>
                         <Setter Target="lvReading.(Grid.Column)" Value="1"/>
                         <Setter Target="lvUpdates.Padding" Value="24,0"/>
+                        <Setter Target="lvReading.Padding" Value="24,0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -57,7 +59,13 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="3*" MaxWidth="512" x:Name="cdReading"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="lvUpdates" ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}" ItemContainerStyle="{StaticResource ListViewStretchItemStyle}" Header="Updates" SelectionMode="None" Padding="0,0,0,24">
+        
+        <ListView x:Name="lvUpdates"
+                  ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
+                  ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
+                  Header="Updates"
+                  SelectionMode="None"
+                  Padding="0,0,0,24">
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
@@ -87,7 +95,7 @@
                             <HyperlinkButton Content="{x:Bind UserName, Mode=OneWay}" Padding="0" Click="{x:Bind UserClick, Mode=OneWay}"/>
                             <TextBlock Text="{x:Bind ActionText, Mode=OneWay}" Foreground="White" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis"/>
                         </StackPanel>
-                        <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
+                        <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
 
                         <Grid Grid.Row="1" Grid.ColumnSpan="3" Height="120" Background="#07FFFFFF" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
@@ -104,7 +112,7 @@
                                 </Image.Source>
                             </Image>
                             <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="18" VerticalAlignment="Top" />
-                            <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,12,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top"/>
+                            <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top"/>
 
                         </Grid>
                         <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
@@ -116,7 +124,15 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView x:Name="lvReading" Visibility="Collapsed" Background="{StaticResource DarkGray}" ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}" Header="Currently Reading" SelectionMode="None" Grid.Column="0" Padding="0,0,0,24">
+        <ListView x:Name="lvReading"
+                  Visibility="Collapsed"
+                  Background="{StaticResource DarkGray}"
+                  ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
+                  ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}"
+                  Header="Currently Reading"
+                  SelectionMode="None"
+                  Grid.Column="0"
+                  Padding="0,0,0,24">
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
@@ -126,7 +142,7 @@
                 <DataTemplate x:DataType="data:UserStatusViewModel">
                     <Grid Padding="0,12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" MinWidth="72"/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -134,14 +150,17 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Image x:Name="imgReadingBook" Grid.RowSpan="3" MaxHeight="158" Stretch="Uniform" Margin="0,0,12,0">
+                        <Image x:Name="imgReadingBook" Grid.RowSpan="3" MaxHeight="158" Stretch="Uniform" Margin="0">
                             <Image.Source>
-                                <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
+                                <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png', FallbackValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
                             </Image.Source>
                         </Image>
-                        <TextBlock Grid.Column="1" Text="{x:Bind BookTitle, Mode=OneWay}" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis" FontSize="18" />
-                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind BookAuthor, Mode=OneWay}" FontSize="14"/>
-                        <ProgressBar Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Value="{x:Bind Percent, Mode=OneWay}" />
+                        <HyperlinkButton Grid.Column="1" Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Margin="12,0,0,0" FontSize="18" VerticalAlignment="Top" />
+                        <HyperlinkButton Grid.Column="1" Grid.Row="1" Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Margin="12,0,0,0" FontSize="14" VerticalAlignment="Top"/>
+
+                        <!--<TextBlock Grid.Column="1" Text="{x:Bind BookTitle, Mode=OneWay}" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis" FontSize="18" />
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind BookAuthor, Mode=OneWay}" FontSize="14"/>-->
+                        <ProgressBar Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Height="12" Margin="12,0,0,0"  Value="{x:Bind Percent, Mode=OneWay}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

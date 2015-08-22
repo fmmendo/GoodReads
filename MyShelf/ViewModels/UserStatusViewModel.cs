@@ -23,5 +23,10 @@ namespace MyShelf.ViewModels
 
             Percent = double.Parse(status.Percent);
         }
+
+        public void BookClick()
+        { }
+        public void AuthorClick()
+        { }
     }
 }
