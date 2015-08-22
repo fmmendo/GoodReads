@@ -20,6 +20,12 @@ namespace MyShelf.API.Services
         public static string AccessToken => "oauth/access_token";
         #endregion
 
+        /// <summary>
+        /// 1. API KEY
+        /// 2. Query
+        /// </summary>
+        public static string Search => String.Format("{0}{1}", BaseUrl, "/search.xml?key={0}&q={1}");
+
         public static string AuthUser => "api/auth_user";
         /// <summary>
         /// 1. User Id

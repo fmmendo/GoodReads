@@ -31,8 +31,8 @@ namespace MyShelf.API.XML
         [XmlElement(ElementName = "average_rating")]
         public string AverageRating { get; set; }
 
-        //[XmlElement(ElementName = "best_book")]
-        //public BestBook Best_book { get; set; }
+        [XmlElement(ElementName = "best_book")]
+        public Book BestBook { get; set; }
 
         [XmlElement(ElementName = "best_book_id")]
         public string BestBookId { get; set; }

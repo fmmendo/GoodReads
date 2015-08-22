@@ -6,6 +6,7 @@
     xmlns:local="using:MyShelf.Pages"
     xmlns:data="using:MyShelf.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mcontrols="using:Mendo.UAP.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
@@ -29,6 +30,7 @@
             <TextBlock Text="{x:Bind ViewModel.BookTitle, Mode=OneWay}"/>
             <TextBlock Text="{x:Bind ViewModel.BookAuthor, Mode=OneWay}"/>
             <TextBlock Text="{x:Bind ViewModel.Stats, Mode=OneWay}"/>
+            <mcontrols:RatingControl Rating="{x:Bind ViewModel.Rating, Mode=OneWay}"/>
             <ItemsControl ItemsSource="{x:Bind ViewModel.Details, Mode=OneWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="data:Detail">

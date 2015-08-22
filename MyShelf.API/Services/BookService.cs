@@ -47,25 +47,25 @@ namespace MyShelf.API.Services
             //}
             //else
             //{
-                //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-                string url = Urls.ShelfBooks + MyShelfSettings.Instance.GoodreadsUserID + ".xml?key=" + MyShelfSettings.Instance.ConsumerKey + "&format=xml&v=2";
+            //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+            string url = Urls.ShelfBooks + MyShelfSettings.Instance.GoodreadsUserID + ".xml?key=" + MyShelfSettings.Instance.ConsumerKey + "&format=xml&v=2";
 
-                //TODO: more params, probably enums
-                if (!String.IsNullOrEmpty(shelf))
-                    url += "&shelf=" + shelf;
-                if (!String.IsNullOrEmpty(per_page))
-                    url += "&per_page=" + per_page;
+            //TODO: more params, probably enums
+            if (!String.IsNullOrEmpty(shelf))
+                url += "&shelf=" + shelf;
+            if (!String.IsNullOrEmpty(per_page))
+                url += "&per_page=" + per_page;
 
-                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(url, RestSharp.Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(url, RestSharp.Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
 
-                //await apiSemaphore.WaitAsync();
-                //var request = new RestRequest(url, Method.GET);
-                //var response = await client.ExecuteAsync(request);
+            //await apiSemaphore.WaitAsync();
+            //var request = new RestRequest(url, Method.GET);
+            //var response = await client.ExecuteAsync(request);
 
-                //ApiCooldown();
+            //ApiCooldown();
 
-                var result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
-                //GoodreadsReviews = result.Reviews;
+            var result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
+            //GoodreadsReviews = result.Reviews;
             //}
 
             return result.Reviews;
@@ -83,6 +83,23 @@ namespace MyShelf.API.Services
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
             return result.Book;
+        }
+
+        /// <summary>
+        /// Performs a GoodReads search for the given query
+        /// </summary>
+        /// <param name="query">string to search for</param>
+        /// <returns>List of Work items</returns>
+        public async Task<Search> Search(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+                return null;
+
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.Search, MyShelfSettings.Instance.ConsumerKey, query.Replace(" ", "+")));
+
+            var result = GoodReadsSerializer.DeserializeResponse(results);
+
+            return result.Search;
         }
     }
 }

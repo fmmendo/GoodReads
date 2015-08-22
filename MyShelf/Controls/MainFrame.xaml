@@ -41,6 +41,7 @@
             <Button x:Name="btnSearch"
                     Grid.Column="3"
                     Visibility="Visible"
+                    Click="{x:Bind ViewModel.SearchClick}"
                     Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                     MinWidth="48"
                     VerticalAlignment="Stretch" HorizontalContentAlignment="Center" 

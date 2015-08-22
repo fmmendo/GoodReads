@@ -80,6 +80,11 @@ namespace MyShelf.ViewModels
             IsPaneOpen = !IsPaneOpen;
         }
 
+        public void SearchClick()
+        {
+            NavigationService.Navigate(typeof(Pages.SearchPage));
+        }
+
         public void HomeClick()
         {
             NavigationService.Navigate(typeof(Pages.HomePage));

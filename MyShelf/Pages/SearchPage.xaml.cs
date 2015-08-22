@@ -22,14 +22,17 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UserPage : PageBase
+    public sealed partial class SearchPage : PageBase
     {
-        public UserViewModel ViewModel { get; set; }
+        public SearchPageViewModel ViewModel { get; set; }
 
-        public UserPage()
+        public SearchPage()
         {
             this.InitializeComponent();
+            ViewModel = new SearchPageViewModel();
         }
+
+
 
         protected override void LoadState(object parameter, Dictionary<string, object> pageState)
         {
@@ -39,11 +42,18 @@ namespace MyShelf.Pages
             {
                 if (parameter is string)
                 {
-                    ViewModel = new UserViewModel(parameter as string);
+                    ViewModel = new SearchPageViewModel();
+                    ViewModel.SearchTerm = parameter as string;
+                    ViewModel.SearchClick();
                 }
-                else if (parameter is UserViewModel)
-                    ViewModel = parameter as UserViewModel;
+                else if (parameter is SearchPageViewModel)
+                    ViewModel = parameter as SearchPageViewModel;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

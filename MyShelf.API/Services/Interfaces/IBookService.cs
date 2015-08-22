@@ -11,5 +11,6 @@ namespace MyShelf.API.Services
     {
         Task<Reviews> GetBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200");
         Task<Book> GetBookInfo(string id);
+        Task<Search> Search(string query);
     }
 }

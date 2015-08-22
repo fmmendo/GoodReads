@@ -54,6 +54,10 @@ namespace MyShelf.ViewModels
             BookImageUrl = new Uri(book.ImageUrl);
             BookImageUrlSmall = book.SmallImageUrl;
 
+            double r;
+            if (double.TryParse(book.AverageRating, out r))
+                Rating = r;
+
             Link = book.Link;
             Description = book.Description;
 
@@ -64,6 +68,7 @@ namespace MyShelf.ViewModels
             OnPropertyChanged("BookImageUrlSmall");
             OnPropertyChanged("Link");
             OnPropertyChanged("Description");
+            OnPropertyChanged("Rating");
 
             BuildBookDetailsList(book);
             OnPropertyChanged("Details");

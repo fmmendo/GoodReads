@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace MyShelf.API.XML
@@ -23,8 +24,15 @@ namespace MyShelf.API.XML
         
         [XmlElement(ElementName = "query-time-seconds")]
         public string QueryTimeSeconds { get; set; }
-        
-        //[XmlElement(ElementName = "results")]
-        //public Results Results { get; set; }
+
+        [XmlElement(ElementName = "results")]
+        public Results Results { get; set; }
+    }
+
+    [XmlRoot(ElementName = "results")]
+    public class Results
+    {
+        [XmlElement(ElementName = "work")]
+        public List<Work> Work { get; set; }
     }
 }
