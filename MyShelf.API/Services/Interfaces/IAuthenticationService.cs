@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System;
 using System.Threading.Tasks;
 
 namespace MyShelf.API.Services
@@ -12,6 +13,8 @@ namespace MyShelf.API.Services
 
     public interface IAuthenticationService
     {
+        event EventHandler<AuthState> AuthStateChanged;
+
         bool IsTokenAvailable
         {
             get;

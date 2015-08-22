@@ -17,12 +17,30 @@ namespace MyShelf.ViewModels
         public ObservableCollection<UpdateViewModel> Updates { get; } = new ObservableCollection<UpdateViewModel>();
         public ObservableCollection<UserStatusViewModel> CurrentlyReading { get; } = new ObservableCollection<UserStatusViewModel>();
 
-
-
-
         public HomePageViewModel()
         {
-            authService.Authenticate();
+            //authService.AuthStateChanged += AuthService_AuthStateChanged;
+        }
+
+        //private void AuthService_AuthStateChanged(object sender, AuthState e)
+        //{
+        //    if (e == AuthState.Authenticated)
+        //    {
+        //        Refresh();
+        //    }
+        //}
+
+        public async Task Refresh()
+        {
+            if (authService.State != AuthState.Authenticated)
+            {
+                authService.Authenticate();
+
+                return;
+            }
+
+            RefreshUpdates();
+            RefreshCurrentlyReading();
         }
 
         public async Task RefreshUpdates()

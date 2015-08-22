@@ -66,24 +66,27 @@ namespace MyShelf.ViewModels
             FriendsCount = $"{friend.FriendsCount} Friends";
             BooksCount = $"{friend.ReviewsCount} Books";
             GroupsCount = $"{friend.GroupsCount} Books";
-            CurrentlyReading.Clear();
 
-            foreach (var userStatus in friend.UserStatuses)
+            Task.Run( async () =>
             {
-                CurrentlyReading.Add(new UserStatusViewModel(userStatus));
-            }
+                CurrentlyReading.Clear();
+                foreach (var userStatus in friend.UserStatuses)
+                {
+                    CurrentlyReading.Add(new UserStatusViewModel(userStatus));
+                }
 
-            Updates.Clear();
-            foreach (var userUpdate in friend.Updates.Update)
-            {
-                Updates.Add(new UpdateViewModel(userUpdate));
-            }
+                Updates.Clear();
+                foreach (var userUpdate in friend.Updates.Update)
+                {
+                    Updates.Add(new UpdateViewModel(userUpdate));
+                }
 
-            Shelves.Clear();
-            foreach (var shelf in friend.UserShelves)
-            {
-                Shelves.Add(new ShelfViewModel(shelf));
-            }
+                Shelves.Clear();
+                foreach (var shelf in friend.UserShelves)
+                {
+                    Shelves.Add(new ShelfViewModel(shelf));
+                }
+            });
         }
 
         public void UserClick()

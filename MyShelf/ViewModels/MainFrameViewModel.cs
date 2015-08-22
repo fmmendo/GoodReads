@@ -12,6 +12,17 @@ namespace MyShelf.ViewModels
     public class MainFrameViewModel : SingletonViewModelBase<MainFrameViewModel>
     {
         IUserService userService = UserService.Instance;
+        IAuthenticationService authService = AuthenticationService.Instance;
+
+        private bool _isPaneOpen;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsPaneOpen
+        {
+            get { return _isPaneOpen; }
+            set { _isPaneOpen = value; OnPropertyChanged(); }
+        }
 
         #region Hamburger Menu States
         private bool? _isHomeChecked;
@@ -65,15 +76,7 @@ namespace MyShelf.ViewModels
         }
         #endregion
 
-        private bool _isPaneOpen;
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsPaneOpen
-        {
-            get { return _isPaneOpen; }
-            set { _isPaneOpen = value; OnPropertyChanged();  }
-        }
+        #region Menu Click Events
 
         public void MenuClick()
         {
@@ -106,8 +109,13 @@ namespace MyShelf.ViewModels
             NavigationService.Navigate(typeof(Pages.SettingsPage));
         }
 
+        #endregion
+
         public async Task RefreshUserId()
         {
+            if (authService.State != AuthState.Authenticated)
+                return;
+
             if (!userService.IsUserIdAvailable)
                 await userService.GetUserID();
         }

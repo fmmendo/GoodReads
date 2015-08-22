@@ -14,14 +14,31 @@ namespace MyShelf.API.Web
 {
     public class ApiClient : Singleton<ApiClient>, IApiClient
     {
-        private readonly SemaphoreSlim _apiSemaphore = new SemaphoreSlim(1, 1);
+        private SemaphoreSlim _apiSemaphore;
         private const int COOLDOWN = 1000;
 
-
+        private CancellationTokenSource _cts;
 
         public ApiClient()
         {
             _client = new RestClient("http://www.goodreads.com");
+
+            _apiSemaphore = new SemaphoreSlim(1, 1);
+            _cts = new CancellationTokenSource();
+        }
+
+        public async Task ResetQueue()
+        {
+            _cts.Cancel();
+
+            //while (_apiSemaphore.CurrentCount > 0)
+            //{
+            //    _apiSemaphore.Release();
+            //    await Task.Delay(100);
+            //}
+
+            //_apiSemaphore = new SemaphoreSlim(1, 1);
+            _cts = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -32,14 +49,22 @@ namespace MyShelf.API.Web
         /// <returns></returns>
         public async Task<IRestResponse> ExecuteForRequestTokenAsync(string url, Method method, string consumerKey, string consumerSecret)
         {
-            await _apiSemaphore.WaitAsync();
+            IRestResponse requestResponse = null;
+            await _apiSemaphore.WaitAsync(_cts.Token);
+            try
+            {
+                _client.Authenticator = GetRequestTokenAuthenticator(consumerKey, consumerSecret);
 
-            _client.Authenticator = GetRequestTokenAuthenticator(consumerKey, consumerSecret);
-
-            var request = new RestRequest(url, method);
-            var requestResponse = await _client.ExecuteAsync(request);
-
-            ApiCooldown();
+                var request = new RestRequest(url, method);
+                requestResponse = await _client.ExecuteAsync(request);
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                ApiCooldown();
+            }
 
             return requestResponse;
         }
@@ -52,14 +77,24 @@ namespace MyShelf.API.Web
         /// <returns></returns>
         public async Task<IRestResponse> ExecuteForAccessTokenAsync(string url, Method method, string consumerKey, string consumerSecret, string token, string tokenSecret)
         {
-            await _apiSemaphore.WaitAsync();
+            IRestResponse requestResponse = null;
+            await _apiSemaphore.WaitAsync(_cts.Token);
 
-            _client.Authenticator = GetAccessTokenAuthenticator(consumerKey, consumerSecret, token, tokenSecret);
+            try
+            {
+                _client.Authenticator = GetAccessTokenAuthenticator(consumerKey, consumerSecret, token, tokenSecret);
 
-            var request = new RestRequest(url, method);
-            var requestResponse = await _client.ExecuteAsync(request);
+                var request = new RestRequest(url, method);
+                requestResponse = await _client.ExecuteAsync(request);
 
-            ApiCooldown();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                ApiCooldown();
+            }
 
             return requestResponse;
         }
@@ -72,24 +107,31 @@ namespace MyShelf.API.Web
         /// <returns></returns>
         public async Task<IRestResponse> ExecuteForProtectedResourceAsync(string url, Method method, string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret, Dictionary<string, object> parameters = null)
         {
-            await _apiSemaphore.WaitAsync();
+            IRestResponse requestResponse = null;
+            await _apiSemaphore.WaitAsync(_cts.Token);
 
-            _client.Authenticator = GetProtectedResourceAuthenticator(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+            try
+            { 
+                _client.Authenticator = GetProtectedResourceAuthenticator(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
-            var request = new RestRequest(url, method);
+                var request = new RestRequest(url, method);
 
-            if (parameters != null)
-            {
-                request.RequestFormat = DataFormat.Xml;
-                foreach (var param in parameters)
+                if (parameters != null)
                 {
-                    request.AddParameter(param.Key, param.Value);
+                    request.RequestFormat = DataFormat.Xml;
+                    foreach (var param in parameters)
+                        request.AddParameter(param.Key, param.Value);
                 }
+
+                requestResponse = await _client.ExecuteAsync(request);
             }
-
-            var requestResponse = await _client.ExecuteAsync(request);
-
-            ApiCooldown();
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                ApiCooldown();
+            }
 
             return requestResponse;
         }
@@ -107,10 +149,9 @@ namespace MyShelf.API.Web
             Request.Method = "GET";
             Request.ContentType = "application/x-www-form-urlencoded";
 
+            await _apiSemaphore.WaitAsync(_cts.Token);
             try
             {
-                await _apiSemaphore.WaitAsync();
-
                 HttpWebResponse response = (HttpWebResponse)await Request.GetResponseAsync();
                 if (response != null)
                 {

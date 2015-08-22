@@ -10,6 +10,8 @@ namespace MyShelf.API.Web
 {
     public interface IApiClient
     {
+        Task ResetQueue();
+
         /// <summary>
         /// Executes a REST request for requesting a token.
         /// /// </summary>

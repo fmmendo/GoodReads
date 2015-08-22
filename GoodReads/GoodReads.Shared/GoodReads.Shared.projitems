@@ -95,4 +95,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Controls\AddToShelfControl.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Controls\BookItemControl.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Controls\RateThisItemControl.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Controls\ShelfTileControl.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Controls\StatusUpdateControl.xaml" />
+  </ItemGroup>
 </Project>

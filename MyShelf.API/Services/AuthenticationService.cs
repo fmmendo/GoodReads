@@ -18,6 +18,14 @@ namespace MyShelf.API.Services
     {
         private AuthState _state;
 
+        public event EventHandler<AuthState> AuthStateChanged;
+
+        private void OnAuthStateChanged()
+        {
+            if (AuthStateChanged != null)
+                AuthStateChanged(this, State);
+        }
+
         #region Properties
 
         public bool IsTokenAvailable => !String.IsNullOrEmpty(MyShelfSettings.Instance.OAuthAccessToken);
@@ -30,7 +38,7 @@ namespace MyShelf.API.Services
         public AuthState State
         {
             get { return _state; }
-            private set { _state = value; }
+            private set { _state = value; OnAuthStateChanged(); }
         }
         #endregion
 
