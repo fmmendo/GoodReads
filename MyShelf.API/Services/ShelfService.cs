@@ -63,7 +63,7 @@ namespace MyShelf.API.Services
             param.Add("a", remove ? "remove" : String.Empty);
 
             //var response = await client.ExecuteAsync(request);
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("shelf/add_to_shelf.xml", RestSharp.Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("shelf/add_to_shelf.xml", RestSharp.Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
 
             //ApiCooldown();
 

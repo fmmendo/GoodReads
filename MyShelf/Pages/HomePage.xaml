@@ -1,4 +1,4 @@
-﻿<common:PageBase
+﻿<common:PageBase xmlns:Windows81="using:Microsoft.AdMediator.Windows81"  xmlns:Universal="using:Microsoft.AdMediator.Universal" 
     x:Class="MyShelf.Pages.HomePage"    
     xmlns:common="using:Mendo.UAP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -59,7 +59,7 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="3*" MaxWidth="512" x:Name="cdReading"/>
         </Grid.ColumnDefinitions>
-        
+
         <ListView x:Name="lvUpdates"
                   ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
                   ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
@@ -104,16 +104,17 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Image Grid.RowSpan="2" MaxHeight="120" Margin="0" Stretch="Uniform" VerticalAlignment="Top">
+                            <Image Grid.RowSpan="3" MaxHeight="120" Margin="0" Stretch="Uniform" VerticalAlignment="Top">
                                 <Image.Source>
                                     <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="120" DecodePixelType="Logical" />
                                 </Image.Source>
                             </Image>
                             <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="18" VerticalAlignment="Top" />
                             <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top"/>
-
+                            <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}"></controls:AddToShelfControl>
                         </Grid>
                         <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
                             <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
@@ -165,5 +166,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Universal:AdMediatorControl x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE"/>
     </Grid>
 </common:PageBase>
