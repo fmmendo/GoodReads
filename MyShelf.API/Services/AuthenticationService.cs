@@ -108,6 +108,7 @@ namespace MyShelf.API.Services
 
             //GoodreadsReviews = await GetShelfBooks();
             //justRefreshedReviews = true;
+            State = AuthState.Authenticated;
 
             return true;
         }

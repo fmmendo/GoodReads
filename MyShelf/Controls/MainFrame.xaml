@@ -103,16 +103,16 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <StackPanel>
-                            <controls:SplitViewItem x:Name="svHome" IsChecked="{x:Bind ViewModel.IsHomeChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.HomeClick}" Text="Home" Icon="&#xE10F;"/>
-                            <controls:SplitViewItem x:Name="svBooks" IsChecked="{x:Bind ViewModel.IsMyBooksChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.MyBooksClick}" Text="My Books" Icon="&#xE1D3;"/>
-                            <!--<controls:SplitViewItem Text="Groups" Icon="&#xE72D;"/>-->
-                            <!--<controls:SplitViewItem Text="Recomendations" Icon="&#xE1CE;"/>-->
-                            <controls:SplitViewItem x:Name="svFriends" IsChecked="{x:Bind ViewModel.IsFriendsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.FriendsClick}" Text="Friends" Icon="&#xE716;"/>
-                            <!--<controls:SplitViewItem Text="Reading Challenge" Icon="&#xE82D;"/>-->
+                            <controls:SplitViewItem x:Name="svHome" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsHomeChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.HomeClick}" Text="Home" Icon="&#xE10F;"/>
+                            <controls:SplitViewItem x:Name="svBooks" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsMyBooksChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.MyBooksClick}" Text="My Books" Icon="&#xE1D3;"/>
+                            <!--<controls:SplitViewItem Text="Groups" GroupName="Sidebar" Icon="&#xE72D;"/>-->
+                            <!--<controls:SplitViewItem Text="Recomendations" GroupName="Sidebar" Icon="&#xE1CE;"/>-->
+                            <controls:SplitViewItem x:Name="svFriends" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsFriendsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.FriendsClick}" Text="Friends" Icon="&#xE716;"/>
+                            <!--<controls:SplitViewItem Text="Reading Challenge" GroupName="Sidebar" Icon="&#xE82D;"/>-->
                         </StackPanel>
                         <StackPanel VerticalAlignment="Bottom">
-                            <controls:SplitViewItem x:Name="svProfile" IsChecked="{x:Bind ViewModel.IsProfileChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.ProfileClick}" Text="Profile" Icon="&#xE13D;"/>
-                            <controls:SplitViewItem x:Name="svSettings" IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;"/>
+                            <controls:SplitViewItem x:Name="svProfile" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsProfileChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.ProfileClick}" Text="Profile" Icon="&#xE13D;"/>
+                            <controls:SplitViewItem x:Name="svSettings" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;"/>
                         </StackPanel>
                     </Grid>
                 </SplitView.Pane>

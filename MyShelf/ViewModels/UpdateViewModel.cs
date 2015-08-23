@@ -28,11 +28,13 @@ namespace MyShelf.ViewModels
         //public UpdateAction Action { get; set; }
         //public string Body { get; set; }
 
+            public IEnumerable<string> Shelves { get; set; }
+
         public Uri BookImageUrl { get; set; }
         public string BookAuthor { get; set; }
         public string BookTitle { get; set; }
 
-        private string BookId;
+        public string BookId { get; set; }
         private string UserId;
         private string AuthorId;
 
@@ -47,8 +49,7 @@ namespace MyShelf.ViewModels
 
             DateTime date;
             if (DateTime.TryParse(update.UpdatedAt, out date))
-                UpdatedAt = date.ToString("dd MMM yyyy");
-                //UpdatedAt = date.ToString("ddd, dd MMM yyyy HH:mm:ss");
+                UpdatedAt = date.ToString("dd MMM yyyy"); // "ddd, dd MMM yyyy HH:mm:ss"
 
             UserId = update.Actor.Id;
 
@@ -74,17 +75,19 @@ namespace MyShelf.ViewModels
 
         private void SetUpBookData(Book book)
         {
-            IsBook = true;
+            BookId = book.Id;
+            OnPropertyChanged("BookId");
 
-            //BookId = book.Id;
-            //AuthorId = book.AuthorId;
-            //WorkId = book.Work_id;
+            //IsBook = true;
 
             GetBookInfoAsync(book);
         }
 
         private async Task GetBookInfoAsync(Book book)
         {
+            Shelves = (await ShelfService.Instance.GetShelvesList()).Select(s => s.Name);
+            OnPropertyChanged("Shelves");
+
             var result = await BookService.Instance.GetBookInfo(book.Id);
 
             BookImageUrl = new Uri(result.ImageUrl);
@@ -97,6 +100,12 @@ namespace MyShelf.ViewModels
             OnPropertyChanged("BookImageUrl");
             OnPropertyChanged("BookAuthor");
             OnPropertyChanged("BookTitle");
+            OnPropertyChanged("BookId");
+            IsBook = true;
+            OnPropertyChanged("IsBook");
+
+  
+
         }
 
         public void UserClick()

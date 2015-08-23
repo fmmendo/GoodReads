@@ -22,7 +22,7 @@ namespace MyShelf.Controls
             EnsureLoadedAsync = _frameTcs.Task;
         }
 
-        private void RootFrame_Loaded(object sender, RoutedEventArgs e)
+        private async void RootFrame_Loaded(object sender, RoutedEventArgs e)
         {
             if (!EnsureLoadedAsync.IsCompleted)
             {

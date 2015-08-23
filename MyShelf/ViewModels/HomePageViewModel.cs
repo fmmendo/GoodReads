@@ -31,8 +31,10 @@ namespace MyShelf.ViewModels
                 return;
             }
 
-            RefreshUpdates();
+            // if currently reading is 2nd it will only load after 
+            // all books from updates have finished loading...
             RefreshCurrentlyReading();
+            RefreshUpdates();
         }
 
         public async Task RefreshUpdates()

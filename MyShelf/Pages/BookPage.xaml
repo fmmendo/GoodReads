@@ -19,7 +19,7 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>
+                        <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
                         <Setter Target="cdBook.Width" Value="120"/>
                         <!--<Setter Target="rdDescription.Height" Value="0"/>-->
                         <Setter Target="skDetails.(Grid.RowSpan)" Value="2"/>
@@ -34,6 +34,7 @@
                         <AdaptiveTrigger MinWindowWidth="640"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -42,6 +43,7 @@
                         <AdaptiveTrigger MinWindowWidth="1280"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

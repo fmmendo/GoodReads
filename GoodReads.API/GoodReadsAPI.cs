@@ -200,24 +200,24 @@ namespace GoodReads.API
         /// </summary>
         /// <param name="query">string to search for</param>
         /// <returns>List of Work items</returns>
-        public async Task<Search> Search(string query)
-        {
-            if (string.IsNullOrEmpty(query))
-                return null;
+        //public async Task<Search> Search(string query)
+        //{
+        //    if (string.IsNullOrEmpty(query))
+        //        return null;
 
-            if (apiSemaphore.CurrentCount > 0)
-            {
-                if (await apiSemaphore.WaitAsync(250))
-                {
-                    string results = await HttpGet(String.Format(Urls.Search, API_KEY, query.Replace(" ", "+")));
-                    ApiCooldown();
-                    var result = DeserializeResponse(results);
+        //    if (apiSemaphore.CurrentCount > 0)
+        //    {
+        //        if (await apiSemaphore.WaitAsync(250))
+        //        {
+        //            string results = await HttpGet(String.Format(Urls.Search, API_KEY, query.Replace(" ", "+")));
+        //            ApiCooldown();
+        //            var result = DeserializeResponse(results);
 
-                    return result.Search;
-                }
-            }
-            return null;
-        }
+        //            return result.Search;
+        //        }
+        //    }
+        //    return null;
+        //}
 
         ///// <summary>
         ///// Returns the shelves for the logged in user
