@@ -15,9 +15,9 @@ namespace MyShelf.ViewModels
         public string BookId { get; set; }
         public string BookTitle { get; set; }
         public string BookAuthor { get; set; }
-        public string BookImageUrlLarge { get; set; }
+        public Uri BookImageUrlLarge { get; set; }
         public Uri BookImageUrl { get; set; }
-        public string BookImageUrlSmall { get; set; }
+        public Uri BookImageUrlSmall { get; set; }
         public string Stats { get; set; }
         public string Link { get; set; }
         public string Description { get; set; }
@@ -31,9 +31,9 @@ namespace MyShelf.ViewModels
             BookId = book.Id;
             BookTitle = book.Title;
             BookAuthor = string.Join(", ", book.Authors.Select(a => a.Name));
-            BookImageUrlLarge = book.LargeImageUrl;
+            ExtractLargeImage(book);
             BookImageUrl = new Uri(book.ImageUrl);
-            BookImageUrlSmall = book.SmallImageUrl;
+            BookImageUrlSmall = new Uri(book.SmallImageUrl);
 
             Link = book.Link;
             Description = book.Description;
@@ -50,9 +50,10 @@ namespace MyShelf.ViewModels
 
             BookTitle = book.Title;
             BookAuthor = string.Join(", ", book.Authors.Select(a => a.Name));
-            BookImageUrlLarge = book.LargeImageUrl;
+
+            ExtractLargeImage(book);
             BookImageUrl = new Uri(book.ImageUrl);
-            BookImageUrlSmall = book.SmallImageUrl;
+            BookImageUrlSmall = new Uri(book.SmallImageUrl);
 
             double r;
             if (double.TryParse(book.AverageRating, out r))
@@ -77,6 +78,27 @@ namespace MyShelf.ViewModels
             LoadReviews(book);
         }
 
+        private void ExtractLargeImage(Book book)
+        {
+            // ok, a bit ugly, but I need to check if we're being passed a medium sized image
+            if (string.IsNullOrEmpty(book.LargeImageUrl) || book.ImageUrl.IndexOf("m/") > 30)
+            {
+                var url = book.ImageUrl;
+                var m = url.LastIndexOf("m/");
+                if (m > 30)
+                {
+                    url = url.Remove(m, 1).Insert(m, "l");
+                    //url = url;
+                }
+
+                BookImageUrlLarge = new Uri(url);
+            }
+            else
+            {
+                BookImageUrlLarge = new Uri(book.LargeImageUrl);
+            }
+        }
+
         private void LoadReviews(Book book)
         {
             Reviews.Clear();
@@ -95,7 +117,7 @@ namespace MyShelf.ViewModels
             var format = new List<string>();
             if (!string.IsNullOrEmpty(book.Format))
                 format.Add(book.Format);
-            if (string.IsNullOrEmpty(book.NumPages))
+            if (!string.IsNullOrEmpty(book.NumPages))
                 format.Add($"{book.NumPages} pages");
             if (format.Count > 0)
                 Details.Add(new Detail { Key = "Format", Value = string.Join(", ", format) });
