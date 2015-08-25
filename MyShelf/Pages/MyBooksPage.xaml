@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Pivot ItemsSource="{x:Bind ViewModel.Shelves}">
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="datatype:ShelfViewModel">
@@ -20,17 +20,36 @@
             <Pivot.ItemTemplate>
                 <DataTemplate x:DataType="datatype:ShelfViewModel">
                     <GridView ItemsSource="{x:Bind ShelfBooks}" SelectedItem="{Binding SelectedBook, Mode=TwoWay}">
+                        <GridView.ItemContainerTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition  />
+                                <RepositionThemeTransition  />
+                            </TransitionCollection>
+                        </GridView.ItemContainerTransitions>
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="datatype:BookViewModel">
-                                <Grid>
+                                <Grid Width="180" Height="270" Margin="4">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <!--<RowDefinition Height="Auto"/>-->
                                     </Grid.RowDefinitions>
-                                    <Image Grid.RowSpan="3" Source="{Binding BookImageUrl, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" Stretch="UniformToFill" Width="140"/>
-                                    <TextBlock Grid.Row="1" Text="{x:Bind BookTitle, Mode=OneWay}"/>
-                                    <TextBlock Grid.Row="2" Text="{x:Bind BookAuthor, Mode=OneWay}"/>
+                                    <Image Grid.RowSpan="2" Stretch="UniformToFill" Width="180">
+                                        <Image.Source>
+                                            <BitmapImage UriSource="{Binding BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue={Binding BookImageUrl}}"
+                                                         DecodePixelWidth="180" DecodePixelType="Logical" />
+                                        </Image.Source>
+                                    </Image>
+                                    <Border Grid.RowSpan="2">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#E0000000" Offset="1" />
+                                                <GradientStop Color="Transparent" Offset="0.6" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Grid.Row="1" Text="{x:Bind BookTitle, Mode=OneWay}" Margin="4" MaxLines="2" FontWeight="SemiBold" FontSize="18" TextAlignment="Center" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Bottom" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords"/>
+                                    <!--<TextBlock Grid.Row="2" Text="{x:Bind BookAuthor, Mode=OneWay}"/>-->
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
