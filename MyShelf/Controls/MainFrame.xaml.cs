@@ -24,6 +24,9 @@ namespace MyShelf.Controls
 
         private async void RootFrame_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Window.Current.Bounds.Width >= 1280)
+                VisualStateManager.GoToState(this, "WideState", false);
+
             if (!EnsureLoadedAsync.IsCompleted)
             {
                 _frameTcs.TrySetResult(true);
