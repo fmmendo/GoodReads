@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace MyShelf.ViewModels
 {
@@ -13,6 +14,16 @@ namespace MyShelf.ViewModels
     {
         IUserService userService = UserService.Instance;
         IAuthenticationService authService = AuthenticationService.Instance;
+
+        private Frame _rootFrame;
+        /// <summary>
+        /// 
+        /// </summary>
+        public Frame RootFrame
+        {
+            get { return _rootFrame; }
+            set { _rootFrame = value; OnPropertyChanged(); }
+        }
 
         private bool _isPaneOpen;
         /// <summary>

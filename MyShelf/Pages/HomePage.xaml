@@ -8,27 +8,60 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:MyShelf.Controls"
     xmlns:data="using:MyShelf.ViewModels"
+    xmlns:triggers="using:WindowsStateTriggers"
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
         <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DeviceTypeStates">
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="tabletBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="phoneBar.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NotMobile">
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-
+                        <Setter Target="abbReading.Visibility" Value="Visible"/>
                         <Setter Target="cdReading.Width" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
                 <VisualState x:Name="MediumState">
                     <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="abbReading.Visibility" Value="Visible"/>
+                        <Setter Target="cdReading.Width" Value="0"/>
+                        <!--<Setter Target="tabletBar.Visibility" Value="Visible"/>-->
+                        <!--<Setter Target="lvReading.Visibility" Value="Visible"/>-->
+                        <!--<Setter Target="lvReading.(Grid.Column)" Value="1"/>-->
+                        <Setter Target="lvUpdates.Padding" Value="12,0"/>
+                        <Setter Target="lvReading.Padding" Value="12,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="MediumWideState">
+                    <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="768"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!--<Setter Target="tabletBar.Visibility" Value="Collapsed"/>-->
                         <Setter Target="lvReading.Visibility" Value="Visible"/>
                         <Setter Target="lvReading.(Grid.Column)" Value="1"/>
                         <Setter Target="lvUpdates.Padding" Value="12,0"/>
@@ -41,6 +74,7 @@
                         <AdaptiveTrigger MinWindowWidth="1280"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="tabletBar.Visibility" Value="Collapsed"/>
                         <Setter Target="lvReading.Visibility" Value="Visible"/>
                         <Setter Target="lvReading.(Grid.Column)" Value="1"/>
                         <Setter Target="lvUpdates.Padding" Value="24,0"/>
@@ -166,6 +200,29 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Universal:AdMediatorControl x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE"/>
+        <!--<Universal:AdMediatorControl x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE"/>-->
     </Grid>
+
+    <common:PageBase.TopBarContent>
+        <CommandBar x:Name="tabletBar" Visibility="Visible" Foreground="White" Background="{StaticResource GoodReadsBrown}" VerticalAlignment="Stretch">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="abbReading" Foreground="White" Label="Currently Reading" Visibility="Collapsed">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE82D;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </common:PageBase.TopBarContent>
+    <common:PageBase.BottomAppBar>
+        <CommandBar x:Name="phoneBar" Visibility="Collapsed" Foreground="White" Background="{StaticResource GoodReadsBrown}" ClosedDisplayMode="Minimal" VerticalAlignment="Stretch">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Foreground="White" Label="Currently Reading">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE82D;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </common:PageBase.BottomAppBar>
 </common:PageBase>

@@ -27,6 +27,8 @@ namespace MyShelf.Controls
             if (Window.Current.Bounds.Width >= 1280)
                 VisualStateManager.GoToState(this, "WideState", false);
 
+            ViewModel.RootFrame = RootFrame;
+
             if (!EnsureLoadedAsync.IsCompleted)
             {
                 _frameTcs.TrySetResult(true);

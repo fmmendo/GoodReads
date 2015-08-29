@@ -88,26 +88,6 @@ namespace MyShelf.API.Services
             MyShelfSettings.Instance.OAuthAccessToken = querystring2["oauth_token"];
             MyShelfSettings.Instance.OAuthAccessTokenSecret = querystring2["oauth_token_secret"];
 
-            //// if we don't have a user ID yet, go fetch it
-            //if (String.IsNullOrEmpty(UserSettings.Settings.GoodreadsUserID))
-            //{
-            //    var user = await GetUserID();
-
-            //    UserSettings.Settings.GoodreadsUserID = user.Id;
-            //    UserSettings.Settings.GoodreadsUserLink = user.Link;
-            //    UserSettings.Settings.GoodreadsUsername = user.Name;
-            //}
-
-            //authenticatedUser = await GetUserInfo(UserSettings.Settings.GoodreadsUserID);
-            //UserSettings.Settings.GoodreadsUserImageUrl = authenticatedUser.Image_url;
-            //UserSettings.Settings.GoodreadsUserSmallImageUrl = authenticatedUser.Small_image_url;
-            //justRefreshedUser = true;
-
-            //GoodreadsUserShelves = await GetShelvesList();
-            //justRefreshedShelves = true;
-
-            //GoodreadsReviews = await GetShelfBooks();
-            //justRefreshedReviews = true;
             State = AuthState.Authenticated;
 
             return true;
