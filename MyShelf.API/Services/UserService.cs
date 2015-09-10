@@ -226,5 +226,52 @@ namespace MyShelf.API.Services
             //else
             //    return false;
         }
+
+        /// <summary>
+        /// Posts a new user status
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <param name="maxUpdates"></param>
+        public async Task<String> PostStatusUpdate(string bookId, string page, string percent, string body)
+        {
+            //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
+
+            //await apiSemaphore.WaitAsync();
+
+            //var request = new RestRequest("user_status.xml", Method.POST);
+            //request.RequestFormat = DataFormat.Xml;
+
+            var param = new Dictionary<string, object>();
+            if (!String.IsNullOrEmpty(bookId)) param.Add("user_status[book_id]", bookId);
+            if (!String.IsNullOrEmpty(page))  param.Add("user_status[page]", page);
+            if (!String.IsNullOrEmpty(percent))  param.Add("user_status[percent]", percent);
+            if (!String.IsNullOrEmpty(body)) param.Add("user_status[body]", body);
+
+            //var response = await client.ExecuteAsync(request);
+
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("user_status.xml", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+
+
+            //ApiCooldown();
+
+            //TODO: This is a quick workaround
+            if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
+            {
+                var result = response.Content.ToString();
+                var start = result.IndexOf("<id type=\"integer\">") + 19;
+                var end = result.IndexOf("</id>", start);
+                string id = result.Substring(start, end - start);
+                //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
+
+                //return status;
+
+
+                return id;
+            }
+            else return String.Empty;
+            //else
+            //    return false;
+        }
     }
 }

@@ -17,10 +17,18 @@ namespace MyShelf.ViewModels
         public ObservableCollection<UpdateViewModel> Updates { get; } = new ObservableCollection<UpdateViewModel>();
         public ObservableCollection<UserStatusViewModel> CurrentlyReading { get; } = new ObservableCollection<UserStatusViewModel>();
 
+        private bool showCurrentlyReading = false;
+        public bool ShowCurrentlyReading
+        {
+            get { return showCurrentlyReading; }
+            set {showCurrentlyReading = value; OnPropertyChanged(); }
+        }
+
+
         public HomePageViewModel()
         {
         }
-        
+
 
         public async Task Refresh()
         {
@@ -62,6 +70,11 @@ namespace MyShelf.ViewModels
                     CurrentlyReading.Add(new UserStatusViewModel(status));
                 }
             }
+        }
+
+        public void CurrentlyReadingClick()
+        {
+            ShowCurrentlyReading = true;
         }
     }
 }

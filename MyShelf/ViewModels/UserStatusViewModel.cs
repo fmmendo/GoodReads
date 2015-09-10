@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyShelf.API.XML;
+using MyShelf.Pages;
+using MyShelf.API.Services;
 
 namespace MyShelf.ViewModels
 {
@@ -14,19 +16,60 @@ namespace MyShelf.ViewModels
         public string BookImageUrl { get; set; }
         public string BookAuthor { get; set; }
         public double Percent { get; set; }
+        public string Page { get; set; }
+        public bool Updating { get { return Get(false); } set { Set(value); } }
+        public bool UpdatingPage { get { return Get(true); } set { Set(value); } }
+
+        public string UpdatePercentage { get { return Get(Percent.ToString()); } set { Set(value); } }
+        public string UpdatePageNum { get { return Get(Page); } set { Set(value); } }
+        public string UpdateText { get { return Get(string.Empty); } set { Set(value); } }
+
+        public string BookPages { get; set; }
+
+        private string bookId;
+        private string authorId;
 
         public UserStatusViewModel(UserStatus status)
         {
             BookTitle = status.Book.Title;
             BookImageUrl = status.Book.ImageUrl;
             BookAuthor = string.Join(", ", status.Book.Authors.Select(a => a.Name));
-
+            BookPages = status.Book.NumPages;
             Percent = double.Parse(status.Percent);
+            Page = status.Page;
+            bookId = status.Book.Id;
+            authorId = status.Book.Authors.FirstOrDefault()?.Id;
+
+            Updating = false;
         }
 
+
         public void BookClick()
-        { }
+        {
+            NavigationService.Navigate(typeof(BookPage), bookId);
+        }
+
         public void AuthorClick()
-        { }
+        {
+            NavigationService.Navigate(typeof(AuthorPage), authorId);
+        }
+
+        public void ToggleUpdating()
+        {
+            Updating = !Updating;
+        }
+
+        public void ToggleUpdateMode()
+        {
+            UpdatingPage = !UpdatingPage;
+        }
+
+        public async void PostUpdate()
+        {
+            var result = await UserService.Instance.PostStatusUpdate(bookId, 
+                                                                     UpdatingPage ? UpdatePageNum : null, 
+                                                                     UpdatingPage ? null : UpdatePercentage, 
+                                                                     UpdateText);
+        }
     }
 }

@@ -54,5 +54,7 @@ namespace MyShelf.API.Services
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
         Task<string> AddComment(string id, string type, string comment);
+
+        Task<string> PostStatusUpdate(string bookId, string page, string percent, string body);
     }
 }
