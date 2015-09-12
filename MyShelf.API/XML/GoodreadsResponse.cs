@@ -24,6 +24,9 @@ namespace MyShelf.API.XML
         [XmlElement(ElementName = "reviews")]
         public Reviews Reviews { get; set; }
 
+        [XmlElement(ElementName = "review")]
+        public Review Review { get; set; }
+
         [XmlElement(ElementName = "book")]
         public Book Book { get; set; }
 

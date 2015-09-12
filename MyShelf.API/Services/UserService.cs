@@ -112,23 +112,12 @@ namespace MyShelf.API.Services
         /// <param name="maxUpdates"></param>
         public async Task<bool> LikeResource(string resourceId, string resourceType)
         {
-            //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-
-            //await apiSemaphore.WaitAsync();
-
-            //var request = new RestRequest("rating", Method.POST);
-            //request.RequestFormat = DataFormat.Xml;
-
             var param = new Dictionary<string, object>();
             param.Add("rating[rating]", 1);
             param.Add("rating[resource_id]", resourceId);
             param.Add("rating[resource_type]", resourceType);
 
             var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("rating", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
-
-            //var response = await client.ExecuteAsync(request);
-
-            //ApiCooldown();
 
             if (response.StatusCode == 200 && response.ResponseStatus == ResponseStatus.Completed)
                 return true;
@@ -150,10 +139,6 @@ namespace MyShelf.API.Services
             //param.Add("rating[resource_type]", resourceType);
 
             var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("rating", Method.DELETE, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
-
-            //var response = await client.ExecuteAsync(request);
-
-            //ApiCooldown();
 
             if (response.StatusCode == 200 && response.ResponseStatus == ResponseStatus.Completed)
                 return true;
@@ -235,25 +220,13 @@ namespace MyShelf.API.Services
         /// <param name="maxUpdates"></param>
         public async Task<String> PostStatusUpdate(string bookId, string page, string percent, string body)
         {
-            //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-
-            //await apiSemaphore.WaitAsync();
-
-            //var request = new RestRequest("user_status.xml", Method.POST);
-            //request.RequestFormat = DataFormat.Xml;
-
             var param = new Dictionary<string, object>();
             if (!String.IsNullOrEmpty(bookId)) param.Add("user_status[book_id]", bookId);
             if (!String.IsNullOrEmpty(page))  param.Add("user_status[page]", page);
             if (!String.IsNullOrEmpty(percent))  param.Add("user_status[percent]", percent);
             if (!String.IsNullOrEmpty(body)) param.Add("user_status[body]", body);
 
-            //var response = await client.ExecuteAsync(request);
-
             var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("user_status.xml", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
-
-
-            //ApiCooldown();
 
             //TODO: This is a quick workaround
             if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)

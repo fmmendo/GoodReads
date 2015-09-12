@@ -40,5 +40,15 @@ namespace MyShelf.Pages
 
             base.SaveState(e, pageState);
         }
+
+        private void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var vm = (e.OriginalSource as Windows.UI.Xaml.Controls.HyperlinkButton)?.DataContext as UserStatusViewModel;
+            if (vm == null)
+                return;
+
+            WriteReviewControl.Review = vm;
+            WriteReviewControl.Show();
+        }
     }
 }

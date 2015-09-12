@@ -3,6 +3,7 @@ using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using MyShelf.API.XML;
 using MyShelf.API.XML.Utilities;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,6 +101,81 @@ namespace MyShelf.API.Services
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
             return result.Search;
+        }
+
+        public async Task<string> CreateReview(string bookId, string body, string rating, string readAt, string shelf)
+        {
+            var param = new Dictionary<string, object>();
+            if (!String.IsNullOrEmpty(bookId)) param.Add("book_id", bookId);
+            if (!String.IsNullOrEmpty(body)) param.Add("review[review]", body);
+            if (!String.IsNullOrEmpty(rating)) param.Add("review[rating]", rating);
+            if (!String.IsNullOrEmpty(readAt)) param.Add("review[read_at]", readAt);
+            if (!String.IsNullOrEmpty(shelf)) param.Add("shelf", shelf);
+
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("review.xml ", Method.PUT, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+
+            //TODO: This is a quick workaround
+            if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
+            {
+                var result = response.Content.ToString();
+                var start = result.IndexOf("<id type=\"integer\">") + 19;
+                var end = result.IndexOf("</id>", start);
+                string id = result.Substring(start, end - start);
+                //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
+
+                //return status;
+
+
+                return id;
+            }
+            else return String.Empty;
+            //else
+            //    return false;
+        }
+
+        public async Task<string> EditReview(string reviewId, string finished, string body, string rating, string readAt, string shelf)
+        {
+
+            var param = new Dictionary<string, object>();
+            if (!String.IsNullOrEmpty(reviewId)) param.Add("id", reviewId);
+            if (!String.IsNullOrEmpty(body)) param.Add("review[review]", body);
+            if (!String.IsNullOrEmpty(rating)) param.Add("review[rating]", rating);
+            if (!String.IsNullOrEmpty(readAt)) param.Add("review[read_at]", readAt);
+            if (!String.IsNullOrEmpty(finished)) param.Add("finished", finished);
+            if (!String.IsNullOrEmpty(shelf)) param.Add("shelf", shelf);
+
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync($"review/{reviewId}.xml ", Method.PUT, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+
+            //TODO: This is a quick workaround
+            if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
+            {
+                var result = response.Content.ToString();
+                var start = result.IndexOf("<id type=\"integer\">") + 19;
+                var end = result.IndexOf("</id>", start);
+                string id = result.Substring(start, end - start);
+                //var status = DeserializeResponse<UserStatus>(response.Content.ToString());
+
+                //return status;
+
+
+                return id;
+            }
+            else return String.Empty;
+            //else
+            //    return false;
+        }
+
+        public async Task<Review> GetUserReview(string bookId, string userId = null)
+        {
+            if (string.IsNullOrEmpty(userId))
+                userId = MyShelfSettings.Instance.GoodreadsUserID;
+
+            //https://www.goodreads.com/review/show_by_user_and_book.xml?book_id=50&key=JRjTYygQzUjkodkHuqfOjg&user_id=1
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.UserReview, bookId, MyShelfSettings.Instance.ConsumerKey, userId));
+
+            var result = GoodReadsSerializer.DeserializeResponse(results);
+
+            return result.Review;
         }
     }
 }

@@ -54,6 +54,13 @@ namespace MyShelf.API.Services
         /// </summary>
         public static string BookShow => String.Format("{0}{1}", BaseUrl, "/book/show/{0}?format=xml&key={1}");
 
+        /// <summary>
+        /// 1. Book Id
+        /// 2. API KEY
+        /// 3. User Id
+        /// </summary>
+        public static string UserReview => String.Format("{0}{1}", BaseUrl, "/review/show_by_user_and_book.xml?book_id={0}&key={1}&user_id={2}");
+
         public static string FriendUpdates => "updates/friends.xml";
 
         public static string FriendList => "/friend/user/{0}.xml?";// => "friend/user.xml";

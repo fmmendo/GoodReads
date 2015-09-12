@@ -19,14 +19,13 @@ namespace MyShelf.ViewModels
         public string Page { get; set; }
         public bool Updating { get { return Get(false); } set { Set(value); } }
         public bool UpdatingPage { get { return Get(true); } set { Set(value); } }
+        public string BookPages { get; set; }
+        public string BookId { get; set; }
 
         public string UpdatePercentage { get { return Get(Percent.ToString()); } set { Set(value); } }
         public string UpdatePageNum { get { return Get(Page); } set { Set(value); } }
         public string UpdateText { get { return Get(string.Empty); } set { Set(value); } }
 
-        public string BookPages { get; set; }
-
-        private string bookId;
         private string authorId;
 
         public UserStatusViewModel(UserStatus status)
@@ -37,7 +36,7 @@ namespace MyShelf.ViewModels
             BookPages = status.Book.NumPages;
             Percent = double.Parse(status.Percent);
             Page = status.Page;
-            bookId = status.Book.Id;
+            BookId = status.Book.Id;
             authorId = status.Book.Authors.FirstOrDefault()?.Id;
 
             Updating = false;
@@ -46,7 +45,7 @@ namespace MyShelf.ViewModels
 
         public void BookClick()
         {
-            NavigationService.Navigate(typeof(BookPage), bookId);
+            NavigationService.Navigate(typeof(BookPage), BookId);
         }
 
         public void AuthorClick()
@@ -66,7 +65,7 @@ namespace MyShelf.ViewModels
 
         public async void PostUpdate()
         {
-            var result = await UserService.Instance.PostStatusUpdate(bookId, 
+            var result = await UserService.Instance.PostStatusUpdate(BookId, 
                                                                      UpdatingPage ? UpdatePageNum : null, 
                                                                      UpdatingPage ? null : UpdatePercentage, 
                                                                      UpdateText);
