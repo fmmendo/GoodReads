@@ -1,4 +1,5 @@
-﻿using MyShelf.ViewModels;
+﻿using Mendo.UAP.Common;
+using MyShelf.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,12 +22,6 @@ namespace MyShelf.Controls
 {
     public sealed partial class ReviewControl : UserControl
     {
-        public ReviewControl()
-        {
-            InitializeComponent();
-            VisualStateManager.GoToState(this, HiddenState.Name, false);
-        }
-
         public UserStatusViewModel Review
         {
             get { return (UserStatusViewModel)GetValue(ReviewProperty); }
@@ -42,6 +37,23 @@ namespace MyShelf.Controls
         public string ReviewBody { get; set; }
         public DateTime ReadAt { get; set; } = DateTime.Today;
 
+        public ReviewControl()
+        {
+            InitializeComponent();
+            VisualStateManager.GoToState(this, HiddenState.Name, false);
+
+            if (DeviceInformation.Instance.HasPhoneHardwareButtons)
+            {
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed; ;
+            }
+        }
+
+        private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+        {
+            if (DisplayStates.CurrentState == VisibleState)
+                Hide();
+        }
+
         private void rect_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!IsPosting)
@@ -53,14 +65,11 @@ namespace MyShelf.Controls
             if (Review == null)
                 return;
 
-                var r = await API.Services.BookService.Instance.GetUserReview(Review.BookId);
-                ReviewId = r.Id;
-
-            //Review = new PostRatingsRequest();
-            //Review.OrderId = OrderId;
-
             if (DisplayStates.CurrentState == HiddenState)
                 VisualStateManager.GoToState(this, VisibleState.Name, true);
+
+            var r = await API.Services.BookService.Instance.GetUserReview(Review.BookId);
+            ReviewId = r.Id;
         }
 
         public void Hide()
@@ -72,8 +81,11 @@ namespace MyShelf.Controls
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             IsPosting = true;
-            await API.Services.BookService.Instance.EditReview(ReviewId, "true", ReviewBody, Rating.ToString(), ReadAt.ToString("yyyy-MM-dd"), "read");
+            var success = await API.Services.BookService.Instance.EditReview(ReviewId, "true", ReviewBody, Rating.ToString(), ReadAt.ToString("yyyy-MM-dd"), "read");
             IsPosting = false;
+
+            if (success)
+                Hide();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

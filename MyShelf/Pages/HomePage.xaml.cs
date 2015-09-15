@@ -1,4 +1,5 @@
 ﻿using Mendo.UAP.Common;
+using Microsoft.AdMediator.Core.Models;
 using MyShelf.ViewModels;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Navigation;

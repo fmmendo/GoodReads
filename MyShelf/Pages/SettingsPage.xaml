@@ -9,6 +9,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Button Content="Remove Ads" Click="Button_Click"/>
     </Grid>
 </common:PageBase>

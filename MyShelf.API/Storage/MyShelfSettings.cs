@@ -13,6 +13,8 @@ namespace MyShelf.API.Storage
         public string ConsumerKey => "JRjTYygQzUjkodkHuqfOjg";
         public string ConsumerSecret => "nEQ6pRIdWTY27jsIYHXW9regO4aCIPDuozjUls8FASk";
 
+        public string InAppProductKey => "RemoveAds";
+
         /// <summary>
         /// Roaming settings
         /// </summary>

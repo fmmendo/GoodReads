@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:MyShelf.Controls"
     xmlns:data="using:MyShelf.ViewModels"
+    xmlns:adduplex="using:AdDuplex"
     xmlns:triggers="using:WindowsStateTriggers"
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
@@ -98,7 +99,6 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="3*" MaxWidth="512" x:Name="cdReading"/>
         </Grid.ColumnDefinitions>
-
         <ListView x:Name="lvUpdates"
                   ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
                   ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
@@ -178,15 +178,19 @@
                   Header="Currently Reading"
                   SelectionMode="None"
                   Grid.Column="0"
-                  Padding="0,0,0,24">
+                  Padding="0,0,0,0">
             <ListView.ItemContainerTransitions>
                 <TransitionCollection>
                     <RepositionThemeTransition/>
                 </TransitionCollection>
             </ListView.ItemContainerTransitions>
+            <ListView.Footer>
+                
+                        <adduplex:AdControl Visibility="{x:Bind ViewModel.CanShowAds, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" AdUnitId="168691" AppKey="512dfb2a-abb1-4cee-a27f-0610d0ac532c" />
+            </ListView.Footer>
             <ListView.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
+                        <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
                 </DataTemplate>
             </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
@@ -279,7 +283,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <controls:ReviewControl x:Name="WriteReviewControl" Grid.ColumnSpan="2" />
-        <!--<Universal:AdMediatorControl x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE"/>-->
+
     </Grid>
 
     <common:PageBase.TopBarContent>

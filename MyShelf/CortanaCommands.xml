@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-gb">
+    <AppName>My Shelf</AppName>
+    <Example> Search for a book </Example>
+
+    <Command Name="findBook">
+      <Example> Find me The Martian</Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase">Search for {book}</ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified">Search for {book} on {builtin:AppName}</ListenFor>
+      <Feedback>Searching for {book}</Feedback>
+      <Navigate/>
+    </Command>
+
+    <PhraseTopic Label="book" Scenario="Search">
+      <Subject>Book</Subject>
+    </PhraseTopic>
+  </CommandSet>
+
+  <CommandSet xml:lang="en-us">
+    <AppName>My Shelf</AppName>
+    <Example> I fancy Italian </Example>
+
+    <Command Name="findBook">
+      <Example> Find me The Martian</Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase">Search for {book}</ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified">Search for {book} on {builtin:AppName}</ListenFor>
+      <Feedback>Searching for {book}</Feedback>
+      <Navigate/>
+    </Command>
+
+    <PhraseTopic Label="book" Scenario="Search">
+      <Subject>Book</Subject>
+    </PhraseTopic>
+  </CommandSet>
+
+</VoiceCommands>

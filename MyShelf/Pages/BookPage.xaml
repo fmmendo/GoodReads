@@ -5,13 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyShelf.Pages"
     xmlns:data="using:MyShelf.ViewModels"
+    xmlns:controls="using:MyShelf.Controls"
+    xmlns:Universal="using:Microsoft.AdMediator.Universal" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mcontrols="using:Mendo.UAP.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="NarrowState">
@@ -19,13 +21,13 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
-                        <Setter Target="cdBook.Width" Value="120"/>
+                        <Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>
+                        <!--<Setter Target="cdBook.Width" Value="120"/>-->
                         <!--<Setter Target="rdDescription.Height" Value="0"/>-->
-                        <Setter Target="skDetails.(Grid.RowSpan)" Value="2"/>
-                        <Setter Target="tbDescription.(Grid.Row)" Value="2"/>
-                        <Setter Target="tbDescription.(Grid.Column)" Value="0"/>
-                        <Setter Target="tbDescription.(Grid.ColumnSpan)" Value="2"/>
+                        <!--<Setter Target="skDetails.(Grid.RowSpan)" Value="2"/>-->
+                        <!--<Setter Target="tbDescription.(Grid.Row)" Value="2"/>-->
+                        <!--<Setter Target="tbDescription.(Grid.Column)" Value="0"/>-->
+                        <!--<Setter Target="tbDescription.(Grid.ColumnSpan)" Value="2"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -34,6 +36,14 @@
                         <AdaptiveTrigger MinWindowWidth="640"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="rdDetails.Height" Value="0"/>
+                        <Setter Target="icDetails.(Grid.Row)" Value="1"/>
+                        <Setter Target="icDetails.(Grid.Column)" Value="1"/>
+                        <Setter Target="icDetails.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="skInfo.(Grid.RowSpan)" Value="1"/>
+                        <Setter Target="cdBook.Width" Value="*"/>
+                        <Setter Target="cdBook.MaxWidth" Value="288"/>
+                        <Setter Target="cdDetails.Width" Value="3*"/>
                         <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
                     </VisualState.Setters>
                 </VisualState>
@@ -43,59 +53,83 @@
                         <AdaptiveTrigger MinWindowWidth="1280"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="rdDetails.Height" Value="0"/>
+                        <Setter Target="icDetails.(Grid.Row)" Value="1"/>
+                        <Setter Target="icDetails.(Grid.Column)" Value="1"/>
+                        <Setter Target="icDetails.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="skInfo.(Grid.RowSpan)" Value="1"/>
+                        <Setter Target="cdBook.Width" Value="*"/>
+                        <Setter Target="cdBook.MaxWidth" Value="288"/>
+                        <Setter Target="cdDetails.Width" Value="3*"/>
                         <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="cdBook" Width="288"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition x:Name="rdDescription" Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Image Grid.RowSpan="2" VerticalAlignment="Top" Margin="12" Stretch="Uniform">
-            <Image.Source>
-                <BitmapImage x:Name="bCover" UriSource="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"></BitmapImage>
-            </Image.Source>
-        </Image>
-        <StackPanel x:Name="skDetails" Grid.Column="1" VerticalAlignment="Top">
-            <TextBlock Text="{x:Bind ViewModel.BookTitle, Mode=OneWay}" Style="{StaticResource ListHeaderTextBlock}" MaxLines="2" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
-            <TextBlock Text="{x:Bind ViewModel.BookAuthor, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
-            <TextBlock Text="{x:Bind ViewModel.Stats, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
-            <mcontrols:RatingControl Rating="{x:Bind ViewModel.Rating, Mode=OneWay}" FontSize="18" Foreground="White" Margin="12" HorizontalAlignment="Left"/>
-            <ItemsControl ItemsSource="{x:Bind ViewModel.Details, Mode=OneWay}" Margin="0,12">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="data:Detail">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind Key, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
-                            <TextBlock Text="{x:Bind Value, Mode=OneWay}"  Style="{StaticResource SubtitleTextBlock}" FontWeight="SemiLight"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-        <TextBlock x:Name="tbDescription" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Text="{x:Bind ViewModel.Description, Mode=OneWay}" Margin="12" Style="{StaticResource NormalTextBlock}" TextWrapping="WrapWholeWords"/>
-
-        <ListView Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Reviews, Mode=OneWay}" Header="Reviews">
-            <ListView.HeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:ReviewViewModel">
-                    <StackPanel>
-                        <TextBlock Text="{x:Bind UserName, Mode=OneWay}"/>
-                        <TextBlock Text="{x:Bind DateAdded, Mode=OneWay}"/>
-                        <TextBlock Text="{x:Bind Body, Mode=OneWay}" TextWrapping="WrapWholeWords"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="cdBook" Width="120"/>
+                    <ColumnDefinition x:Name="cdDetails" Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto" x:Name="rdDetails" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Image Grid.RowSpan="2" VerticalAlignment="Top" Margin="12" Stretch="Uniform">
+                    <Image.Source>
+                        <BitmapImage x:Name="bCover" UriSource="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"></BitmapImage>
+                    </Image.Source>
+                </Image>
+                <StackPanel x:Name="skInfo" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top">
+                    <TextBlock Text="{x:Bind ViewModel.BookTitle, Mode=OneWay}" Style="{StaticResource ListHeaderTextBlock}" MaxLines="2" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
+                    <TextBlock Text="{x:Bind ViewModel.BookAuthor, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
+                    <TextBlock Text="{x:Bind ViewModel.Stats, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
+                    <mcontrols:RatingControl Rating="{x:Bind ViewModel.Rating, Mode=OneWay}" FontSize="18" Foreground="White" Margin="12" HorizontalAlignment="Left"/>
+                    <controls:AddToShelfControl HorizontalAlignment="Left" Margin="12" BookId="{x:Bind ViewModel.BookId, Mode=OneWay}" Shelves="{x:Bind ViewModel.Shelves, Mode=OneWay}"/>
+                </StackPanel>
+                
+                <ItemsControl x:Name="icDetails" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Details, Mode=OneWay}" Margin="0,12">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="data:Detail">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Bind Key, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
+                                <TextBlock Text="{x:Bind Value, Mode=OneWay}"  Style="{StaticResource SubtitleTextBlock}" FontWeight="SemiLight"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <TextBlock x:Name="tbDescription" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="{x:Bind ViewModel.Description, Mode=OneWay}" Margin="12" Style="{StaticResource NormalTextBlock}" TextWrapping="WrapWholeWords"/>
+                
+                <Universal:AdMediatorControl Grid.Row="4" Grid.ColumnSpan="2" x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE" />
+                
+                <GridView Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Reviews, Mode=OneWay}" Header="Reviews">
+                    <GridView.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
+                        </DataTemplate>
+                    </GridView.HeaderTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="data:ReviewViewModel">
+                            <StackPanel Width="320" Margin="12" VerticalAlignment="Top">
+                                <TextBlock Text="{x:Bind UserName, Mode=OneWay}" Foreground="White"/>
+                                <TextBlock Text="{x:Bind DateAdded, Mode=OneWay}" Foreground="White"/>
+                                <TextBlock Text="{x:Bind Body, Mode=OneWay}"  Foreground="White" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="10"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </common:PageBase>

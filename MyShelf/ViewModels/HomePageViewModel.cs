@@ -1,11 +1,13 @@
 ﻿using Mendo.UAP.Common;
 using MyShelf.API.Services;
+using MyShelf.API.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store;
 
 namespace MyShelf.ViewModels
 {
@@ -13,6 +15,8 @@ namespace MyShelf.ViewModels
     {
         private IAuthenticationService authService = AuthenticationService.Instance;
         private IUserService userService = UserService.Instance;
+
+        private ProductLicense productLicense = null;
 
         public ObservableCollection<UpdateViewModel> Updates { get; } = new ObservableCollection<UpdateViewModel>();
         public ObservableCollection<UserStatusViewModel> CurrentlyReading { get; } = new ObservableCollection<UserStatusViewModel>();
@@ -24,9 +28,11 @@ namespace MyShelf.ViewModels
             set {showCurrentlyReading = value; OnPropertyChanged(); }
         }
 
+        public bool CanShowAds => !(productLicense != null && productLicense.IsActive);
 
         public HomePageViewModel()
         {
+            CurrentApp.LicenseInformation.ProductLicenses.TryGetValue(MyShelfSettings.Instance.InAppProductKey, out productLicense);
         }
 
 

@@ -26,6 +26,8 @@ namespace MyShelf.ViewModels
         public ObservableCollection<Detail> Details { get; set; } = new ObservableCollection<Detail>();
         public ObservableCollection<ReviewViewModel> Reviews { get; set; } = new ObservableCollection<ReviewViewModel>();
 
+        public IEnumerable<string> Shelves { get; set; }
+
         public BookViewModel(Book book)
         {
             BookId = book.Id;
@@ -74,6 +76,9 @@ namespace MyShelf.ViewModels
             BuildBookDetailsList(book);
             OnPropertyChanged("Details");
             OnPropertyChanged("Stats");
+
+            Shelves = (await ShelfService.Instance.GetShelvesList()).Select(s => s.Name);
+            OnPropertyChanged("Shelves");
 
             LoadReviews(book);
         }

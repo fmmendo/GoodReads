@@ -1,2 +1,2 @@
-MainPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\bin\x86\Release\Upload\MyShelf_0.6.2.0_x86.appx
-SymbolPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\AppPackages\MyShelf_0.6.2.0\MyShelf_0.6.2.0_x86.appxsym
+MainPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\bin\x86\Release\Upload\MyShelf_0.6.3.0_x86.appx
+SymbolPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\AppPackages\MyShelf_0.6.3.0\MyShelf_0.6.3.0_x86.appxsym

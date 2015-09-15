@@ -12,6 +12,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.ExtendedExecution;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,6 +29,8 @@ namespace MyShelf
     /// </summary>
     sealed partial class App : Application
     {
+        private readonly string AppLaunchCount = "APP_LAUNCH_COUNT_SETTING";
+
         public MainFrame Root = null;
 
         public Frame RootFrame { get; private set; }
@@ -47,9 +51,41 @@ namespace MyShelf
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             CreateRootFrame(e.PreviousExecutionState, e.Arguments);
+
+            RateMyApp();
+
+            try
+            {
+                // Install the main VCD. Since there's no simple way to test that the VCD has been imported, 
+                // or that it's your most recent version, it's not unreasonable to do this upon app load.
+                StorageFile vcdStorageFile = await Package.Current.InstalledLocation.GetFileAsync(@"CortanaCommands.xml");
+                await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdStorageFile);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Installing Voice Commands Failed: " + ex.ToString());
+            }
+        }
+
+        protected override async void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+
+            switch (args.Kind)
+            {
+                case ActivationKind.VoiceCommand:
+                    //VoiceService.Instance.ProcessVoiceCommand(args);
+                    break;
+                case ActivationKind.ToastNotification:
+                    break;
+                case ActivationKind.Search:
+                    break;
+            }
+
+            await CreateRootFrame(args.PreviousExecutionState, null);
         }
 
         private async Task CreateRootFrame(ApplicationExecutionState executionState, string args)
@@ -149,5 +185,46 @@ namespace MyShelf
 
             deferral.Complete();
         }
+
+
+        #region Rate My App
+        private void RateMyApp()
+        {
+            var launchcount = Settings.Get(AppLaunchCount, SettingsLocation.Local);
+            if (launchcount == null)
+                Settings.Set(AppLaunchCount, 1, SettingsLocation.Local);
+            else if ((int)launchcount == 2)
+            {
+                MessageDialog md = new MessageDialog("Thank you for using myShelf, would you like to rate the app?", "Rate myShelf?");
+                md.Commands.Add(new UICommand(
+                    "No",
+                    new UICommandInvokedHandler(this.CommandInvokedHandler)));
+                md.Commands.Add(new UICommand(
+                    "Yes",
+                    new UICommandInvokedHandler(this.CommandInvokedHandler)));
+
+                // Set the command that will be invoked by default
+                md.DefaultCommandIndex = 1;
+
+                // Set the command to be invoked when escape is pressed
+                md.CancelCommandIndex = 0;
+                md.ShowAsync();
+
+                Settings.Set(AppLaunchCount, ((int)launchcount) + 1, SettingsLocation.Local, true);
+            }
+            else if ((int)launchcount > 2)
+                return;
+            else
+                Settings.Set(AppLaunchCount, ((int)launchcount) + 1, SettingsLocation.Local, true);
+        }
+
+        private async void CommandInvokedHandler(IUICommand command)
+        {
+            if (command.Label == "Yes")
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=9WZDNCRDR8RZ"));
+            }
+        }
+        #endregion
     }
 }

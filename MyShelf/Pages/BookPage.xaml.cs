@@ -1,4 +1,5 @@
 ﻿using Mendo.UAP.Common;
+using Microsoft.AdMediator.Core.Models;
 using MyShelf.ViewModels;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Navigation;
@@ -17,6 +18,9 @@ namespace MyShelf.Pages
         public BookPage()
         {
             this.InitializeComponent();
+
+            AdMediator_Home_1.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 728;
+            AdMediator_Home_1.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 90;
         }
 
         protected override void LoadState(object parameter, Dictionary<string, object> pageState)

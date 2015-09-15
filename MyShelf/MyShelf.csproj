@@ -166,6 +166,7 @@
   <ItemGroup>
     <Content Include="Assets\book_placeholder_111.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="CortanaCommands.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -247,6 +248,9 @@
     <Folder Include="Assets\Fonts\" />
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="AdDuplex.Windows10, Version=10.0.0.2">
+      <Name>AdDuplex SDK for Windows 10 %28XAML%29</Name>
+    </SDKReference>
     <SDKReference Include="Microsoft.AdMediator.Universal, Version=1.0">
       <Name>Microsoft.AdMediator.Universal</Name>
     </SDKReference>
@@ -258,6 +262,9 @@
     </SDKReference>
     <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
       <Name>Microsoft.VCLibs.120</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
