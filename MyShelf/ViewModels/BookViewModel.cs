@@ -43,6 +43,7 @@ namespace MyShelf.ViewModels
 
         public BookViewModel(string id)
         {
+            BookId = id;
             GetBookInfo(id);
         }
 

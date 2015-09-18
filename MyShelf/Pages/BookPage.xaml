@@ -114,16 +114,17 @@
                             <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
                         </DataTemplate>
                     </GridView.HeaderTemplate>
-                    <GridView.ItemsPanel>
+                    <!--<GridView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <ItemsWrapGrid />
                         </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
+                    </GridView.ItemsPanel>-->
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="data:ReviewViewModel">
                             <StackPanel Width="320" Margin="12" VerticalAlignment="Top">
                                 <TextBlock Text="{x:Bind UserName, Mode=OneWay}" Foreground="White"/>
-                                <TextBlock Text="{x:Bind DateAdded, Mode=OneWay}" Foreground="White"/>
+                                <TextBlock Text="{x:Bind DateAdded, Mode=OneWay}" Foreground="#999999" FontSize="10"/>
+                                <mcontrols:RatingControl Rating="{x:Bind Rating, Mode=OneWay}" Margin="0,12" FontSize="18" Foreground="White" HorizontalAlignment="Left"/>
                                 <TextBlock Text="{x:Bind Body, Mode=OneWay}"  Foreground="White" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="10"/>
                             </StackPanel>
                         </DataTemplate>

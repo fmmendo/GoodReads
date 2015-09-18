@@ -25,7 +25,7 @@ namespace MyShelf.ViewModels
         {
             Rating = work.AverageRating;
             BooksCount = work.BooksCount;
-            BestBookId = work.BestBookId;
+            BestBookId = work?.BestBook?.Id;
             RatingsCount = work.RatingsCount;
             TextReviewsCount = work.TextReviewsCount;
             //AuthorName = work.BestBook.Authors?.FirstOrDefault().Name;
