@@ -10,21 +10,26 @@
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <GridView ItemsSource="{x:Bind ViewModel.Friends}">
+    <Grid>
+        <GridView ItemsSource="{x:Bind ViewModel.Friends}" Padding="12" SelectionMode="None">
+            <GridView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <RepositionThemeTransition/>
+                </TransitionCollection>
+            </GridView.ItemContainerTransitions>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:UserViewModel">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Padding="0,0,24,12">
                         <Ellipse Height="50" Width="50" Grid.RowSpan="2" VerticalAlignment="Top">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="UniformToFill"/>
                             </Ellipse.Fill>
                         </Ellipse>
-                        <StackPanel>
+                        <StackPanel Margin="12,0,0,0">
                             <HyperlinkButton Content="{x:Bind Name, Mode=OneWay}" Click="{x:Bind UserClick}"/>
                             <StackPanel Orientation="Horizontal">
-                                <HyperlinkButton Content="{x:Bind BooksCount, Mode=OneWay}" Click="{x:Bind BooksClick}"/>
-                                <HyperlinkButton Content="{x:Bind FriendsCount, Mode=OneWay}" Click="{x:Bind FriendsClick}"/>
+                                <TextBlock Text="{x:Bind BooksCount, Mode=OneWay}" Style="{StaticResource NormalTextBlock}" Margin="0,0,12,0"/>
+                                <TextBlock Text="{x:Bind FriendsCount, Mode=OneWay}" Style="{StaticResource NormalTextBlock}" Margin="0" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

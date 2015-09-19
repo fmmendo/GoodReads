@@ -27,6 +27,7 @@
             <!--#endregion-->
 
             <!--#region Brushes -->
+            <SolidColorBrush x:Key="LightBackground" Color="#FFF5F5F5" />
             <SolidColorBrush x:Key="DarkGray" Color="#FF2B2B2B" />
             <SolidColorBrush x:Key="GoodReadsLightBackground" Color="#FFF0EFE1" />
             <SolidColorBrush x:Key="GoodReadsBrown" Color="#FF645240" />

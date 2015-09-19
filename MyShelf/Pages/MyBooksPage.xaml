@@ -14,7 +14,7 @@
         <Pivot ItemsSource="{x:Bind ViewModel.Shelves}">
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="datatype:ShelfViewModel">
-                    <TextBlock Text="{x:Bind Name}"/>
+                    <TextBlock Text="{x:Bind Name}" Foreground="White"/>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
@@ -28,16 +28,16 @@
                         </GridView.ItemContainerTransitions>
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="datatype:BookViewModel">
-                                <Grid Width="180" Height="270" Margin="4">
+                                <Grid Width="144" Height="216" Margin="4">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
                                         <!--<RowDefinition Height="Auto"/>-->
                                     </Grid.RowDefinitions>
-                                    <Image Grid.RowSpan="2" Stretch="UniformToFill" Width="180">
+                                    <Image Grid.RowSpan="2" Stretch="UniformToFill" Width="144">
                                         <Image.Source>
                                             <BitmapImage UriSource="{Binding BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue={Binding BookImageUrl}}"
-                                                         DecodePixelWidth="180" DecodePixelType="Logical" />
+                                                         DecodePixelWidth="144" DecodePixelType="Logical" />
                                         </Image.Source>
                                     </Image>
                                     <Border Grid.RowSpan="2">
