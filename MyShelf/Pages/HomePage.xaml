@@ -218,7 +218,7 @@
                             </Grid.RowDefinitions>
                             <Image x:Name="imgReadingBook" Grid.RowSpan="3" Stretch="Uniform" VerticalAlignment="Top" Margin="0">
                                 <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png', FallbackValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
+                                    <BitmapImage UriSource="{Binding BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png', FallbackValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
                                 </Image.Source>
                             </Image>
                             <HyperlinkButton Grid.Column="1" Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Margin="12,-6,0,0" FontSize="18" VerticalAlignment="Top" />

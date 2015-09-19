@@ -42,6 +42,19 @@ namespace MyShelf.ViewModels
             Updating = false;
         }
 
+        public UserStatusViewModel(Update update)
+        {
+            BookTitle = update?.Object?.ReadStatus?.Review?.Book?.Title;
+            BookImageUrl = update?.Object?.ReadStatus?.Review?.Book?.ImageUrl;
+            BookAuthor = string.Join(", ", update?.Object?.ReadStatus?.Review?.Book?.Authors.Select(a => a.Name));
+            BookPages = update?.Object?.ReadStatus?.Review?.Book?.NumPages;
+            Percent = 0d;
+            Page = "0";
+            BookId = update?.Object?.ReadStatus?.Review?.Book?.Id;
+            authorId = update?.Object?.ReadStatus?.Review?.Book?.Authors.FirstOrDefault()?.Id;
+
+            Updating = false;
+        }
 
         public void BookClick()
         {
@@ -69,6 +82,8 @@ namespace MyShelf.ViewModels
                                                                      UpdatingPage ? UpdatePageNum : null, 
                                                                      UpdatingPage ? null : UpdatePercentage, 
                                                                      UpdateText);
+            if (!String.IsNullOrEmpty(result))
+                ToggleUpdating();
         }
     }
 }
