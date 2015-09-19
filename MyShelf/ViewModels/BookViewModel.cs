@@ -25,7 +25,7 @@ namespace MyShelf.ViewModels
         public double MyRating { get; set; }
         public ObservableCollection<Detail> Details { get; set; } = new ObservableCollection<Detail>();
         public ObservableCollection<ReviewViewModel> Reviews { get; set; } = new ObservableCollection<ReviewViewModel>();
-
+        public bool IsTitleVisible { get; set; } = false;
         public IEnumerable<string> Shelves { get; set; }
 
         public BookViewModel(Book book)
@@ -39,6 +39,8 @@ namespace MyShelf.ViewModels
 
             Link = book.Link;
             Description = book.Description;
+
+            IsTitleVisible = book.ImageUrl.Contains("nophoto");
         }
 
         public BookViewModel(string id)

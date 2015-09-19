@@ -17,9 +17,10 @@ namespace MyShelf.ViewModels
         public String TextReviewsCount { get; set; }
         public String AuthorName { get; set; }
         public String Id { get; set; }
-        public String ImageURL { get; set; }
-        public String SmallImageURL { get; set; }
+        public Uri ImageURL { get; set; }
+        public Uri SmallImageURL { get; set; }
         public String Title { get; set; }
+        public bool IsTitleVisible { get; set; }
 
         public WorkViewModel(Work work)
         {
@@ -30,9 +31,12 @@ namespace MyShelf.ViewModels
             TextReviewsCount = work.TextReviewsCount;
             //AuthorName = work.BestBook.Authors?.FirstOrDefault().Name;
             Id = work.Id;
-            ImageURL = work.BestBook.ImageUrl;
-            SmallImageURL = work.BestBook.SmallImageUrl;
+            ImageURL = new Uri(work.BestBook.ImageUrl);
+            SmallImageURL = new Uri(work.BestBook.SmallImageUrl);
             Title = work.BestBook.Title;
+
+
+            IsTitleVisible = work.BestBook.ImageUrl.Contains("nophoto");
         }
     }
 }

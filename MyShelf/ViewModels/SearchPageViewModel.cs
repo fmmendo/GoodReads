@@ -22,6 +22,7 @@ namespace MyShelf.ViewModels
         {
             var results = await BookService.Instance.Search(SearchTerm);
 
+            Results.Clear();
             foreach (var work in results.Results.Work)
             {
                 if (!String.IsNullOrEmpty(work?.BestBook?.Id))
