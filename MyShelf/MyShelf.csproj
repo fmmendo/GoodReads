@@ -156,6 +156,7 @@
     <Compile Include="ViewModels\UserStatusViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\WorkViewModel.cs" />
+    <Compile Include="VoiceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

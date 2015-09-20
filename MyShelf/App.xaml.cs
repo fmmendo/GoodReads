@@ -75,18 +75,19 @@ namespace MyShelf
         {
             base.OnActivated(args);
 
+
+            await CreateRootFrame(args.PreviousExecutionState, null);
+
             switch (args.Kind)
             {
                 case ActivationKind.VoiceCommand:
-                    //VoiceService.Instance.ProcessVoiceCommand(args);
+                    VoiceService.Instance.ProcessVoiceCommand(args);
                     break;
                 case ActivationKind.ToastNotification:
                     break;
                 case ActivationKind.Search:
                     break;
             }
-
-            await CreateRootFrame(args.PreviousExecutionState, null);
         }
 
         private async Task CreateRootFrame(ApplicationExecutionState executionState, string args)
