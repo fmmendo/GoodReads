@@ -12,7 +12,7 @@ namespace MyShelf.Pages
     /// </summary>
     public sealed partial class FriendsPage : PageBase
     {
-        FriendsPageViewModel ViewModel => FriendsPageViewModel.Instance;
+        public FriendsPageViewModel ViewModel => FriendsPageViewModel.Instance;
 
         public FriendsPage()
         {
@@ -39,6 +39,11 @@ namespace MyShelf.Pages
 
             API.Services.AuthenticationService.Instance.AuthStateChanged -= Instance_AuthStateChanged;
             base.SaveState(e, pageState);
+        }
+
+        private void StackPanel_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

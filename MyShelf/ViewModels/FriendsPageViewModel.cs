@@ -1,5 +1,6 @@
 ﻿using Mendo.UAP.Common;
 using MyShelf.API.Services;
+using MyShelf.Pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,20 @@ namespace MyShelf.ViewModels
         private IAuthenticationService authService = AuthenticationService.Instance;
 
         public ObservableCollection<UserViewModel> Friends { get; set; } = new ObservableCollection<UserViewModel>();
+
+        private UserViewModel selectedFriend;
+        public UserViewModel SelectedFriend
+        {
+            get { return selectedFriend; }
+            set
+            {
+                selectedFriend = value;
+                OnPropertyChanged();
+
+                NavigationService.Navigate(typeof(UserPage), selectedFriend.Id);
+            }
+        }
+
 
         public async Task RefreshFriends()
         {

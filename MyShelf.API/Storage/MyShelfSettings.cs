@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store;
 using Windows.Storage;
 
 namespace MyShelf.API.Storage
@@ -13,7 +14,20 @@ namespace MyShelf.API.Storage
         public string ConsumerKey => "JRjTYygQzUjkodkHuqfOjg";
         public string ConsumerSecret => "nEQ6pRIdWTY27jsIYHXW9regO4aCIPDuozjUls8FASk";
 
+        #region IAP
         public string InAppProductKey => "RemoveAds";
+
+        public LicenseInformation License
+        {
+            get
+            {
+                // return CurrentApp.LicenseInformation;
+                return CurrentAppSimulator.LicenseInformation;
+            }
+        }
+
+        public bool DontShowAds => License.ProductLicenses[InAppProductKey].IsActive;
+        #endregion
 
         /// <summary>
         /// Roaming settings

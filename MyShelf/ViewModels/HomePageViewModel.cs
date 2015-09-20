@@ -15,9 +15,7 @@ namespace MyShelf.ViewModels
     {
         private IAuthenticationService authService = AuthenticationService.Instance;
         private IUserService userService = UserService.Instance;
-
-        private ProductLicense productLicense = null;
-
+        
         public ObservableCollection<UpdateViewModel> Updates { get; } = new ObservableCollection<UpdateViewModel>();
         public ObservableCollection<UserStatusViewModel> CurrentlyReading { get; } = new ObservableCollection<UserStatusViewModel>();
 
@@ -28,11 +26,9 @@ namespace MyShelf.ViewModels
             set {showCurrentlyReading = value; OnPropertyChanged(); }
         }
 
-        public bool CanShowAds => !(productLicense != null && productLicense.IsActive);
 
         public HomePageViewModel()
         {
-            CurrentApp.LicenseInformation.ProductLicenses.TryGetValue(MyShelfSettings.Instance.InAppProductKey, out productLicense);
         }
 
 

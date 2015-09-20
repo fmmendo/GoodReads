@@ -28,6 +28,7 @@ namespace MyShelf.ViewModels
 
         public ObservableCollection<BookViewModel> ShelfBooks { get; set; } = new ObservableCollection<BookViewModel>();
 
+        private BookViewModel selectedBook;
         public BookViewModel SelectedBook
         {
             get { return selectedBook; }
@@ -42,7 +43,6 @@ namespace MyShelf.ViewModels
             }
         }
 
-        private BookViewModel selectedBook;
 
         public ShelfViewModel(UserShelf userShelf)
         {

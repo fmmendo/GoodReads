@@ -51,7 +51,10 @@ namespace MyShelf.ViewModels
             if (DateTime.TryParse(update.UpdatedAt, out date))
                 UpdatedAt = date.ToString("dd MMM yyyy"); // "ddd, dd MMM yyyy HH:mm:ss"
 
-            UserId = update.Actor.Id;
+            if (String.IsNullOrEmpty(update.Actor.Id) && !String.IsNullOrEmpty(ImageUrl) && !ImageUrl.Contains("nophoto"))
+                UserId = System.IO.Path.GetFileNameWithoutExtension(ImageUrl);
+            else
+                UserId = update.Actor.Id;
 
             if (update.Type.Equals("review") && update.Object?.Book != null)
                 SetUpBookData(update.Object.Book);

@@ -113,7 +113,7 @@ namespace MyShelf.ViewModels
         }
         public void ProfileClick()
         {
-            NavigationService.Navigate(typeof(Pages.UserPage));
+            NavigationService.Navigate(typeof(Pages.UserPage), MyShelfSettings.Instance.GoodreadsUserID);
         }
         public void SettingsClick()
         {

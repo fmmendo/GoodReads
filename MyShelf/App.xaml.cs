@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.ExtendedExecution;
+using Windows.ApplicationModel.Store;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -52,8 +53,8 @@ namespace MyShelf
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
-        {
-            CreateRootFrame(e.PreviousExecutionState, e.Arguments);
+        { 
+           CreateRootFrame(e.PreviousExecutionState, e.Arguments);
 
             RateMyApp();
 

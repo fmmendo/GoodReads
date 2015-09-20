@@ -14,6 +14,7 @@ namespace MyShelf.Pages
     public sealed partial class HomePage : PageBase
     {
         HomePageViewModel ViewModel => HomePageViewModel.Instance;
+        public bool ShowAds => !API.Storage.MyShelfSettings.Instance.DontShowAds;
 
         public HomePage()
         {

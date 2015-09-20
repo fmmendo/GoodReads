@@ -12,21 +12,22 @@ namespace MyShelf.ViewModels
 {
     public class UserViewModel : ViewModelBase
     {
-        public string Name { get; set; }
-        public string ImageUrl { get; set; }
-        public string Link { get; set; }
-        public string Age { get; set; }
-        public string About { get; set; }
-        public string Gender { get; set; }
-        public string Location { get; set; }
-        public string Website { get; set; }
-        public string Joined { get; set; }
-        public string LastActive { get; set; }
-        public string Interests { get; set; }
-        public string FavouriteBooks { get; set; }
-        public string GroupsCount { get; set; }
-        public string FriendsCount { get; set; }
-        public string BooksCount { get; set; }
+        public string Id { get { return Get(string.Empty); } set { Set(value); } }
+        public string Name { get { return Get(string.Empty); } set { Set(value); } }
+        public string ImageUrl { get { return Get(string.Empty); } set { Set(value); } }
+        public string Link { get { return Get(string.Empty); } set { Set(value); } }
+        public string Age { get { return Get(string.Empty); } set { Set(value); } }
+        public string About { get { return Get(string.Empty); } set { Set(value); } }
+        public string Gender { get { return Get(string.Empty); } set { Set(value); } }
+        public string Location { get { return Get(string.Empty); } set { Set(value); } }
+        public string Website { get { return Get(string.Empty); } set { Set(value); } }
+        public string Joined { get { return Get(string.Empty); } set { Set(value); } }
+        public string LastActive { get { return Get(string.Empty); } set { Set(value); } }
+        public string Interests { get { return Get(string.Empty); } set { Set(value); } }
+        public string FavouriteBooks { get { return Get(string.Empty); } set { Set(value); } }
+        public string GroupsCount { get { return Get(string.Empty); } set { Set(value); } }
+        public string FriendsCount { get { return Get(string.Empty); } set { Set(value); } }
+        public string BooksCount { get { return Get(string.Empty); } set { Set(value); } }
 
         public ObservableCollection<UserStatusViewModel> CurrentlyReading { get; set; } = new ObservableCollection<UserStatusViewModel>();
         public ObservableCollection<UpdateViewModel> Updates { get; set; } = new ObservableCollection<UpdateViewModel>();
@@ -35,6 +36,11 @@ namespace MyShelf.ViewModels
         public UserViewModel(User friend)
         {
             PopulateData(friend);
+
+            if (String.IsNullOrEmpty(friend.Id) && !String.IsNullOrEmpty(friend.ImageUrl) && !friend.ImageUrl.Contains("nophoto"))
+                Id = System.IO.Path.GetFileNameWithoutExtension(friend.ImageUrl);
+            else
+                Id = friend.Id;
         }
 
         public UserViewModel(string id)
@@ -51,6 +57,7 @@ namespace MyShelf.ViewModels
 
         private void PopulateData(User friend)
         {
+                Id = friend.Id;
             Name = friend.Name;
             ImageUrl = friend.ImageUrl;
             Link = friend.Link;
@@ -65,9 +72,9 @@ namespace MyShelf.ViewModels
             FavouriteBooks = friend.FavoriteBooks;
             FriendsCount = $"{friend.FriendsCount} Friends";
             BooksCount = $"{friend.ReviewsCount} Books";
-            GroupsCount = $"{friend.GroupsCount} Books";
+            GroupsCount = $"{friend.GroupsCount} Groups";
 
-            Task.Run( async () =>
+            //Task.Run( async () =>
             {
                 CurrentlyReading.Clear();
                 foreach (var userStatus in friend.UserStatuses)
@@ -86,7 +93,7 @@ namespace MyShelf.ViewModels
                 {
                     Shelves.Add(new ShelfViewModel(shelf));
                 }
-            });
+            }//);
         }
 
         public void UserClick()

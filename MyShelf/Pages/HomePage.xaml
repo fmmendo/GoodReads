@@ -185,8 +185,8 @@
                 </TransitionCollection>
             </ListView.ItemContainerTransitions>
             <ListView.Footer>
-                
-                        <adduplex:AdControl Visibility="{x:Bind ViewModel.CanShowAds, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" AdUnitId="168691" AppKey="512dfb2a-abb1-4cee-a27f-0610d0ac532c" />
+
+                <adduplex:AdControl Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}"  AdUnitId="168691" AppKey="512dfb2a-abb1-4cee-a27f-0610d0ac532c" />
             </ListView.Footer>
             <ListView.HeaderTemplate>
                 <DataTemplate>

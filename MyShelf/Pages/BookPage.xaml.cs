@@ -14,6 +14,7 @@ namespace MyShelf.Pages
     public sealed partial class BookPage : PageBase
     {
         public BookViewModel ViewModel { get; set; }
+        public bool ShowAds => !API.Storage.MyShelfSettings.Instance.DontShowAds;
 
         public BookPage()
         {

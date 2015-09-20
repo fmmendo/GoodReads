@@ -11,7 +11,7 @@
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
-        <GridView ItemsSource="{x:Bind ViewModel.Friends}" Padding="12" SelectionMode="None">
+        <GridView ItemsSource="{x:Bind ViewModel.Friends}" Padding="12" SelectedItem="{Binding ViewModel.SelectedFriend, Mode=TwoWay}">
             <GridView.ItemContainerTransitions>
                 <TransitionCollection>
                     <RepositionThemeTransition/>
