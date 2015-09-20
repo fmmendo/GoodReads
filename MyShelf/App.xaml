@@ -70,8 +70,8 @@
             <!--#endregion-->
             
             <!--#region Button Styles -->
-            <Style x:Key="ChromelessButtonStyle" TargetType="Button">
-                <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="#336699"/>
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0"/>

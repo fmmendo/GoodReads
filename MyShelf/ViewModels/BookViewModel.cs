@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MyShelf.API.XML;
 using System.Collections.ObjectModel;
 using MyShelf.API.Services;
+using Windows.Data.Html;
 
 namespace MyShelf.ViewModels
 {
@@ -38,7 +39,7 @@ namespace MyShelf.ViewModels
             BookImageUrlSmall = new Uri(book.SmallImageUrl);
 
             Link = book.Link;
-            Description = book.Description;
+            Description = HtmlUtilities.ConvertToText(book.Description);
 
             IsTitleVisible = book.ImageUrl.Contains("nophoto");
         }
@@ -65,7 +66,7 @@ namespace MyShelf.ViewModels
                 Rating = r;
 
             Link = book.Link;
-            Description = book.Description;
+            Description = HtmlUtilities.ConvertToText(book.Description);
 
             OnPropertyChanged("BookTitle");
             OnPropertyChanged("BookAuthor");

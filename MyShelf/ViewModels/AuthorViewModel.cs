@@ -8,32 +8,33 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Html;
 
 namespace MyShelf.ViewModels
 {
     public class AuthorViewModel : ViewModelBase
     {
-        public string Id { get; private set; }
-        public string ImageUrl { get; private set; }
-        public string Name { get; private set; }
-        public string Url { get; private set; }
-        public string Hometown { get; private set; }
-        public string BornAt { get; private set; }
-        public string DiedAt { get; private set ; }
-        public string Genre { get; private set; }
-        public string Gender { get; private set; }
-        public string Link { get; private set; }
-        public string About { get; private set; }
-        public string Influences { get; private set; }
-        public string Rating { get; private set; }
-        public string WorksCount { get; private set; }
+        public string Id { get { return Get(string.Empty); } set { Set(value); } }
+        public string ImageUrl  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Name  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Url  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Hometown  { get { return Get(string.Empty); } set { Set(value); } }
+        public string BornAt  { get { return Get(string.Empty); } set { Set(value); } }
+        public string DiedAt { get { return Get(string.Empty); } set { Set(value); } }
+        public string Genre  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Gender  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Link  { get { return Get(string.Empty); } set { Set(value); } }
+        public string About  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Influences  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Rating  { get { return Get(string.Empty); } set { Set(value); } }
+        public string WorksCount  { get { return Get(string.Empty); } set { Set(value); } }
         public ObservableCollection<BookViewModel> AuthorBooks { get; private set; } = new ObservableCollection<BookViewModel>();
 
         public AuthorViewModel(Author author)
         {
             PopulateAuthorDetails(author);
 
-            GetAuthorBooks(author.Id);
+            GetAuthorBooks(author.Id);            
         }
 
         public AuthorViewModel(string id)
@@ -73,10 +74,10 @@ namespace MyShelf.ViewModels
             Genre = string.Join(", ", new[] { author.Genre1, author.Genre2, author.Genre3 });
             Gender = author.Gender;
             Link = author.Link;
-            About = WebUtility.HtmlDecode(author.About);
-            Influences = author.Influences;
+            About = HtmlUtilities.ConvertToText(author.About);
+            Influences = HtmlUtilities.ConvertToText(author.Influences);
             Rating = author.AverageRating;
-            WorksCount = author.WorksCount;
+            WorksCount = $"{author.WorksCount} Works";
         }
     }
 }

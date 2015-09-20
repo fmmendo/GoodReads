@@ -52,5 +52,13 @@ namespace MyShelf.Pages
             WriteReviewControl.Review = vm;
             WriteReviewControl.Show();
         }
+
+        private void abbReading_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (lvReading.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
+                lvReading.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            else
+                lvReading.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
     }
 }

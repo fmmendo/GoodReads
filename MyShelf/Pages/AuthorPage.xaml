@@ -9,8 +9,206 @@
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
+    <Grid x:Name="LayoutRoot">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="gDetails.Margin" Value="12,4"/>
+                        <Setter Target="spHeader.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="spAbout.(Grid.Row)" Value="1"/>
+                        <Setter Target="spAbout.(Grid.Column)" Value="1"/>
+                        <Setter Target="spAbout.Padding" Value="0,0,24,24"/>
+                        <Setter Target="cdUser.Width" Value="320"/>
+                        <!--<Setter Target="cdUser.MaxWidth" Value="320"/>-->
+                        <Setter Target="cdDetails.Width" Value="*"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="cdUser" Width="*"/>
+                    <ColumnDefinition x:Name="cdDetails" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel x:Name="spHeader" Orientation="Horizontal">
+                    <Ellipse Height="120" Width="120" VerticalAlignment="Top" Margin="12">
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="UniformToFill">
+                                <ImageBrush.ImageSource>
+                                    <BitmapImage x:Name="bCover" UriSource="{Binding ViewModel.ImageUrl, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <StackPanel x:Name="skInfo" Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind ViewModel.Name, Mode=OneWay}" Style="{StaticResource ListHeaderTextBlock}" MaxLines="2" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
+                        <TextBlock Text="{x:Bind ViewModel.WorksCount, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
+                        <!--<StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind ViewModel.BooksCount, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
+                            <TextBlock Text="{x:Bind ViewModel.GroupsCount, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
+                        </StackPanel>-->
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Details" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <Grid x:Name="gDetails" Grid.Row="1" Margin="0,4" Background="{StaticResource DarkGray}">
+                        <Grid.ChildrenTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition/>
+                            </TransitionCollection>
+                        </Grid.ChildrenTransitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <!--<RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>-->
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Hometown" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Hometown, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4" TextWrapping="WrapWholeWords"/>
+
+                        <TextBlock Grid.Row="1" Text="Born" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.BornAt, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
+
+                        <TextBlock Grid.Row="2" Text="Died" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.DiedAt, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
+
+                        <TextBlock Grid.Row="3" Text="Gender" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Gender, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
+
+                        <TextBlock Grid.Row="4" Text="Website" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <HyperlinkButton Grid.Row="4" Grid.Column="1" Content="{x:Bind ViewModel.Url, Mode=OneWay}" NavigateUri="{Binding ViewModel.Url, Mode=OneWay}" Padding="12,4" />
+
+                        <TextBlock Grid.Row="5" Text="Genre" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.Genre, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
+
+                        <TextBlock Grid.Row="6" Text="Influences" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{x:Bind ViewModel.Influences, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4" TextWrapping="WrapWholeWords"/>
+
+                        <!--<TextBlock Grid.Row="7" Text="Favorite Books" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="{x:Bind ViewModel.FavouriteBooks, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
+
+                        <TextBlock Grid.Row="8" Grid.ColumnSpan="2" Foreground="White" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.About, Mode=OneWay}"  Margin="12,4"/>-->
+
+                        <HyperlinkButton Grid.Row="7" Grid.Column="1" Content="view goodreads page >" NavigateUri="{Binding ViewModel.Link, Mode=OneWay}" HorizontalAlignment="Right" Margin="0,0,12,0" />
+                    </Grid>
+                </StackPanel>
+                
+                <StackPanel x:Name="spAbout" Grid.Row="2" Grid.Column="0">
+                    <TextBlock Text="About" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <TextBlock  Text="{x:Bind ViewModel.About, Mode=OneWay}"  Style="{StaticResource NormalTextBlock}" TextWrapping="WrapWholeWords"/>
+                </StackPanel>
+                <!--<ListView x:Name="lvUpdates"
+                          ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
+                          Header="Updates"
+                          Grid.Row="2" Grid.Column="0"
+                          SelectionMode="None"
+                          Padding="0,0,0,24">
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                            <RepositionThemeTransition/>
+                        </TransitionCollection>
+                    </ListView.ItemContainerTransitions>
+                    <ListView.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
+                        </DataTemplate>
+                    </ListView.HeaderTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:UpdateViewModel">
+                            <Grid Background="{StaticResource DarkGray}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" MaxHeight="120"/>
+                                    --><!--<RowDefinition Height="Auto"/>--><!--
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Ellipse Height="48" Width="48" VerticalAlignment="Top" Margin="12">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="None"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <HyperlinkButton Content="{x:Bind UserName, Mode=OneWay}" Padding="0" Click="{x:Bind UserClick, Mode=OneWay}"/>
+                                    <TextBlock Text="{x:Bind ActionText, Mode=OneWay}" Foreground="White" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
+
+                                <Grid Grid.Row="1" Grid.ColumnSpan="3" Height="120" Background="#07FFFFFF" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.RowSpan="3" MaxHeight="120" Margin="0" Stretch="Uniform" VerticalAlignment="Top">
+                                        <Image.Source>
+                                            <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="120" DecodePixelType="Logical" />
+                                        </Image.Source>
+                                    </Image>
+                                    <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" FontSize="18" VerticalAlignment="Top" Padding="0" />
+                                    <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
+                                    <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}"></controls:AddToShelfControl>
+                                </Grid>
+                                --><!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
+                            <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
+                            <Button Click="{x:Bind CommentClick}" Width="100">Comment</Button>
+                        </StackPanel>--><!--
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>-->
+            </Grid>
+        </ScrollViewer>
+
+
+
+
+
+
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -24,7 +222,6 @@
             <Ellipse.Fill>
                 <ImageBrush ImageSource="{x:Bind ViewModel.ImageUrl}"/>
             </Ellipse.Fill>
-        </Ellipse>
-        
+        </Ellipse>-->
     </Grid>
 </common:PageBase>

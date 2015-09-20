@@ -75,6 +75,7 @@ namespace MyShelf.ViewModels
             GroupsCount = $"{friend.GroupsCount} Groups";
 
             //Task.Run( async () =>
+            try
             {
                 CurrentlyReading.Clear();
                 foreach (var userStatus in friend.UserStatuses)
@@ -94,6 +95,7 @@ namespace MyShelf.ViewModels
                     Shelves.Add(new ShelfViewModel(shelf));
                 }
             }//);
+            catch { }
         }
 
         public void UserClick()

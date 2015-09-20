@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Html;
 
 namespace MyShelf.ViewModels
 {
@@ -23,7 +24,7 @@ namespace MyShelf.ViewModels
         {
             Id = review.Id;
             //BookId = review.Book.Id;
-            Body = WebUtility.HtmlDecode(review.Body);
+            Body = HtmlUtilities.ConvertToText(review.Body);
             UserName = review.User.Name;
             UserImageUrl = review.User.ImageUrl;
             Rating = double.Parse(review.Rating);

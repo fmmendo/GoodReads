@@ -13,18 +13,46 @@
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid x:Name="LayoutRoot">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="gDetails.Margin" Value="12,4"/>
+                        <Setter Target="spHeader.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="lvUpdates.(Grid.Row)" Value="1"/>
+                        <Setter Target="lvUpdates.(Grid.Column)" Value="1"/>
+                        <Setter Target="lvUpdates.Padding" Value="0,0,24,24"/>
+                        <Setter Target="cdUser.Width" Value="Auto"/>
+                        <Setter Target="cdDetails.Width" Value="*"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <ScrollViewer>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="cdUser" Width="Auto"/>
-                    <ColumnDefinition x:Name="cdDetails" Width="*"/>
+                    <ColumnDefinition x:Name="cdUser" Width="*"/>
+                    <ColumnDefinition x:Name="cdDetails" Width="0"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                <StackPanel x:Name="spHeader" Orientation="Horizontal">
                     <Ellipse Height="120" Width="120" VerticalAlignment="Top" Margin="12">
                         <Ellipse.Fill>
                             <ImageBrush Stretch="UniformToFill">
@@ -45,64 +73,67 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Grid Grid.Row="1" Padding="12">
-                    <Grid.ChildrenTransitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition/>
-                        </TransitionCollection>
-                    </Grid.ChildrenTransitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Age" Foreground="White" Margin="0,8,12,0"  />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Age, Mode=OneWay}" Foreground="White" Margin="0,8,12,0"  />
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Details" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <Grid x:Name="gDetails" Grid.Row="1" Margin="0,4" Background="{StaticResource DarkGray}">
+                        <Grid.ChildrenTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition/>
+                            </TransitionCollection>
+                        </Grid.ChildrenTransitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Age" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Age, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                    <TextBlock Grid.Row="1" Text="Gender" Foreground="White" Margin="0,8,12,0"  />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Gender, Mode=OneWay}" Foreground="White" Margin="0,8,12,0"  />
+                        <TextBlock Grid.Row="1" Text="Gender" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Gender, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                    <TextBlock Grid.Row="2" Text="Location" Foreground="White" Margin="0,8,12,0"  />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Foreground="White" Margin="0,8,0,0" Text="{x:Bind ViewModel.Location, Mode=OneWay}" />
+                        <TextBlock Grid.Row="2" Text="Location" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Location, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                    <TextBlock Grid.Row="3" Text="Website" Foreground="White" Margin="0,8,12,0"  />
-                    <HyperlinkButton Grid.Row="3" Grid.Column="1" Content="{x:Bind ViewModel.Website, Mode=OneWay}"  NavigateUri="{Binding ViewModel.Website, Mode=OneWay}" />
+                        <TextBlock Grid.Row="3" Text="Website" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <HyperlinkButton Grid.Row="3" Grid.Column="1" Content="{x:Bind ViewModel.Website, Mode=OneWay}" NavigateUri="{Binding ViewModel.Website, Mode=OneWay}" Padding="12,4" />
 
-                    <TextBlock Grid.Row="4" Text="Joined" Foreground="White" Margin="0,8,12,0"  />
-                    <TextBlock Grid.Row="4" Grid.Column="1" Foreground="White" Margin="0,8,0,0" Text="{x:Bind ViewModel.Joined, Mode=OneWay}" />
+                        <TextBlock Grid.Row="4" Text="Joined" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Joined, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                    <TextBlock Grid.Row="5" Text="Last Active" Foreground="White" Margin="0,8,12,0"  />
-                    <TextBlock Grid.Row="5" Grid.Column="1" Foreground="White" Margin="0,8,0,0" Text="{x:Bind ViewModel.LastActive, Mode=OneWay}" />
+                        <TextBlock Grid.Row="5" Text="Last Active" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.LastActive, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                    <TextBlock Grid.Row="6" Text="Interests" Foreground="White" Margin="0,8,12,0"  />
-                    <TextBlock Grid.Row="6" Grid.Column="1" Foreground="White" Margin="0,8,0,0" Text="{x:Bind ViewModel.Interests, Mode=OneWay}" />
+                        <TextBlock Grid.Row="6" Text="Interests" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{x:Bind ViewModel.Interests, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                    <TextBlock Grid.Row="7" Text="Favorite Books" Foreground="White" Margin="0,8,12,0"  />
-                    <TextBlock Grid.Row="7" Grid.Column="1" Foreground="White" Margin="0,8,0,0" Text="{x:Bind ViewModel.FavouriteBooks, Mode=OneWay}" />
+                        <TextBlock Grid.Row="7" Text="Favorite Books" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="{x:Bind ViewModel.FavouriteBooks, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                    <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Foreground="White" TextWrapping="WrapWholeWords" Margin="0,12,0,0" Text="{x:Bind ViewModel.About, Mode=OneWay}" />
+                        <TextBlock Grid.Row="8" Grid.ColumnSpan="2" Foreground="White" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.About, Mode=OneWay}"  Margin="12,4"/>
 
-                    <HyperlinkButton Grid.Row="9" Grid.Column="1" Content="view goodreads page >" NavigateUri="{Binding ViewModel.Link, Mode=OneWay}" HorizontalAlignment="Right" />
-                </Grid>
+                        <HyperlinkButton Grid.Row="9" Grid.Column="1" Content="view goodreads page >" NavigateUri="{Binding ViewModel.Link, Mode=OneWay}" HorizontalAlignment="Right" Margin="0,0,12,0" />
+                    </Grid>
+                </StackPanel>
 
                 <ListView x:Name="lvUpdates"
-                  ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
-                  ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
-                  Header="Updates"
-                          Grid.Row="1" Grid.Column="1"
-                  SelectionMode="None"
-                  Padding="0,0,0,24">
+                          ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
+                          Header="Updates"
+                          Grid.Row="2" Grid.Column="0"
+                          SelectionMode="None"
+                          Padding="0,0,0,24">
                     <ListView.ItemContainerTransitions>
                         <TransitionCollection>
                             <EntranceThemeTransition/>

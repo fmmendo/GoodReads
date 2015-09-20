@@ -71,11 +71,10 @@
             
             <Button x:Name="bMenu"
                     Background="{StaticResource GoodReadsBrown}"
-                    Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+                    Foreground="White" 
                     Width="48" Height="48"
                     VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                    Click="{x:Bind ViewModel.MenuClick}"
-                    Style="{StaticResource ChromelessButtonStyle}">
+                    Click="{x:Bind ViewModel.MenuClick}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE700;"/>
             </Button>
             <!--<TextBlock Grid.Column="1"
@@ -113,10 +112,9 @@
                    Background="{StaticResource GoodReadsBrown}"
                    Grid.Column="2"
                    Click="{x:Bind ViewModel.SearchClick}"
-                   Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+                   Foreground="White" 
                    MinWidth="48" Height="48"
-                   VerticalAlignment="Stretch" HorizontalContentAlignment="Center"   
-                   Style="{StaticResource ChromelessButtonStyle}">
+                   VerticalAlignment="Stretch" HorizontalContentAlignment="Center">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE094;"/>
             </Button>
 

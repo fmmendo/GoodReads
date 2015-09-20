@@ -158,7 +158,7 @@
                             <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed">
                                 <TextBlock x:Name="PlaceholderTextBlock" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontWeight="{ThemeResource ComboBoxPlaceholderTextThemeFontWeight}" Text=""/>
                             </ContentPresenter>
-                            <FontIcon x:Name="DropDownGlyph" AutomationProperties.AccessibilityView="Raw" Grid.Column="1" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" FontSize="24" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE1D3;" HorizontalAlignment="Right" IsHitTestVisible="False" Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Center"/>
+                            <FontIcon x:Name="DropDownGlyph" AutomationProperties.AccessibilityView="Raw" Grid.Column="1" Foreground="White" FontSize="24" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE1D3;" HorizontalAlignment="Right" IsHitTestVisible="False" Margin="10,10,10,10" Grid.Row="1" VerticalAlignment="Center"/>
                             <Popup x:Name="Popup"  FlowDirection="LeftToRight">
                                 <Border x:Name="PopupBorder"
                                         BorderBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
@@ -192,8 +192,8 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal" Height="44">
-        <ToggleButton Content="Want to read" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="44" Background="#336699"/>
-        <ComboBox x:Name="cbShelves" Style="{StaticResource ComboBoxStyle}" ItemsSource="{x:Bind Shelves, Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged" Header="Header">
+        <ToggleButton Content="Want to read" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="44" Background="#336699" Foreground="White"/>
+        <ComboBox x:Name="cbShelves" Style="{StaticResource ComboBoxStyle}" Background="#336699" Margin="1,0,0,0" ItemsSource="{x:Bind Shelves, Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged" Header="Header">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"/>
