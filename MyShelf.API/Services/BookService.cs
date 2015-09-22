@@ -112,7 +112,7 @@ namespace MyShelf.API.Services
             if (!String.IsNullOrEmpty(readAt)) param.Add("review[read_at]", readAt);
             if (!String.IsNullOrEmpty(shelf)) param.Add("shelf", shelf);
 
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("review.xml ", Method.PUT, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("review.xml ", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
 
             //TODO: This is a quick workaround
             if (response.StatusCode == 201 && response.StatusDescription == "Created" && response.ResponseStatus == ResponseStatus.Completed)
@@ -144,7 +144,7 @@ namespace MyShelf.API.Services
             if (!String.IsNullOrEmpty(finished)) param.Add("finished", finished);
             if (!String.IsNullOrEmpty(shelf)) param.Add("shelf", shelf);
 
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync($"review/{reviewId}.xml ", Method.PUT, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync($"review/{reviewId}.xml ", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);
 
 
             return (response.StatusCode == 200 && response.StatusDescription == "OK" && response.ResponseStatus == ResponseStatus.Completed);

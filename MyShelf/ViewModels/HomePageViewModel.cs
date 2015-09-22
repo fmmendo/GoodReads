@@ -75,7 +75,12 @@ namespace MyShelf.ViewModels
                 //TODO: this might give me crap later
                 foreach (var update in user.Updates.Update.Where(u => u.Type.Equals("readstatus")))
                 {
-                    if (update.ActionText.StartsWith("started reading") && !String.IsNullOrEmpty(update?.Object?.ReadStatus?.Review?.Book?.Id ) && !CurrentlyReading.Select(cr => cr.BookId).Contains(update?.Object?.ReadStatus?.Review?.Book?.Id))
+                    var id = update?.Object?.ReadStatus?.Review?.Book?.Id;
+                    if (update.ActionText.StartsWith("started reading")
+                        && !String.IsNullOrEmpty(id)
+                        && !CurrentlyReading.Select(cr => cr.BookId).Contains(update?.Object?.ReadStatus?.Review?.Book?.Id)
+                        && !user.Updates.Update.Where(u => u.Type.Equals("review")).Any(r => r.Object.Book.Id.Equals(id)))
+
                         CurrentlyReading.Add(new UserStatusViewModel(update));
                 }
             }

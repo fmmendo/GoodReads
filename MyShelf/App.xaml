@@ -30,10 +30,13 @@
             <SolidColorBrush x:Key="LightBackground" Color="#FFF5F5F5" />
             <SolidColorBrush x:Key="DarkGray" Color="#FF2B2B2B" />
             <SolidColorBrush x:Key="GoodReadsLightBackground" Color="#FFF0EFE1" />
-            <SolidColorBrush x:Key="GoodReadsBrown" Color="#FF645240" />
+            <SolidColorBrush x:Key="GoodReadsBrown" Color="#FF336699" />
+            <!--<SolidColorBrush x:Key="GoodReadsBrown" Color="#FF645240" />-->
             <SolidColorBrush x:Key="GoodReadsLightBrown" Color="#FFE1D7C5" />
-            <SolidColorBrush x:Key="GoodReadsBrown_Transparent" Color="#70645240" />
-            <SolidColorBrush x:Key="GoodReadsLightBrown_Transparent" Color="#70E1D7C5" />
+            <SolidColorBrush x:Key="GoodReadsBrown_Transparent" Color="#70336699" />
+            <!--<SolidColorBrush x:Key="GoodReadsBrown_Transparent" Color="#70645240" />-->
+            <SolidColorBrush x:Key="GoodReadsLightBrown_Transparent" Color="#70336699" />
+            <!--<SolidColorBrush x:Key="GoodReadsLightBrown_Transparent" Color="#70E1D7C5" />-->
             <!--#endregion-->
 
             <!--#region TextBlock Styles -->

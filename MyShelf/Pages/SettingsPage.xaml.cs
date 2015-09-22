@@ -25,13 +25,20 @@ namespace MyShelf.Pages
             base.SaveState(e, pageState);
         }
 
-
         private async void Rate_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        { }
-
+        {
+            Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=9WZDNCRDR8RZ"));
+        }
 
         private async void Feedback_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        { }
+        {
+            Windows.System.Launcher.LaunchUriAsync(new Uri("mailto:feedback@fmendo.com?subject=MyShelf Feedback"));
+        }
+
+        private async void Privacy_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Windows.System.Launcher.LaunchUriAsync(new Uri("https://www.goodreads.com/about/privacy"));
+        }
 
         private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {

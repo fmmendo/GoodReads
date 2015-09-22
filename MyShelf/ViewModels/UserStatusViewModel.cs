@@ -26,6 +26,8 @@ namespace MyShelf.ViewModels
         public string UpdatePageNum { get { return Get(Page); } set { Set(value); } }
         public string UpdateText { get { return Get(string.Empty); } set { Set(value); } }
 
+        public bool Posting { get { return Get(false); } set { Set(value); } }
+
         private string authorId;
 
         public UserStatusViewModel(UserStatus status)
@@ -78,12 +80,15 @@ namespace MyShelf.ViewModels
 
         public async void PostUpdate()
         {
+            ToggleUpdating();
+            //Posting = true;
             var result = await UserService.Instance.PostStatusUpdate(BookId, 
                                                                      UpdatingPage ? UpdatePageNum : null, 
                                                                      UpdatingPage ? null : UpdatePercentage, 
                                                                      UpdateText);
-            if (!String.IsNullOrEmpty(result))
-                ToggleUpdating();
+            //Posting = false;
+            //if (!String.IsNullOrEmpty(result))
+            //    ToggleUpdating();
         }
     }
 }

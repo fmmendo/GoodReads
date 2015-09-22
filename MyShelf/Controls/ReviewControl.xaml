@@ -69,7 +69,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Write your Review" Style="{StaticResource ListHeaderTextBlock}" Margin="0,0,0,12"/>
+                <TextBlock Text="Write your Review" Style="{StaticResource ListHeaderTextBlock}" Margin="12,0,0,12"/>
                 <ScrollViewer Grid.Row="1" x:Name="ContentRoot" Padding="12">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
