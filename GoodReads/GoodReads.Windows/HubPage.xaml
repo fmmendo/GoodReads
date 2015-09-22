@@ -151,7 +151,7 @@
                                                      Visibility="{Binding PercentVisibility}"
                                                      VerticalAlignment="Center"
                                                      Style="{StaticResource TextBoxDefaultStyle}"/>
-                                            <HyperlinkButton Visibility="{Binding PercentVisibility}" Command="{Binding EditModeCommand}">
+                                            <HyperlinkButton Visibility="{Binding PercentVisibility}">
                                                 <TextBlock Text="%" Margin="0,-10,0,0" Style="{StaticResource TextBlockSmall}"/>
                                             </HyperlinkButton>
                                             <TextBlock Text=" done" Visibility="{Binding PercentVisibility}" Style="{StaticResource TextBlockSmall}"/>

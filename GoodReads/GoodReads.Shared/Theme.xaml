@@ -415,7 +415,7 @@
                         <ContentPresenter x:Name="HeaderContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Foreground="{ThemeResource ComboBoxHeaderForegroundThemeBrush}" FontWeight="{ThemeResource ComboBoxHeaderThemeFontWeight}" FlowDirection="{TemplateBinding FlowDirection}" Margin="{ThemeResource ComboBoxHeaderThemeMargin}" Visibility="Collapsed" d:IsHidden="True"/>
                         <!--<Rectangle x:Name="PressedBackground" Fill="{ThemeResource ComboBoxPressedHighlightThemeBrush}" Margin="{TemplateBinding BorderThickness}" Opacity="0" Grid.Row="1" d:IsHidden="True"/>-->
                         <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" d:IsHidden="True">
-                            <TextBlock x:Name="PlaceholderTextBlock" Foreground="{ThemeResource ComboBoxPlaceholderTextForegroundThemeBrush}" FontWeight="{ThemeResource ComboBoxPlaceholderTextThemeFontWeight}" Text="{TemplateBinding PlaceholderText}"/>
+                            <!--<TextBlock x:Name="PlaceholderTextBlock" Foreground="{ThemeResource ComboBoxPlaceholderTextForegroundThemeBrush}" FontWeight="{ThemeResource ComboBoxPlaceholderTextThemeFontWeight}" Text="{TemplateBinding PlaceholderText}"/>-->
                         </ContentPresenter>
                         <Rectangle Height="28" Width="28" Fill="{StaticResource MyBlue}"/>
                         <Rectangle x:Name="Highlight" Height="35" Width="35" Fill="#C6AA93" Opacity="0" Grid.Row="1"/>
@@ -428,12 +428,12 @@
 								   VerticalAlignment="Center">
                             <Rectangle Height="16" Width="3" Fill="{StaticResource AlmostWhite}"  Canvas.Left="-7" Canvas.Top="-8" Margin="0" >
                                 <Rectangle.RenderTransform>
-                                    <RotateTransform Angle="1"/>
+                                    <RotateTransform Angle="0"/>
                                 </Rectangle.RenderTransform>
                             </Rectangle>
-                            <Rectangle Height="16" Width="3" Fill="{StaticResource AlmostWhite}"  Canvas.Left="-3" Canvas.Top="-7.5" Margin="0" >
+                            <Rectangle Height="16" Width="3" Fill="{StaticResource AlmostWhite}"  Canvas.Left="-3" Canvas.Top="-8" Margin="0" >
                                 <Rectangle.RenderTransform>
-                                    <RotateTransform Angle="-10"/>
+                                    <RotateTransform Angle="0"/>
                                 </Rectangle.RenderTransform>
                             </Rectangle>
                             <Rectangle Height="16" Width="3" Fill="{StaticResource AlmostWhite}"  Canvas.Left="1" Canvas.Top="-7.5" Margin="0">
