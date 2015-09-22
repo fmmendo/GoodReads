@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -86,6 +87,11 @@ namespace MyShelf.Controls
 
             if (success)
                 Hide();
+            else
+            {
+                var md = new MessageDialog("Couldn't post review. Please try again later");
+                md.ShowAsync();
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
