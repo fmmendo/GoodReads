@@ -21,8 +21,8 @@ namespace MyShelf.API.Storage
         {
             get
             {
-                // return CurrentApp.LicenseInformation;
-                return CurrentAppSimulator.LicenseInformation;
+                return CurrentApp.LicenseInformation;
+                //return CurrentAppSimulator.LicenseInformation;
             }
         }
 

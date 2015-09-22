@@ -47,8 +47,8 @@ namespace MyShelf.Pages
                 try
                 {
                     // The customer doesn't own this feature, so show the purchase dialog.
-                    await CurrentAppSimulator.RequestProductPurchaseAsync(MyShelfSettings.Instance.InAppProductKey, false);
-                    //await CurrentApp.RequestProductPurchaseAsync(MyShelfSettings.Instance.InAppProductKey, false);
+                    //await CurrentAppSimulator.RequestProductPurchaseAsync(MyShelfSettings.Instance.InAppProductKey, false);
+                    await CurrentApp.RequestProductPurchaseAsync(MyShelfSettings.Instance.InAppProductKey, false);
 
                     MessageDialog m;
                     if (MyShelfSettings.Instance.DontShowAds)

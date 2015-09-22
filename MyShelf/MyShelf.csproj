@@ -21,7 +21,7 @@
     <ApplicationInsightsResourceId>/subscriptions/6a1eb951-5b2d-42bc-80ba-07acde5e5679/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/MyShelf</ApplicationInsightsResourceId>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>1180727B7E91EAD1669049BDD244667ED731A143</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
