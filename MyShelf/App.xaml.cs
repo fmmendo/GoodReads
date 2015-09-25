@@ -224,7 +224,7 @@ namespace MyShelf
         {
             if (command.Label == "Yes")
             {
-                Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=9WZDNCRDR8RZ"));
+                Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9WZDNCRDR8RZ"));
             }
         }
         #endregion
