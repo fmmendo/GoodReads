@@ -27,7 +27,7 @@ namespace MyShelf.Pages
 
         private async void Rate_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=9WZDNCRDR8RZ"));
+            Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9WZDNCRDR8RZ"));
         }
 
         private async void Feedback_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
