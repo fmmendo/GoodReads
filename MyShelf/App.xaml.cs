@@ -57,6 +57,7 @@ namespace MyShelf
            CreateRootFrame(e.PreviousExecutionState, e.Arguments);
 
             RateMyApp();
+            AdDuplex.AdDuplexClient.Initialize("512dfb2a-abb1-4cee-a27f-0610d0ac532c");
 
             try
             {
