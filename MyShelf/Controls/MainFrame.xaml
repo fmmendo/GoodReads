@@ -39,6 +39,7 @@
                         <AdaptiveTrigger MinWindowWidth="1280"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="bMenu.IsHitTestVisible" Value="False"/>
                         <Setter Target="splitView.DisplayMode" Value="Inline"/>
                         <Setter Target="splitView.IsPaneOpen" Value="True"/>
                         <Setter Target="svHome.ClosesParent" Value="False"/>

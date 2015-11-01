@@ -11,7 +11,7 @@ namespace MyShelf.Controls
     {
         MainFrameViewModel ViewModel => MainFrameViewModel.Instance;
 
-        TaskCompletionSource<bool> _frameTcs = new TaskCompletionSource<bool>();
+        TaskCompletionSource<bool> _tcs = new TaskCompletionSource<bool>();
 
         public Task EnsureLoadedAsync { get; }
 
@@ -19,7 +19,7 @@ namespace MyShelf.Controls
         {
             InitializeComponent();
 
-            EnsureLoadedAsync = _frameTcs.Task;
+            EnsureLoadedAsync = _tcs.Task;
         }
 
         private async void RootFrame_Loaded(object sender, RoutedEventArgs e)
@@ -31,7 +31,7 @@ namespace MyShelf.Controls
 
             if (!EnsureLoadedAsync.IsCompleted)
             {
-                _frameTcs.TrySetResult(true);
+                _tcs.TrySetResult(true);
             }
         }
     }

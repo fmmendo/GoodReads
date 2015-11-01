@@ -9,7 +9,7 @@
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d"
     d:DesignHeight="800"
-    d:DesignWidth="400"
+    d:DesignWidth="500"
     x:Name="ControlRoot">
 
     <Grid x:Name="LayoutRoot">
@@ -63,28 +63,31 @@
         <Rectangle x:Name="rect" Visibility="Collapsed" Fill="Black" Opacity="0.6" StrokeThickness="0" Tapped="rect_Tapped" />
         <Border x:Name="border" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="DarkGray" Background="{StaticResource DarkGray}">
             <Grid>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Write your Review" Style="{StaticResource ListHeaderTextBlock}" Margin="12,0,0,12"/>
+                <TextBlock Text="Write your Review" Style="{StaticResource ListHeaderTextBlock}" Margin="12,12,0,12"/>
                 <ScrollViewer Grid.Row="1" x:Name="ContentRoot" Padding="12">
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <Grid Height="158">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
                             <Image x:Name="imgReadingBook" Grid.RowSpan="3" Stretch="Uniform" VerticalAlignment="Top" Margin="0">
                                 <Image.Source>
                                     <BitmapImage UriSource="{x:Bind Review.BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png', FallbackValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
                                 </Image.Source>
                             </Image>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{x:Bind Review.BookTitle, Mode=OneWay}" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="2" Style="{StaticResource TitleTextBlock}" Margin="12,0,0,12"/>
-                                <TextBlock Text="{x:Bind Review.BookAuthor, Mode=OneWay}" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="2" Style="{StaticResource SubtitleTextBlock}" Margin="12,0,0,12"/>
+                            <StackPanel Orientation="Vertical" Grid.Column="1">
+                                <TextBlock Text="{x:Bind Review.BookTitle, Mode=OneWay}" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="2" Style="{StaticResource TitleTextBlock}" Margin="12,0,12,12"/>
+                                <TextBlock Text="{x:Bind Review.BookAuthor, Mode=OneWay}" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="2" Style="{StaticResource SubtitleTextBlock}" Margin="12,0,12,12"/>
                             </StackPanel>
 
 
-                        </StackPanel>
+                        </Grid>
                         <mcontrols:RateControl Margin="0,12,0,0" UserRating="{x:Bind Rating, Mode=TwoWay}" />
                         <TextBlock Text="What did you think?" Style="{StaticResource TitleTextBlock}" Margin="0,12,0,12"/>
                         <TextBox Height="120" AcceptsReturn="True" VerticalAlignment="Stretch" Text="{x:Bind ReviewBody, Mode=TwoWay}"/>
@@ -105,6 +108,8 @@
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>
+
+                <ProgressRing Grid.RowSpan="2" Visibility="{x:Bind IsPosting, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsActive="{x:Bind IsPosting, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#7F000000"/>
             </Grid>
         </Border>
     </Grid>

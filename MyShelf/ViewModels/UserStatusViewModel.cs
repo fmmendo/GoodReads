@@ -80,15 +80,15 @@ namespace MyShelf.ViewModels
 
         public async void PostUpdate()
         {
-            ToggleUpdating();
-            //Posting = true;
+            //ToggleUpdating();
+            Posting = true;
             var result = await UserService.Instance.PostStatusUpdate(BookId, 
                                                                      UpdatingPage ? UpdatePageNum : null, 
                                                                      UpdatingPage ? null : UpdatePercentage, 
                                                                      UpdateText);
-            //Posting = false;
-            //if (!String.IsNullOrEmpty(result))
-            //    ToggleUpdating();
+            Posting = false;
+            if (!String.IsNullOrEmpty(result))
+                ToggleUpdating();
         }
     }
 }

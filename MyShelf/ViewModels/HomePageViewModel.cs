@@ -1,4 +1,5 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UAP;
+using Mendo.UAP.Common;
 using MyShelf.API.Services;
 using MyShelf.API.Storage;
 using System;
@@ -16,8 +17,8 @@ namespace MyShelf.ViewModels
         private IAuthenticationService authService = AuthenticationService.Instance;
         private IUserService userService = UserService.Instance;
         
-        public ObservableCollection<UpdateViewModel> Updates { get; } = new ObservableCollection<UpdateViewModel>();
-        public ObservableCollection<UserStatusViewModel> CurrentlyReading { get; } = new ObservableCollection<UserStatusViewModel>();
+        public DynamicCollection<UpdateViewModel> Updates { get; } = new DynamicCollection<UpdateViewModel>();
+        public DynamicCollection<UserStatusViewModel> CurrentlyReading { get; } = new DynamicCollection<UserStatusViewModel>();
 
         private bool showCurrentlyReading = false;
         public bool ShowCurrentlyReading
@@ -50,14 +51,17 @@ namespace MyShelf.ViewModels
         public async Task RefreshUpdates()
         {
             Updates.Clear();
-
+            Updates.LoadState = LoadState.Loading;
             var updates = await userService.GetFriendUpdates("", "", "");
             foreach (var update in updates.Update)
                 Updates.Add(new UpdateViewModel(update));
+
+            Updates.LoadState = LoadState.Loaded;
         }
 
         public async Task RefreshCurrentlyReading()
         {
+            CurrentlyReading.LoadState = LoadState.Loading;
             if (!userService.IsUserIdAvailable)
                 await userService.GetUserID();
 
@@ -76,13 +80,19 @@ namespace MyShelf.ViewModels
                 foreach (var update in user.Updates.Update.Where(u => u.Type.Equals("readstatus")))
                 {
                     var id = update?.Object?.ReadStatus?.Review?.Book?.Id;
-                    if (update.ActionText.StartsWith("started reading")
+                    if ((update.ActionText.StartsWith("started reading") || update.ActionText.StartsWith("is currently reading"))
                         && !String.IsNullOrEmpty(id)
                         && !CurrentlyReading.Select(cr => cr.BookId).Contains(update?.Object?.ReadStatus?.Review?.Book?.Id)
                         && !user.Updates.Update.Where(u => u.Type.Equals("review")).Any(r => r.Object.Book.Id.Equals(id)))
 
                         CurrentlyReading.Add(new UserStatusViewModel(update));
                 }
+
+                CurrentlyReading.LoadState = LoadState.Loaded;
+            }
+            else
+            {
+                CurrentlyReading.SetFaulted();
             }
         }
 
