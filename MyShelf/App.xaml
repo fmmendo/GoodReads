@@ -9,6 +9,7 @@
         <ResourceDictionary>
             
             <!--#region Converters -->
+            <converters:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <!--#endregion-->
 
