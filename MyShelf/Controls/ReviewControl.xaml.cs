@@ -77,8 +77,13 @@ namespace MyShelf.Controls
             if (DisplayStates.CurrentState == HiddenState)
                 VisualStateManager.GoToState(this, VisibleState.Name, true);
 
-            var r = await API.Services.BookService.Instance.GetUserReview(Review.BookId);
-            ReviewId = r.Id;
+            try
+            {
+                var r = await API.Services.BookService.Instance.GetUserReview(Review.BookId);
+                ReviewId = r.Id;
+            }
+            catch (Exception)
+            { }
         }
 
         public void Hide()

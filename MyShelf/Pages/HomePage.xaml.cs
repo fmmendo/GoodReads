@@ -18,6 +18,7 @@ namespace MyShelf.Pages
         public HomePage()
         {
             InitializeComponent();
+            WriteReviewControl.Hide();
         }
 
         private async void Instance_AuthStateChanged(object sender, API.Services.AuthState e)
