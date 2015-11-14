@@ -10,6 +10,7 @@ namespace MyShelf.Controls
     public sealed partial class MainFrame : UserControl
     {
         MainFrameViewModel ViewModel => MainFrameViewModel.Instance;
+        public bool ShowAds => !API.Storage.MyShelfSettings.Instance.DontShowAds;
 
         TaskCompletionSource<bool> _tcs = new TaskCompletionSource<bool>();
 
