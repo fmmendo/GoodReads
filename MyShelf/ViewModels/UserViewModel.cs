@@ -33,6 +33,8 @@ namespace MyShelf.ViewModels
         public ObservableCollection<UpdateViewModel> Updates { get; set; } = new ObservableCollection<UpdateViewModel>();
         public ObservableCollection<ShelfViewModel> Shelves { get; set; } = new ObservableCollection<ShelfViewModel>();
 
+        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+
         public UserViewModel(User friend)
         {
             PopulateData(friend);
@@ -50,9 +52,11 @@ namespace MyShelf.ViewModels
 
         private async Task GetUserInfoAsync(string id)
         {
+            IsLoading = true;
             var user = await UserService.Instance.GetUserInfo(id);
 
             PopulateData(user);
+            IsLoading = false;
         }
 
         private void PopulateData(User friend)

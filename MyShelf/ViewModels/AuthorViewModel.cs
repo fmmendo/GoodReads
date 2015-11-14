@@ -30,6 +30,8 @@ namespace MyShelf.ViewModels
         public string WorksCount  { get { return Get(string.Empty); } set { Set(value); } }
         public ObservableCollection<BookViewModel> AuthorBooks { get; private set; } = new ObservableCollection<BookViewModel>();
 
+        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+
         public AuthorViewModel(Author author)
         {
             PopulateAuthorDetails(author);
@@ -44,10 +46,11 @@ namespace MyShelf.ViewModels
 
         private async Task GetAuthorData(string id)
         {
+            IsLoading = true;
             var author = await AuthorService.Instance.GetAuthorInfo(id);
 
             PopulateAuthorDetails(author);
-
+            IsLoading = false;
             GetAuthorBooks(id);
         }
 
