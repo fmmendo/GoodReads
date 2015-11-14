@@ -18,8 +18,11 @@ namespace MyShelf.ViewModels
         
         public object SelectedWork { get; set; }
 
+        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+
         public async Task SearchClick()
         {
+            IsLoading = true;
             var results = await BookService.Instance.Search(SearchTerm);
 
             Results.Clear();
@@ -28,6 +31,7 @@ namespace MyShelf.ViewModels
                 if (!String.IsNullOrEmpty(work?.BestBook?.Id))
                     Results.Add(new WorkViewModel(work));
             }
+            IsLoading = false;
         }
 
 

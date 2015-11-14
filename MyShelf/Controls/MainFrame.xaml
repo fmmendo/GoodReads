@@ -5,6 +5,7 @@
     xmlns:local="using:MyShelf.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:adduplex="using:AdDuplex"
     xmlns:controls="using:MyShelf.Controls"
     mc:Ignorable="d"
     d:DesignHeight="500"
@@ -39,6 +40,7 @@
                         <AdaptiveTrigger MinWindowWidth="1280"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="bMenu.IsHitTestVisible" Value="False"/>
                         <Setter Target="splitView.DisplayMode" Value="Inline"/>
                         <Setter Target="splitView.IsPaneOpen" Value="True"/>
                         <Setter Target="svHome.ClosesParent" Value="False"/>
@@ -140,9 +142,12 @@
                             <controls:SplitViewItem x:Name="svFriends" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsFriendsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.FriendsClick}" Text="Friends" Icon="&#xE716;"/>
                             <!--<controls:SplitViewItem Text="Reading Challenge" GroupName="Sidebar" Icon="&#xE82D;"/>-->
                         </StackPanel>
-                        <StackPanel VerticalAlignment="Bottom" Padding="0,0,0,24">
+                        <StackPanel VerticalAlignment="Bottom" Padding="0,0,0,12">
                             <controls:SplitViewItem x:Name="svProfile" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsProfileChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.ProfileClick}" Text="Profile" Icon="&#xE13D;"/>
-                            <controls:SplitViewItem x:Name="svSettings" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;"/>
+                            <controls:SplitViewItem x:Name="svSettings" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;" />
+                            <Viewbox Width="220">
+                                <adduplex:AdControl Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" AdUnitId="168691" AppKey="512dfb2a-abb1-4cee-a27f-0610d0ac532c" />
+                            </Viewbox>
                         </StackPanel>
                     </Grid>
                 </SplitView.Pane>

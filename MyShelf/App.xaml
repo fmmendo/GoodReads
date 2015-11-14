@@ -9,6 +9,7 @@
         <ResourceDictionary>
             
             <!--#region Converters -->
+            <converters:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <!--#endregion-->
 
@@ -26,7 +27,7 @@
             </ResourceDictionary>
             <!--#endregion-->
 
-            <!--#region Brushes -->
+            <!--#region Brushes -->            
             <SolidColorBrush x:Key="LightBackground" Color="#FFF5F5F5" />
             <SolidColorBrush x:Key="DarkGray" Color="#FF2B2B2B" />
             <SolidColorBrush x:Key="GoodReadsLightBackground" Color="#FFF0EFE1" />

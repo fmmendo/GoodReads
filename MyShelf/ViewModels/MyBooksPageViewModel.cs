@@ -15,6 +15,9 @@ namespace MyShelf.ViewModels
         private IShelfService shelfService = ShelfService.Instance;
         private IBookService bookService = BookService.Instance;
 
+        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+
+
         public ObservableCollection<ShelfViewModel> Shelves { get; } = new ObservableCollection<ShelfViewModel>();
 
         public MyBooksPageViewModel()
@@ -24,6 +27,7 @@ namespace MyShelf.ViewModels
 
         public async Task GetUserShelves()
         {
+            IsLoading = true;
             if (authService.State != AuthState.Authenticated)
             {
                 authService.Authenticate();
@@ -31,12 +35,22 @@ namespace MyShelf.ViewModels
                 return;
             }
 
-            Shelves.Clear();
             var shelves = await shelfService.GetShelvesList();
-            foreach (var shelf in shelves)
-                Shelves.Add(new ShelfViewModel(shelf));
+            var except = Enumerable.Except(shelves.Select(s => s.Name), Shelves.Select(s => s.Name));
 
-            foreach (var shelf in Shelves)
+            if (except.Count() > 0)
+            {
+                Shelves.Clear();
+                foreach (var shelf in shelves)
+                    Shelves.Add(new ShelfViewModel(shelf));
+            }
+
+
+            await Shelves.First().LoadShelfBooks(bookService);
+
+            IsLoading = false;
+
+            foreach (var shelf in Shelves.Skip(1))
                 shelf.LoadShelfBooks(bookService);
         }
     }

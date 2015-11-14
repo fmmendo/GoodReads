@@ -57,5 +57,8 @@
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>
+        <Border Background="#9f000000"  Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
+        </Border>
     </Grid>
 </common:PageBase>

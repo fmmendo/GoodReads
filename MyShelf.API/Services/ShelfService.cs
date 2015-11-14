@@ -16,6 +16,10 @@ namespace MyShelf.API.Services
     {
         private SemaphoreSlim shelfSemaphore = new SemaphoreSlim(1, 1);
         public List<UserShelf> UserShelves { get; } = new List<UserShelf>();
+
+        private DateTime timestamp_shelves;
+        private string response_shelves;
+
         /// <summary>
         /// Returns the shelves for the logged in user
         /// </summary>
@@ -23,24 +27,23 @@ namespace MyShelf.API.Services
         /// <returns>List of Work items</returns>
         public async Task<List<UserShelf>> GetShelvesList()
         {
-            await shelfSemaphore.WaitAsync();
-            try
+            if (timestamp_shelves.AddMinutes(15) <= DateTime.Now)
             {
-                if (UserShelves.Count > 0)
-                    return UserShelves;
-
-                var results = await ApiClient.Instance.HttpGet(String.Format(Urls.ShelvesList, MyShelfSettings.Instance.ConsumerKey));
-
-                var result = GoodReadsSerializer.DeserializeResponse(results);
-
-                UserShelves.Clear();
-                UserShelves.AddRange(result.Shelves.UserShelf);
+                await shelfSemaphore.WaitAsync();
+                try
+                {
+                    response_shelves = await ApiClient.Instance.HttpGet(String.Format(Urls.ShelvesList, MyShelfSettings.Instance.ConsumerKey));
+                }
+                finally
+                {
+                    shelfSemaphore.Release();
+                    timestamp_shelves = DateTime.Now;
+                }
             }
-            finally
-            {
-                shelfSemaphore.Release();
-            }
-            return UserShelves;
+
+            var result = GoodReadsSerializer.DeserializeResponse(response_shelves);
+
+            return result.Shelves.UserShelf;
         }
 
         /// <summary>

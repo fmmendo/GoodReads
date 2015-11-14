@@ -53,12 +53,17 @@ namespace MyShelf
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
-        { 
-           CreateRootFrame(e.PreviousExecutionState, e.Arguments);
+        {
+            CreateRootFrame(e.PreviousExecutionState, e.Arguments);
 
             RateMyApp();
             AdDuplex.AdDuplexClient.Initialize("512dfb2a-abb1-4cee-a27f-0610d0ac532c");
 
+            InstallCortanaCommands();
+        }
+
+        private static async Task InstallCortanaCommands()
+        {
             try
             {
                 // Install the main VCD. Since there's no simple way to test that the VCD has been imported, 
@@ -191,34 +196,34 @@ namespace MyShelf
 
 
         #region Rate My App
-        private void RateMyApp()
+        private async Task RateMyApp()
         {
             var launchcount = Settings.Get(AppLaunchCount, SettingsLocation.Local);
             if (launchcount == null)
+            {
                 Settings.Set(AppLaunchCount, 1, SettingsLocation.Local);
+            }
             else if ((int)launchcount == 2)
             {
                 MessageDialog md = new MessageDialog("Thank you for using myShelf, would you like to rate the app?", "Rate myShelf?");
-                md.Commands.Add(new UICommand(
-                    "No",
-                    new UICommandInvokedHandler(this.CommandInvokedHandler)));
-                md.Commands.Add(new UICommand(
-                    "Yes",
-                    new UICommandInvokedHandler(this.CommandInvokedHandler)));
+                md.Commands.Add(new UICommand("No", new UICommandInvokedHandler(this.CommandInvokedHandler)));
+                md.Commands.Add(new UICommand("Yes", new UICommandInvokedHandler(this.CommandInvokedHandler)));
 
-                // Set the command that will be invoked by default
                 md.DefaultCommandIndex = 1;
-
-                // Set the command to be invoked when escape is pressed
                 md.CancelCommandIndex = 0;
+
                 md.ShowAsync();
 
                 Settings.Set(AppLaunchCount, ((int)launchcount) + 1, SettingsLocation.Local, true);
             }
             else if ((int)launchcount > 2)
+            {
                 return;
+            }
             else
+            {
                 Settings.Set(AppLaunchCount, ((int)launchcount) + 1, SettingsLocation.Local, true);
+            }
         }
 
         private async void CommandInvokedHandler(IUICommand command)

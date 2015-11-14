@@ -29,6 +29,8 @@ namespace MyShelf.ViewModels
         public bool IsTitleVisible { get; set; } = false;
         public IEnumerable<string> Shelves { get; set; }
 
+        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+
         public BookViewModel(Book book)
         {
             BookId = book.Id;
@@ -52,6 +54,7 @@ namespace MyShelf.ViewModels
 
         private async Task GetBookInfo(string id)
         {
+            IsLoading = true;
             var book = await BookService.Instance.GetBookInfo(id);
 
             BookTitle = book.Title;
@@ -84,6 +87,7 @@ namespace MyShelf.ViewModels
             Shelves = (await ShelfService.Instance.GetShelvesList()).Select(s => s.Name);
             OnPropertyChanged("Shelves");
 
+            IsLoading = false;
             LoadReviews(book);
         }
 

@@ -29,13 +29,21 @@ namespace MyShelf.Controls
             set { SetValue(ReviewProperty, value); }
         }
         // Using a DependencyProperty as the backing store for Review.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ReviewProperty =
-            DependencyProperty.Register("Review", typeof(UserStatusViewModel), typeof(ReviewControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty ReviewProperty = DependencyProperty.Register("Review", typeof(UserStatusViewModel), typeof(ReviewControl), new PropertyMetadata(null));
+
+        public bool IsPosting
+        {
+            get { return (bool)GetValue(IsPostingProperty); }
+            set { SetValue(IsPostingProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for IsPosting.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsPostingProperty =  DependencyProperty.Register("IsPosting", typeof(bool), typeof(ReviewControl), new PropertyMetadata(false));
+
+
 
         public string ReviewId { get; set; }
-        public bool IsPosting { get; set; }
         public double Rating { get; set; }
-        public string ReviewBody { get; set; }
+        public string ReviewBody { get; set; } = string.Empty;
         public DateTime ReadAt { get; set; } = DateTime.Today;
 
         public ReviewControl()
@@ -43,7 +51,7 @@ namespace MyShelf.Controls
             InitializeComponent();
             VisualStateManager.GoToState(this, HiddenState.Name, false);
 
-            if (DeviceInformation.Instance.HasPhoneHardwareButtons)
+            if (DeviceInformation.HasPhoneHardwareButtons)
             {
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed; ;
             }

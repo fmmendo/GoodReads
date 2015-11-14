@@ -14,24 +14,24 @@ namespace MyShelf.Pages
     public sealed partial class HomePage : PageBase
     {
         HomePageViewModel ViewModel => HomePageViewModel.Instance;
-        public bool ShowAds => !API.Storage.MyShelfSettings.Instance.DontShowAds;
 
         public HomePage()
         {
             InitializeComponent();
         }
 
-        private void Instance_AuthStateChanged(object sender, API.Services.AuthState e)
+        private async void Instance_AuthStateChanged(object sender, API.Services.AuthState e)
         {
             if (IsCurrentPage)
                 ViewModel.Refresh();
         }
 
-        protected override void LoadState(object parameter, Dictionary<string, object> pageState)
+        protected override async void LoadState(object parameter, Dictionary<string, object> pageState)
         {
             base.LoadState(parameter, pageState);
 
             API.Services.AuthenticationService.Instance.AuthStateChanged += Instance_AuthStateChanged;
+
             ViewModel.Refresh();
         }
 
