@@ -142,7 +142,7 @@
                             <controls:SplitViewItem x:Name="svFriends" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsFriendsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.FriendsClick}" Text="Friends" Icon="&#xE716;"/>
                             <!--<controls:SplitViewItem Text="Reading Challenge" GroupName="Sidebar" Icon="&#xE82D;"/>-->
                         </StackPanel>
-                        <StackPanel VerticalAlignment="Bottom" Padding="0,0,0,12">
+                        <StackPanel VerticalAlignment="Bottom" Padding="0,0,0,24">
                             <controls:SplitViewItem x:Name="svProfile" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsProfileChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.ProfileClick}" Text="Profile" Icon="&#xE13D;"/>
                             <controls:SplitViewItem x:Name="svSettings" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;" />
                             <Viewbox Width="220">
