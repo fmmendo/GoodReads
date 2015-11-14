@@ -14,6 +14,8 @@ namespace MyShelf.API.Services
 {
     public class BookService : Singleton<BookService>, IBookService
     {
+        private Dictionary<string, DateTime> timestamp_shelfbooks = new Dictionary<string, DateTime>();
+        private Dictionary<string, string> response_shelfbooks = new Dictionary<string, string>();
 
         /// <summary>
         /// Returns the books for the logged in user
@@ -23,6 +25,23 @@ namespace MyShelf.API.Services
         /// <param name="maxUpdates"></param>
         public async Task<Reviews> GetBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200")
         {
+
+            if (!timestamp_shelfbooks.ContainsKey(shelf) || timestamp_shelfbooks[shelf].AddMinutes(15) <= DateTime.Now)
+            {
+                string url = Urls.ShelfBooks + MyShelfSettings.Instance.GoodreadsUserID + ".xml?key=" + MyShelfSettings.Instance.ConsumerKey + "&format=xml&v=2";
+
+                if (!String.IsNullOrEmpty(shelf))
+                    url += "&shelf=" + shelf;
+                if (!String.IsNullOrEmpty(per_page))
+                    url += "&per_page=" + per_page;
+
+                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(url, RestSharp.Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+
+                response_shelfbooks[shelf] = response.Content.ToString();
+                timestamp_shelfbooks[shelf] = DateTime.Now;
+            }
+
+
             //if (shelf == null && justRefreshedReviews)
             //{
             //    Task.Run(async () =>
@@ -49,15 +68,15 @@ namespace MyShelf.API.Services
             //else
             //{
             //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
-            string url = Urls.ShelfBooks + MyShelfSettings.Instance.GoodreadsUserID + ".xml?key=" + MyShelfSettings.Instance.ConsumerKey + "&format=xml&v=2";
+            //string url = Urls.ShelfBooks + MyShelfSettings.Instance.GoodreadsUserID + ".xml?key=" + MyShelfSettings.Instance.ConsumerKey + "&format=xml&v=2";
 
             //TODO: more params, probably enums
-            if (!String.IsNullOrEmpty(shelf))
-                url += "&shelf=" + shelf;
-            if (!String.IsNullOrEmpty(per_page))
-                url += "&per_page=" + per_page;
+            //if (!String.IsNullOrEmpty(shelf))
+            //    url += "&shelf=" + shelf;
+            //if (!String.IsNullOrEmpty(per_page))
+            //    url += "&per_page=" + per_page;
 
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(url, RestSharp.Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+            //var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(url, RestSharp.Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
 
             //await apiSemaphore.WaitAsync();
             //var request = new RestRequest(url, Method.GET);
@@ -65,7 +84,7 @@ namespace MyShelf.API.Services
 
             //ApiCooldown();
 
-            var result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
+            var result = GoodReadsSerializer.DeserializeResponse(response_shelfbooks[shelf]);
             //GoodreadsReviews = result.Reviews;
             //}
 

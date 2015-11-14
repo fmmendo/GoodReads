@@ -57,5 +57,10 @@ namespace MyShelf.ViewModels
             foreach (var r in reviews.Review)
                 ShelfBooks.Add(new BookViewModel(r.Book));
         }
+
+        private async Task GetBooks(IBookService bookService)
+        {
+            
+        }
     }
 }

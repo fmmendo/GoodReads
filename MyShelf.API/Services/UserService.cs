@@ -17,26 +17,38 @@ namespace MyShelf.API.Services
 
         private User _currentUser = null;
 
+        #region pseudo-cache
+        private DateTime timestamp_userId;
+        private string response_userId;
+
+        private DateTime timestamp_friendUpdates;
+        private string response_friendUpdates = string.Empty;
+
+        private DateTime timestamp_friends;
+        private string response_friends = string.Empty;
+        #endregion
+
         /// <summary>
         /// Returns the logged in User
         /// </summary>
         /// <returns>User</returns>
         public async Task<User> GetUserID(bool refresh = false)
         {
-            if (_currentUser == null || refresh == true)
+            if (_currentUser == null || timestamp_friendUpdates.AddMinutes(15) <= DateTime.Now)
             {
                 var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.AuthUser, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+                response_userId = response.Content.ToString();
 
-                var result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
-
-                _currentUser = result.User;
-
-                MyShelfSettings.Instance.GoodreadsUserID = _currentUser.Id;
-                MyShelfSettings.Instance.GoodreadsUsername = _currentUser.UserName;
-                MyShelfSettings.Instance.GoodreadsUserLink = _currentUser.Link;
+                timestamp_userId = DateTime.Now;
             }
 
-            return _currentUser;
+            var result = GoodReadsSerializer.DeserializeResponse(response_userId);
+
+            MyShelfSettings.Instance.GoodreadsUserID = result.User.Id;
+            MyShelfSettings.Instance.GoodreadsUsername = result.User.UserName;
+            MyShelfSettings.Instance.GoodreadsUserLink = result.User.Link;
+
+            return result.User;
         }
 
         /// <summary>
@@ -82,9 +94,15 @@ namespace MyShelf.API.Services
         /// <param name="maxUpdates"></param>
         public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates)
         {
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.FriendUpdates, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+            if (timestamp_friendUpdates.AddMinutes(15) <= DateTime.Now)
+            {
+                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.FriendUpdates, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+                response_friendUpdates = response.Content.ToString();
 
-            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
+                timestamp_friendUpdates = DateTime.Now;
+            }
+
+            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response_friendUpdates);
 
             return result.Updates;
         }
@@ -97,9 +115,15 @@ namespace MyShelf.API.Services
         /// <returns></returns>
         public async Task<Friends> GetFriends(string page = null, string sort = null)
         {
-            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(string.Format(Urls.FriendList, MyShelfSettings.Instance.GoodreadsUserID), Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+            if (timestamp_friends.AddMinutes(15) <= DateTime.Now)
+            {
+                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(string.Format(Urls.FriendList, MyShelfSettings.Instance.GoodreadsUserID), Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
+                response_friends = response.Content.ToString();
 
-            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
+                timestamp_friends = DateTime.Now;
+            }
+
+            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response_friends);
 
             return result.Friends;
         }
@@ -222,8 +246,8 @@ namespace MyShelf.API.Services
         {
             var param = new Dictionary<string, object>();
             if (!String.IsNullOrEmpty(bookId)) param.Add("user_status[book_id]", bookId);
-            if (!String.IsNullOrEmpty(page))  param.Add("user_status[page]", page);
-            if (!String.IsNullOrEmpty(percent))  param.Add("user_status[percent]", percent);
+            if (!String.IsNullOrEmpty(page)) param.Add("user_status[page]", page);
+            if (!String.IsNullOrEmpty(percent)) param.Add("user_status[percent]", percent);
             if (!String.IsNullOrEmpty(body)) param.Add("user_status[body]", body);
 
             var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync("user_status.xml", Method.POST, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, param);

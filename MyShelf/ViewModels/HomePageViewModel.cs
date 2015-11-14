@@ -52,7 +52,8 @@ namespace MyShelf.ViewModels
         {
             Updates.Clear();
             Updates.LoadState = LoadState.Loading;
-            var updates = await userService.GetFriendUpdates("", "", "");
+
+            var updates = await userService.GetFriendUpdates("", "", "100");
             foreach (var update in updates.Update)
                 Updates.Add(new UpdateViewModel(update));
 

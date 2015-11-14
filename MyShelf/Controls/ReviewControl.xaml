@@ -109,7 +109,9 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <ProgressRing Grid.RowSpan="2" Visibility="{x:Bind IsPosting, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsActive="{x:Bind IsPosting, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#7F000000"/>
+                <Border Background="#9f000000" Grid.RowSpan="2" Visibility="{x:Bind IsPosting, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                    <ProgressRing IsActive="{x:Bind IsPosting, Mode=OneWay}" Width="50" Height="50"/>
+                </Border>
             </Grid>
         </Border>
     </Grid>

@@ -17,6 +17,8 @@ namespace MyShelf.ViewModels
 
         public ObservableCollection<UserViewModel> Friends { get; set; } = new ObservableCollection<UserViewModel>();
 
+        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+
         private UserViewModel selectedFriend;
         public UserViewModel SelectedFriend
         {
@@ -33,6 +35,7 @@ namespace MyShelf.ViewModels
 
         public async Task RefreshFriends()
         {
+            IsLoading = true;
             if (authService.State != AuthState.Authenticated)
             {
                 authService.Authenticate();
@@ -46,6 +49,8 @@ namespace MyShelf.ViewModels
 
             foreach (var friend in result.User)
                 Friends.Add(new UserViewModel(friend));
+
+            IsLoading = false;
         }
     }
 }

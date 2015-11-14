@@ -292,8 +292,8 @@
         
         <controls:ReviewControl x:Name="WriteReviewControl" Grid.ColumnSpan="2" />
 
-        <ProgressRing x:Name="pRingUpdates" Grid.Column="0" IsActive="{x:Bind ViewModel.Updates.IsLoading, Mode=OneWay}"/>
-        <ProgressRing x:Name="pRingReading" Grid.Column="1" IsActive="{x:Bind ViewModel.CurrentlyReading.IsLoading, Mode=OneWay}"/>
+        <ProgressRing x:Name="pRingUpdates" Grid.Column="0" IsActive="{x:Bind ViewModel.Updates.IsLoading, Mode=OneWay}" Height="50" Width="50"/>
+        <ProgressRing x:Name="pRingReading" Grid.Column="1" IsActive="{x:Bind ViewModel.CurrentlyReading.IsLoading, Mode=OneWay}" Height="50" Width="50"/>
     </Grid>
 
     <common:PageBase.TopBarContent>
