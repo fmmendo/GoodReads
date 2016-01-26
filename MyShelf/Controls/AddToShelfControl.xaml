@@ -192,8 +192,8 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal" Height="44">
-        <ToggleButton Content="Want to read" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="44" Background="#336699" Foreground="White"/>
-        <ComboBox x:Name="cbShelves" Style="{StaticResource ComboBoxStyle}" Background="#336699" Margin="1,0,0,0" ItemsSource="{x:Bind Shelves, Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged" Header="Header">
+        <ToggleButton Content="Want to read" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="44" Background="{StaticResource GoodReadsGreen}" FontFamily="{StaticResource Lato}" Foreground="White"/>
+        <ComboBox x:Name="cbShelves" Style="{StaticResource ComboBoxStyle}" Background="{StaticResource GoodReadsGreen}" Margin="0,0,0,0" ItemsSource="{x:Bind Shelves, Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged" Header="Header">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"/>

@@ -57,7 +57,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="gTitleBar" Background="{StaticResource GoodReadsBrown}" Canvas.ZIndex="1">
+        <Grid x:Name="gTitleBar" Background="{StaticResource GoodReadsDarkBrown}" Canvas.ZIndex="1">
             <Grid.ChildrenTransitions>
                 <TransitionCollection>
                     <RepositionThemeTransition />
@@ -72,7 +72,7 @@
             </Grid.ColumnDefinitions>
             
             <Button x:Name="bMenu"
-                    Background="{StaticResource GoodReadsBrown}"
+                    Background="{StaticResource GoodReadsDarkBrown}"
                     Foreground="White" 
                     Width="48" Height="48"
                     VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
@@ -111,7 +111,7 @@
                                   VerticalContentAlignment="Stretch">
             </ContentPresenter>
             <Button x:Name="btnSearch"
-                   Background="{StaticResource GoodReadsBrown}"
+                   Background="{StaticResource GoodReadsDarkBrown}"
                    Grid.Column="2"
                    Click="{x:Bind ViewModel.SearchClick}"
                    Foreground="White" 
@@ -129,7 +129,7 @@
                        DisplayMode="Overlay"
                        IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
-                    <Grid Background="{StaticResource DarkGray}">
+                    <Grid Background="{StaticResource GoodReadsVeryDarkBrown}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
@@ -152,7 +152,7 @@
                     </Grid>
                 </SplitView.Pane>
 
-                <Grid Background="#1C1C1C">
+                <Grid Background="White">
                     <Frame x:Name="RootFrame" x:FieldModifier="Public" Loaded="RootFrame_Loaded"/>
                 </Grid>
             </SplitView>

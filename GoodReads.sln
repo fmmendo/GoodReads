@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GoodReads", "GoodReads", "{4337FDB0-8A33-4D29-86C4-83A6711A627E}"
 EndProject
@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShelf", "MyShelf\MyShelf.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShelf.API", "MyShelf.API\MyShelf.API.csproj", "{0C39A16F-6B2C-4947-B7BD-612AD0F32F7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharp.UAP", "..\..\..\GitHub\RestSharp\RestSharp.UAP\RestSharp.UAP.csproj", "{2A83BF11-C1C0-4031-AC08-07BD7F6EB941}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharp.UAP", "..\RestSharp\RestSharp.UAP\RestSharp.UAP.csproj", "{2A83BF11-C1C0-4031-AC08-07BD7F6EB941}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mendo.UAP", "..\Mendo\Mendo.UAP\Mendo.UAP.csproj", "{A6A64D0E-B444-493A-91D1-7815E3F8CEF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mendo.UAP", "..\MendoTools\Mendo.UAP\Mendo.UAP.csproj", "{A6A64D0E-B444-493A-91D1-7815E3F8CEF7}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
