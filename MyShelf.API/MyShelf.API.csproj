@@ -163,11 +163,11 @@
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GitHub\RestSharp\RestSharp.UAP\RestSharp.UAP.csproj">
+    <ProjectReference Include="..\..\RestSharp\RestSharp.UAP\RestSharp.UAP.csproj">
       <Project>{2a83bf11-c1c0-4031-ac08-07bd7f6eb941}</Project>
       <Name>RestSharp.UAP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mendo\Mendo.UAP\Mendo.UAP.csproj">
+    <ProjectReference Include="..\..\MendoTools\Mendo.UAP\Mendo.UAP.csproj">
       <Project>{a6a64d0e-b444-493a-91d1-7815e3f8cef7}</Project>
       <Name>Mendo.UAP</Name>
     </ProjectReference>

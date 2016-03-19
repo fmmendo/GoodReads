@@ -102,6 +102,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="AdMediator.config" />
+    <Content Include="Assets\Fonts\Lato\Lato-Regular.ttf" />
+    <Content Include="Assets\Fonts\Merriweather\Merriweather-Regular.ttf" />
     <None Include="MyShelf_StoreKey.pfx" />
     <None Include="project.json" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
@@ -271,7 +273,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Mendo\Mendo.UAP\Mendo.UAP.csproj">
+    <ProjectReference Include="..\..\MendoTools\Mendo.UAP\Mendo.UAP.csproj">
       <Project>{a6a64d0e-b444-493a-91d1-7815e3f8cef7}</Project>
       <Name>Mendo.UAP</Name>
     </ProjectReference>
@@ -280,11 +282,9 @@
       <Name>MyShelf.API</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Assets\Fonts\" />
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="AdDuplex.Windows10, Version=10.0.0.2">
+    <SDKReference Include="AdDuplex.Windows10, Version=10.0.1.3">
       <Name>AdDuplex SDK for Windows 10 %28XAML%29</Name>
     </SDKReference>
     <SDKReference Include="Microsoft.AdMediator.Universal, Version=1.0">

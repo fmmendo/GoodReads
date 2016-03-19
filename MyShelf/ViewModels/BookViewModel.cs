@@ -26,6 +26,7 @@ namespace MyShelf.ViewModels
         public double MyRating { get; set; }
         public ObservableCollection<Detail> Details { get; set; } = new ObservableCollection<Detail>();
         public ObservableCollection<ReviewViewModel> Reviews { get; set; } = new ObservableCollection<ReviewViewModel>();
+        public ReviewViewModel SelectedReview { get { return Get(default(ReviewViewModel)); } set { Set(value); } }
         public bool IsTitleVisible { get; set; } = false;
         public IEnumerable<string> Shelves { get; set; }
 

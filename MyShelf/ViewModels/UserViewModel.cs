@@ -104,6 +104,7 @@ namespace MyShelf.ViewModels
 
         public void UserClick()
         {
+            NavigationService.Navigate(typeof(Pages.UserPage), Id);
         }
 
         public void BooksClick()
