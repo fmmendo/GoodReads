@@ -45,6 +45,13 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="mainGrid.Margin" Value="12,0,12,0"/>
+                        <Setter Target="gDetails.Margin" Value="12,4"/>
+                        <Setter Target="spHeader.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="lvUpdates.(Grid.Row)" Value="1"/>
+                        <Setter Target="lvUpdates.(Grid.Column)" Value="1"/>
+                        <Setter Target="lvUpdates.Padding" Value="0,0,24,24"/>
+                        <Setter Target="cdUser.Width" Value="Auto"/>
+                        <Setter Target="cdDetails.Width" Value="*"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
