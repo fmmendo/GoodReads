@@ -72,7 +72,7 @@
                                 <VisualState x:Name="Unchecked"/>
                                 <VisualState x:Name="Checked">
                                     <VisualState.Setters>
-                                        <Setter Target="Border.Background" Value="{StaticResource GoodReadsLightBrown_Transparent}" />
+                                        <Setter Target="Border.Background" Value="{StaticResource DarkBrownOverlay}" />
                                         <!--<Setter Target="tbIcon.Foreground" Value="Black" />
                                         <Setter Target="btnText.Foreground" Value="Black" />-->
                                     </VisualState.Setters>

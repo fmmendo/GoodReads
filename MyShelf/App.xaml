@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyShelf"
     xmlns:converters="using:Mendo.UAP.Converters"
+    xmlns:mcontrols="using:Mendo.UAP.Controls"
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
@@ -27,68 +28,75 @@
             <!--#endregion-->
 
             <!--#region Brushes -->
+            <SolidColorBrush x:Key="DarkGray" Color="#FFBFBFBF" />
+            <SolidColorBrush x:Key="MidGray" Color="#FFAAAAAA" />
+            <SolidColorBrush x:Key="LightGray" Color="#FFD6D6D6" />
+            
+            <SolidColorBrush x:Key="DarkerText" Color="#FF181818" />
             <SolidColorBrush x:Key="DarkText" Color="#FF333333" />
-            <SolidColorBrush x:Key="GoodReadsGreen" Color="#FF3D9363" />
-            <SolidColorBrush x:Key="GoodReadsBrown" Color="#FF927f64" />
-            <SolidColorBrush x:Key="GoodReadsLightBrown" Color="#FFF4F1EA" />
-            <SolidColorBrush x:Key="GoodReadsDarkBrown" Color="#FF665242" />
-            <SolidColorBrush x:Key="GoodReadsVeryDarkBrown" Color="#FF382110" />
-            <SolidColorBrush x:Key="GoodReadsLightBrown_Transparent" Color="#70F4F1EA" />
 
-            <SolidColorBrush x:Key="LightBackground" Color="#FFF5F5F5" />
-            <SolidColorBrush x:Key="DarkGray" Color="#FF2B2B2B" />
-            <SolidColorBrush x:Key="GoodReadsLightBackground" Color="#FFF0EFE1" />
+            <SolidColorBrush x:Key="DarkBrown" Color="#FF6E5A42" />
+            <SolidColorBrush x:Key="DarkBrownOverlay" Color="#706E5A42" />
+            <SolidColorBrush x:Key="LightBrown" Color="#FFF4F1EA" />
+            <SolidColorBrush x:Key="VeryDarkBrown" Color="#FF382110" />
+            <SolidColorBrush x:Key="MidBrown" Color="#FFBAAD6A" />
 
-            <SolidColorBrush x:Key="GoodReadsBrown_Transparent" Color="#70336699" />
-            <!--<SolidColorBrush x:Key="GoodReadsLightBrown_Transparent" Color="#70336699" />-->
+            <SolidColorBrush x:Key="Green" Color="#FF409D69" />
+            <SolidColorBrush x:Key="DarkGreen" Color="#FF00635D" />
+
+            <SolidColorBrush x:Key="Orange" Color="#FFFA604A" />
             <!--#endregion-->
 
             <!--#region TextBlock Styles -->
-            <!--base style-->
             <Style TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource Lato}"/>
                 <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
             </Style>
             <Style x:Key="NormalTextBlock" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource Lato}"/>
-                <!--<Setter Property="Foreground" Value="#EEE"/>-->
+                <Setter Property="Foreground" Value="{StaticResource DarkerText}"/>
                 <Setter Property="Margin" Value="12,0"/>
             </Style>
-            
+            <Style x:Key="NormalSerifTextBlock" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource Merriweather}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkerText}"/>
+                <Setter Property="Margin" Value="12,0"/>
+            </Style>
+
             <Style x:Key="ListHeaderTextBlock" TargetType="TextBlock">
-                <Setter Property="FontFamily" Value="{StaticResource Lato}"/>
-                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="FontFamily" Value="{StaticResource Merriweather}"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
                 <Setter Property="FontSize" Value="24"/>
                 <Setter Property="Margin" Value="12,9,12,6"/>
             </Style>
             <Style x:Key="TitleTextBlock" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource Merriweather}"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Foreground" Value="#EEE"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="Margin" Value="12,0"/>
             </Style>
             <Style x:Key="SubtitleTextBlock" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource Merriweather}"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Foreground" Value="#EEE"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Margin" Value="12,0"/>
             </Style>
             <Style x:Key="SubtleTextBlock" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="{StaticResource Lato}"/>
                 <Setter Property="FontWeight" Value="SemiLight"/>
-                <Setter Property="Foreground" Value="#D1D1D1"/>
+                <Setter Property="Foreground" Value="{StaticResource MidGray}"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Margin" Value="12,0"/>
             </Style>
-
             <!--#endregion-->
 
             <!--#region Button Styles -->
             <Style TargetType="Button">
-                <Setter Property="Background" Value="#336699"/>
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                <Setter Property="Background" Value="{StaticResource LightBrown}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Padding" Value="8,4,8,4"/>
@@ -185,9 +193,9 @@
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
+                                                </ObjectAnimationUsingKeyFrames>-->
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
@@ -196,9 +204,9 @@
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
+                                                </ObjectAnimationUsingKeyFrames>-->
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
@@ -207,9 +215,9 @@
                                         </VisualState>
                                         <VisualState x:Name="Selected">
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
+                                                </ObjectAnimationUsingKeyFrames>-->
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
@@ -218,9 +226,9 @@
                                         </VisualState>
                                         <VisualState x:Name="PointerOverSelected">
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentMediumBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
+                                                </ObjectAnimationUsingKeyFrames>-->
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
@@ -229,9 +237,9 @@
                                         </VisualState>
                                         <VisualState x:Name="PressedSelected">
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderBackground" Storyboard.TargetProperty="Fill">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentHighBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
+                                                </ObjectAnimationUsingKeyFrames>-->
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
@@ -276,13 +284,14 @@
                 </Setter>
             </Style>
 
+            <!--#region Hyperlink Styles -->
             <Style TargetType="HyperlinkButton">
                 <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
                 <Setter Property="BorderThickness" Value="{ThemeResource HyperlinkButtonBorderThemeThickness}"/>
                 <Setter Property="Padding" Value="0,6,0,6"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+                <Setter Property="FontFamily" Value="{StaticResource Lato}"/>
                 <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
                 <Setter Property="UseSystemFocusVisuals" Value="True"/>
                 <Setter Property="Template">
@@ -335,6 +344,70 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="HyperlinkButton" x:Key="HyperlinkSerifButton">
+                <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
+                <Setter Property="BorderThickness" Value="{ThemeResource HyperlinkButtonBorderThemeThickness}"/>
+                <Setter Property="Padding" Value="0,6,0,6"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="{StaticResource Merriweather}"/>
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+                <Setter Property="UseSystemFocusVisuals" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="HyperlinkButton">
+                            <Grid x:Name="RootGrid">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHyperlinkBaseMediumBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  AutomationProperties.AccessibilityView="Raw"
+                                                  FontWeight="SemiBold"
+                                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                                  Background="{TemplateBinding Background}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTransitions="{TemplateBinding ContentTransitions}"
+
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <TextBlock Text="{TemplateBinding Content}"  TextWrapping="WrapWholeWords"  MaxLines="2" TextTrimming="WordEllipsis"/>
+                                </ContentPresenter>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!--#endregion-->
+
+            <Style TargetType="mcontrols:RatingControl">
+                <Setter Property="Foreground" Value="{StaticResource Orange}"/>
+                <Setter Property="Background" Value="{StaticResource LightGray}"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 

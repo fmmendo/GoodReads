@@ -45,6 +45,10 @@
                         <Setter Target="cdBook.MaxWidth" Value="288"/>
                         <Setter Target="cdDetails.Width" Value="3*"/>
                         <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
+                        <Setter Target="border.MaxHeight" Value="640"/>
+                        <Setter Target="border.Width" Value="480"/>
+                        <Setter Target="border.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="border.VerticalAlignment" Value="Center"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -61,13 +65,34 @@
                         <Setter Target="cdBook.Width" Value="*"/>
                         <Setter Target="cdBook.MaxWidth" Value="288"/>
                         <Setter Target="cdDetails.Width" Value="3*"/>
+                        <Setter Target="mainGrid.Margin" Value="12,0,12,0"/>
                         <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
+
+                        <Setter Target="border.MaxHeight" Value="640"/>
+                        <Setter Target="border.Width" Value="480"/>
+                        <Setter Target="border.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="border.VerticalAlignment" Value="Center"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup x:FieldModifier="Public" x:Name="DisplayStates">
+                <VisualState x:FieldModifier="Public" x:Name="HiddenState">
+                    <VisualState.Setters>
+                        <Setter Target="rect.Visibility" Value="Collapsed" />
+                        <Setter Target="border.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:FieldModifier="Public" x:Name="VisibleState">
+                    <VisualState.Setters>
+                        <Setter Target="rect.Visibility" Value="Visible" />
+                        <Setter Target="border.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <ScrollViewer>
-            <Grid>
+            <Grid x:Name="mainGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="cdBook" Width="120"/>
                     <ColumnDefinition x:Name="cdDetails" Width="*"/>
@@ -89,10 +114,10 @@
                     <TextBlock Text="{x:Bind ViewModel.BookTitle, Mode=OneWay}" Style="{StaticResource ListHeaderTextBlock}" MaxLines="2" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
                     <TextBlock Text="{x:Bind ViewModel.BookAuthor, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
                     <TextBlock Text="{x:Bind ViewModel.Stats, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
-                    <mcontrols:RatingControl Rating="{x:Bind ViewModel.Rating, Mode=OneWay}" FontSize="18" Foreground="White" Margin="12" HorizontalAlignment="Left"/>
+                    <mcontrols:RatingControl Rating="{x:Bind ViewModel.Rating, Mode=OneWay}" FontSize="18" Margin="12" HorizontalAlignment="Left"/>
                     <controls:AddToShelfControl HorizontalAlignment="Left" Margin="12" BookId="{x:Bind ViewModel.BookId, Mode=OneWay}" Shelves="{x:Bind ViewModel.Shelves, Mode=OneWay}"/>
                 </StackPanel>
-                
+
                 <ItemsControl x:Name="icDetails" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Details, Mode=OneWay}" Margin="0,12">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="data:Detail">
@@ -103,37 +128,54 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
-                <TextBlock x:Name="tbDescription" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="{x:Bind ViewModel.Description, Mode=OneWay}" Margin="12" Style="{StaticResource NormalTextBlock}" TextWrapping="WrapWholeWords"/>
-                
-                <Universal:AdMediatorControl Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="4" Grid.ColumnSpan="2" x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE" />
-                
-                <GridView Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Reviews, Mode=OneWay}" Header="Reviews">
+
+                <TextBlock x:Name="tbDescription" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" LineHeight="22" Text="{x:Bind ViewModel.Description, Mode=OneWay}" Margin="12" Style="{StaticResource NormalSerifTextBlock}" TextAlignment="Justify" TextWrapping="WrapWholeWords"/>
+
+                <Universal:AdMediatorControl Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="4" Grid.ColumnSpan="2" x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE" Margin="0,12,0,12" />
+
+                <GridView Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Reviews, Mode=OneWay}" SelectionChanged="GridView_SelectionChanged" Header="Reviews">
                     <GridView.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
                         </DataTemplate>
                     </GridView.HeaderTemplate>
-                    <!--<GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid />
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>-->
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="data:ReviewViewModel">
                             <StackPanel Width="320" Margin="12" VerticalAlignment="Top">
-                                <TextBlock Text="{x:Bind UserName, Mode=OneWay}" Foreground="White"/>
-                                <TextBlock Text="{x:Bind DateAdded, Mode=OneWay}" Foreground="#999999" FontSize="10"/>
-                                <mcontrols:RatingControl Rating="{x:Bind Rating, Mode=OneWay}" Margin="0,12" FontSize="18" Foreground="White" HorizontalAlignment="Left"/>
-                                <TextBlock Text="{x:Bind Body, Mode=OneWay}"  Foreground="White" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="10"/>
+                                <TextBlock Text="{x:Bind UserName, Mode=OneWay}"/>
+                                <TextBlock Text="{x:Bind DateAdded, Mode=OneWay}" Foreground="{StaticResource MidGray}" FontSize="10"/>
+                                <mcontrols:RatingControl Rating="{x:Bind Rating, Mode=OneWay}" Margin="0,12" FontSize="18" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{x:Bind Body, Mode=OneWay}" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="10"/>
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
             </Grid>
         </ScrollViewer>
-        <Border Background="#9f000000"  Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
+        <Border Background="{StaticResource DarkBrownOverlay}"  Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
+
+        <!--review detail-->
+
+        <Rectangle x:Name="rect" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="Black" Opacity="0.6" StrokeThickness="0" Tapped="rect_Tapped" />
+        <Border x:Name="border" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderThickness="3" BorderBrush="{StaticResource VeryDarkBrown}" Background="White">
+            <ScrollViewer ZoomMode="Disabled" x:Name="reviewScroll" Padding="24,0,24,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="{x:Bind ViewModel.SelectedReview.UserName, Mode=OneWay}" Margin="0,24,0,0"/>
+                    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.SelectedReview.DateAdded, Mode=OneWay}" Foreground="{StaticResource MidGray}" FontSize="10"/>
+                    <mcontrols:RatingControl Grid.Row="2" Rating="{x:Bind ViewModel.SelectedReview.Rating, Mode=OneWay}" Margin="0,12" FontSize="18" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="3" Text="{x:Bind ViewModel.SelectedReview.Body, Mode=OneWay}" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" TextAlignment="Justify" Padding="0,0,0,24" />
+                </Grid>
+            </ScrollViewer>
+        </Border>
+
     </Grid>
 </common:PageBase>

@@ -38,11 +38,20 @@
                         <Setter Target="cdDetails.Width" Value="*"/>
                     </VisualState.Setters>
                 </VisualState>
+                
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainGrid.Margin" Value="12,0,12,0"/>
+                    </VisualState.Setters>
+                </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <ScrollViewer>
-            <Grid>
+            <Grid x:Name="mainGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="cdUser" Width="*"/>
                     <ColumnDefinition x:Name="cdDetails" Width="0"/>
@@ -67,15 +76,15 @@
                         <TextBlock Text="{x:Bind ViewModel.Name, Mode=OneWay}" Style="{StaticResource ListHeaderTextBlock}" MaxLines="2" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
                         <TextBlock Text="{x:Bind ViewModel.FriendsCount, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind ViewModel.BooksCount, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
-                            <TextBlock Text="{x:Bind ViewModel.GroupsCount, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
+                            <TextBlock Text="{x:Bind ViewModel.BooksCount, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" FontFamily="{StaticResource Merriweather}"/>
+                            <TextBlock Text="{x:Bind ViewModel.GroupsCount, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" FontFamily="{StaticResource Merriweather}"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
                     <TextBlock Text="Details" Style="{StaticResource ListHeaderTextBlock}"/>
-                    <Grid x:Name="gDetails" Grid.Row="1" Margin="0,4" Background="{StaticResource DarkGray}">
+                    <Grid x:Name="gDetails" Grid.Row="1" Margin="0,4">
                         <Grid.ChildrenTransitions>
                             <TransitionCollection>
                                 <EntranceThemeTransition/>
@@ -121,7 +130,7 @@
                         <TextBlock Grid.Row="7" Text="Favorite Books" Style="{StaticResource NormalTextBlock}" Margin="12,4"/>
                         <TextBlock Grid.Row="7" Grid.Column="1" Text="{x:Bind ViewModel.FavouriteBooks, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" Margin="12,4"/>
 
-                        <TextBlock Grid.Row="8" Grid.ColumnSpan="2" Foreground="White" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.About, Mode=OneWay}"  Margin="12,4"/>
+                        <TextBlock Grid.Row="8" Grid.ColumnSpan="2" Style="{StaticResource NormalSerifTextBlock}" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.About, Mode=OneWay}"  Margin="12,4"/>
 
                         <HyperlinkButton Grid.Row="9" Grid.Column="1" Content="view goodreads page >" NavigateUri="{Binding ViewModel.Link, Mode=OneWay}" HorizontalAlignment="Right" Margin="0,0,12,0" />
                     </Grid>
@@ -147,7 +156,7 @@
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:UpdateViewModel">
-                            <Grid Background="{StaticResource DarkGray}">
+                            <Grid x:Name="mainGrid">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -167,11 +176,11 @@
                                 </Ellipse>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                     <HyperlinkButton Content="{x:Bind UserName, Mode=OneWay}" Padding="0" Click="{x:Bind UserClick, Mode=OneWay}"/>
-                                    <TextBlock Text="{x:Bind ActionText, Mode=OneWay}" Foreground="White" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis"/>
+                                    <TextBlock Text="{x:Bind ActionText, Mode=OneWay}" Style="{StaticResource NormalTextBlock}" TextWrapping="WrapWholeWords" Margin="0" MaxLines="2" TextTrimming="WordEllipsis"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
+                                <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Margin="12,0,12,0" />
 
-                                <Grid Grid.Row="1" Grid.ColumnSpan="3" Height="120" Background="#07FFFFFF" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="120" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
@@ -186,7 +195,7 @@
                                             <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="120" DecodePixelType="Logical" />
                                         </Image.Source>
                                     </Image>
-                                    <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" FontSize="18" VerticalAlignment="Top" Padding="0" />
+                                    <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" VerticalAlignment="Top" Padding="0" />
                                     <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
                                     <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}"></controls:AddToShelfControl>
                                 </Grid>
@@ -201,7 +210,7 @@
             </Grid>
         </ScrollViewer>
 
-        <Border Background="#9f000000"  Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
+        <Border Background="{StaticResource DarkBrownOverlay}"  Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
     </Grid>

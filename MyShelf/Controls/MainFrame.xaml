@@ -57,7 +57,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="gTitleBar" Background="{StaticResource GoodReadsDarkBrown}" Canvas.ZIndex="1">
+        <Grid x:Name="gTitleBar" Background="{StaticResource DarkBrown}" Canvas.ZIndex="1">
             <Grid.ChildrenTransitions>
                 <TransitionCollection>
                     <RepositionThemeTransition />
@@ -72,7 +72,7 @@
             </Grid.ColumnDefinitions>
             
             <Button x:Name="bMenu"
-                    Background="{StaticResource GoodReadsDarkBrown}"
+                    Background="{StaticResource DarkBrown}"
                     Foreground="White" 
                     Width="48" Height="48"
                     VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
@@ -111,7 +111,7 @@
                                   VerticalContentAlignment="Stretch">
             </ContentPresenter>
             <Button x:Name="btnSearch"
-                   Background="{StaticResource GoodReadsDarkBrown}"
+                   Background="{StaticResource DarkBrown}"
                    Grid.Column="2"
                    Click="{x:Bind ViewModel.SearchClick}"
                    Foreground="White" 
@@ -129,7 +129,7 @@
                        DisplayMode="Overlay"
                        IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
-                    <Grid Background="{StaticResource GoodReadsVeryDarkBrown}">
+                    <Grid Background="{StaticResource VeryDarkBrown}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
