@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.Data.Html;
 
 namespace MyShelf.ViewModels
 {
@@ -21,6 +22,7 @@ namespace MyShelf.ViewModels
         //public string Link { get; set; }
         public string ImageUrl { get; set; }
         public bool IsBook { get; set; } = false;
+        public bool IsBookLoading { get; set; } = false;
         //public User Actor { get; set; }
         public string UpdatedAt { get; set; }
         //public UpdateObject Object { get; set; }
@@ -45,7 +47,7 @@ namespace MyShelf.ViewModels
 
             ImageUrl = update.Actor?.ImageUrl;
             UserName = update.Actor?.Name;
-            ActionText = update.ActionText.Contains("<") ? Regex.Replace(update.ActionText, "<.*?>", string.Empty) : update.ActionText;
+            ActionText = update.ActionText.Contains("<") ? HtmlUtilities.ConvertToText(Regex.Replace(update.ActionText, "<.*?>", string.Empty)) : HtmlUtilities.ConvertToText(update.ActionText);
 
             DateTime date;
             if (DateTime.TryParse(update.UpdatedAt, out date))
@@ -81,6 +83,9 @@ namespace MyShelf.ViewModels
             BookId = book.Id;
             OnPropertyChanged("BookId");
 
+            IsBook = true;
+            IsBookLoading = true;
+            OnPropertyChanged("IsBook");
             //IsBook = true;
 
             GetBookInfoAsync(book);
@@ -104,11 +109,9 @@ namespace MyShelf.ViewModels
             OnPropertyChanged("BookAuthor");
             OnPropertyChanged("BookTitle");
             OnPropertyChanged("BookId");
-            IsBook = true;
-            OnPropertyChanged("IsBook");
-
-  
-
+            //IsBook = true;
+            IsBookLoading = false;
+            OnPropertyChanged("IsBookLoading");
         }
 
         public void UserClick()

@@ -165,6 +165,8 @@
                             <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" FontSize="18" VerticalAlignment="Top" Padding="0" />
                             <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
                             <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}"></controls:AddToShelfControl>
+
+                            <ProgressRing Visibility="Visible" IsActive="{x:Bind IsBookLoading, Mode=OneWay}" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
                         </Grid>
                         <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
                             <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
