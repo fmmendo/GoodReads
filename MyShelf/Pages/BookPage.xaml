@@ -1,14 +1,14 @@
-﻿<common:PageBase
+﻿<common:BasePage
     x:Class="MyShelf.Pages.BookPage"
-    xmlns:common="using:Mendo.UAP.Common"
+    xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyShelf.Pages"
     xmlns:data="using:MyShelf.ViewModels"
     xmlns:controls="using:MyShelf.Controls"
-    xmlns:Universal="using:Microsoft.AdMediator.Universal" 
+    xmlns:ads="using:Microsoft.Advertising"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mcontrols="using:Mendo.UAP.Controls"
+    xmlns:mcontrols="using:Mendo.UWP.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
@@ -131,7 +131,8 @@
 
                 <TextBlock x:Name="tbDescription" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" LineHeight="22" Text="{x:Bind ViewModel.Description, Mode=OneWay}" Margin="12" Style="{StaticResource NormalSerifTextBlock}" TextAlignment="Justify" TextWrapping="WrapWholeWords"/>
 
-                <Universal:AdMediatorControl Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="4" Grid.ColumnSpan="2" x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE" Margin="0,12,0,12" />
+                <Grid x:Name="adGrid" Grid.Row="4" Grid.ColumnSpan="2" Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,12,0,12"/>
+                <!--<Universal:AdMediatorControl  x:Name="AdMediator_Home_1" Id="AdMediator-Id-1B64BEFE-73C2-40CD-87D4-53B9DAC83CCE" />-->
 
                 <GridView Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Reviews, Mode=OneWay}" SelectionChanged="GridView_SelectionChanged" Header="Reviews">
                     <GridView.HeaderTemplate>
@@ -178,4 +179,4 @@
         </Border>
 
     </Grid>
-</common:PageBase>
+</common:BasePage>

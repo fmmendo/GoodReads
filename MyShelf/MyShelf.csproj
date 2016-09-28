@@ -11,7 +11,7 @@
     <AssemblyName>MyShelf</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -123,6 +123,7 @@
       <DependentUpon>ReviewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SplitViewItem.cs" />
+    <Compile Include="BasePage.cs" />
     <Compile Include="Pages\AuthorPage.xaml.cs">
       <DependentUpon>AuthorPage.xaml</DependentUpon>
     </Compile>
@@ -273,9 +274,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MendoTools\Mendo.UAP\Mendo.UAP.csproj">
-      <Project>{a6a64d0e-b444-493a-91d1-7815e3f8cef7}</Project>
-      <Name>Mendo.UAP</Name>
+    <ProjectReference Include="..\..\MendoTools\Mendo.UWP\Mendo.UWP.csproj">
+      <Project>{39feb0bb-5790-4cc3-826f-939b7059c30d}</Project>
+      <Name>Mendo.UWP</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyShelf.API\MyShelf.API.csproj">
       <Project>{0c39a16f-6b2c-4947-b7bd-612ad0f32f7d}</Project>
@@ -284,12 +285,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <SDKReference Include="AdDuplex.Windows10, Version=10.0.1.3">
-      <Name>AdDuplex SDK for Windows 10 %28XAML%29</Name>
-    </SDKReference>
-    <SDKReference Include="Microsoft.AdMediator.Universal, Version=1.0">
-      <Name>Microsoft.AdMediator.Universal</Name>
-    </SDKReference>
     <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
       <Name>Microsoft Advertising SDK for XAML</Name>
     </SDKReference>
@@ -299,7 +294,7 @@
     <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
       <Name>Microsoft.VCLibs.120</Name>
     </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>

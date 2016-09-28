@@ -1,5 +1,5 @@
-﻿using Mendo.UAP;
-using Mendo.UAP.Common;
+﻿using Mendo.UWP;
+using Mendo.UWP.Common;
 using MyShelf.API.Services;
 using MyShelf.API.Storage;
 using System;
@@ -12,13 +12,13 @@ using Windows.ApplicationModel.Store;
 
 namespace MyShelf.ViewModels
 {
-    public class HomePageViewModel : SingletonViewModelBase<HomePageViewModel>
+    public class HomePageViewModel : BindableSingleton<HomePageViewModel>
     {
         private IAuthenticationService authService = AuthenticationService.Instance;
         private IUserService userService = UserService.Instance;
         
-        public DynamicCollection<UpdateViewModel> Updates { get; } = new DynamicCollection<UpdateViewModel>();
-        public DynamicCollection<UserStatusViewModel> CurrentlyReading { get; } = new DynamicCollection<UserStatusViewModel>();
+        public BindableCollection<UpdateViewModel> Updates { get; } = new BindableCollection<UpdateViewModel>();
+        public BindableCollection<UserStatusViewModel> CurrentlyReading { get; } = new BindableCollection<UserStatusViewModel>();
 
         private bool showCurrentlyReading = false;
         public bool ShowCurrentlyReading

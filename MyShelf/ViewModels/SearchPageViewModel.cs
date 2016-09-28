@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.API.Services;
 using MyShelf.Pages;
 using System;
@@ -18,7 +18,7 @@ namespace MyShelf.ViewModels
         
         public object SelectedWork { get; set; }
 
-        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+        public bool IsLoading { get { return GetV(false); } set { Set(value); } }
 
         public async Task SearchClick()
         {

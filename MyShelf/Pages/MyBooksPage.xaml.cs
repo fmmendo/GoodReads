@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.ViewModels;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Navigation;
@@ -10,7 +10,7 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MyBooksPage : PageBase
+    public sealed partial class MyBooksPage : BasePage
     {
         MyBooksPageViewModel ViewModel => MyBooksPageViewModel.Instance;
 

@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +17,16 @@ namespace MyShelf.ViewModels
         public string BookAuthor { get; set; }
         public double Percent { get; set; }
         public string Page { get; set; }
-        public bool Updating { get { return Get(false); } set { Set(value); } }
-        public bool UpdatingPage { get { return Get(true); } set { Set(value); } }
+        public bool Updating { get { return GetV(false); } set { Set(value); } }
+        public bool UpdatingPage { get { return GetV(true); } set { Set(value); } }
         public string BookPages { get; set; }
         public string BookId { get; set; }
 
-        public string UpdatePercentage { get { return Get(Percent.ToString()); } set { Set(value); } }
-        public string UpdatePageNum { get { return Get(Page); } set { Set(value); } }
-        public string UpdateText { get { return Get(string.Empty); } set { Set(value); } }
+        public string UpdatePercentage { get { return Get(() => Percent.ToString()); } set { Set(value); } }
+        public string UpdatePageNum { get { return Get(() => Page); } set { Set(value); } }
+        public string UpdateText { get { return Get<string>(); } set { Set(value); } }
 
-        public bool Posting { get { return Get(false); } set { Set(value); } }
+        public bool Posting { get { return GetV(false); } set { Set(value); } }
 
         private string authorId;
 

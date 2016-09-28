@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace MyShelf.Controls
             InitializeComponent();
             VisualStateManager.GoToState(this, HiddenState.Name, false);
 
-            if (DeviceInformation.HasPhoneHardwareButtons)
+            if (DeviceInformation.Instance.IsPhone)
             {
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed; ;
             }

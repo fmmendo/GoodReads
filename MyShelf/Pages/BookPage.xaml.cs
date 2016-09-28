@@ -1,11 +1,11 @@
-﻿using Mendo.UAP.Common;
-using Microsoft.AdMediator.Core.Models;
+﻿using Mendo.UWP.Common;
 using MyShelf.ViewModels;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using System.Linq;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Advertising.WinRT.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -14,10 +14,23 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BookPage : PageBase
+    public sealed partial class BookPage : BasePage
     {
         public BookViewModel ViewModel { get; set; }
         public bool ShowAds => !API.Storage.MyShelfSettings.Instance.DontShowAds;
+
+        private const int AD_WIDTH = 728;
+        private const int AD_HEIGHT = 90;
+        //private const int AD_WIDTH = 480;
+        //private const int AD_HEIGHT = 80;
+        private const string WAPPLICATIONID = "<tbd>";
+        private const string WADUNITID = "<tbd>";
+        private const string MAPPLICATIONID = "<tbd>";
+        private const string MADUNITID = "<tbd>";
+
+        private AdControl adControl = null;
+        private string myAppId = WAPPLICATIONID;
+        private string myAdUnitId = WADUNITID;
 
         public BookPage()
         {
@@ -25,13 +38,23 @@ namespace MyShelf.Pages
 
             VisualStateManager.GoToState(this, HiddenState.Name, true);
 
-            AdMediator_Home_1.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 728;
-            AdMediator_Home_1.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 90;
-
-            if (DeviceInformation.HasPhoneHardwareButtons)
+            if (DeviceInformation.Instance.IsPhone)
             {
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed; ;
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+
+                myAppId = MAPPLICATIONID;
+                myAdUnitId = MADUNITID;
             }
+
+            // Initialize the AdControl.
+            adControl = new AdControl();
+            adControl.ApplicationId = myAppId;
+            adControl.AdUnitId = myAdUnitId;
+            adControl.Width = AD_WIDTH;
+            adControl.Height = AD_HEIGHT;
+            adControl.IsAutoRefreshEnabled = true;
+
+            adGrid.Children.Add(adControl);
         }
 
         protected override void LoadState(object parameter, Dictionary<string, object> pageState)

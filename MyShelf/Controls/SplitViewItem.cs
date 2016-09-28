@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Extensions;
+﻿using Mendo.UWP.Extensions;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

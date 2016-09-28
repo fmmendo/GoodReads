@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.API.Storage;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MyShelf.Pages
 {
-    public sealed partial class SettingsPage : PageBase
+    public sealed partial class SettingsPage : BasePage
     {
 
 

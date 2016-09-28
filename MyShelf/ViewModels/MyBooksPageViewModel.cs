@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.API.Services;
 using System;
 using System.Collections.Generic;
@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace MyShelf.ViewModels
 {
-    public class MyBooksPageViewModel : SingletonViewModelBase<MyBooksPageViewModel>
+    public class MyBooksPageViewModel : BindableSingleton<MyBooksPageViewModel>
     {
         private IAuthenticationService authService = AuthenticationService.Instance;
         private IShelfService shelfService = ShelfService.Instance;
         private IBookService bookService = BookService.Instance;
 
-        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+        public bool IsLoading { get { return GetV(false); } set { Set(value); } }
 
 
         public ObservableCollection<ShelfViewModel> Shelves { get; } = new ObservableCollection<ShelfViewModel>();

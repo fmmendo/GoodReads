@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.API.Services;
 using MyShelf.API.XML;
 using System;
@@ -14,23 +14,23 @@ namespace MyShelf.ViewModels
 {
     public class AuthorViewModel : ViewModelBase
     {
-        public string Id { get { return Get(string.Empty); } set { Set(value); } }
-        public string ImageUrl  { get { return Get(string.Empty); } set { Set(value); } }
-        public string Name  { get { return Get(string.Empty); } set { Set(value); } }
-        public string Url  { get { return Get(string.Empty); } set { Set(value); } }
-        public string Hometown  { get { return Get(string.Empty); } set { Set(value); } }
-        public string BornAt  { get { return Get(string.Empty); } set { Set(value); } }
-        public string DiedAt { get { return Get(string.Empty); } set { Set(value); } }
-        public string Genre  { get { return Get(string.Empty); } set { Set(value); } }
-        public string Gender  { get { return Get(string.Empty); } set { Set(value); } }
-        public string Link  { get { return Get(string.Empty); } set { Set(value); } }
-        public string About  { get { return Get(string.Empty); } set { Set(value); } }
-        public string Influences  { get { return Get(string.Empty); } set { Set(value); } }
-        public string Rating  { get { return Get(string.Empty); } set { Set(value); } }
-        public string WorksCount  { get { return Get(string.Empty); } set { Set(value); } }
+        public string Id { get { return Get<string>(); } set { Set(value); } }
+        public string ImageUrl  { get { return Get<string>(); } set { Set(value); } }
+        public string Name  { get { return Get<string>(); } set { Set(value); } }
+        public string Url  { get { return Get<string>(); } set { Set(value); } }
+        public string Hometown  { get { return Get<string>(); } set { Set(value); } }
+        public string BornAt  { get { return Get<string>(); } set { Set(value); } }
+        public string DiedAt { get { return Get<string>(); } set { Set(value); } }
+        public string Genre  { get { return Get<string>(); } set { Set(value); } }
+        public string Gender  { get { return Get<string>(); } set { Set(value); } }
+        public string Link  { get { return Get<string>(); } set { Set(value); } }
+        public string About  { get { return Get<string>(); } set { Set(value); } }
+        public string Influences  { get { return Get<string>(); } set { Set(value); } }
+        public string Rating  { get { return Get<string>(); } set { Set(value); } }
+        public string WorksCount  { get { return Get<string>(); } set { Set(value); } }
         public ObservableCollection<BookViewModel> AuthorBooks { get; private set; } = new ObservableCollection<BookViewModel>();
 
-        public bool IsLoading { get { return Get(false); } set { Set(value); } }
+        public bool IsLoading { get { return GetV(false); } set { Set(value); } }
 
         public AuthorViewModel(Author author)
         {

@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.API.Services;
 using MyShelf.API.Storage;
 using System;
@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MyShelf.ViewModels
 {
-    public class MainFrameViewModel : SingletonViewModelBase<MainFrameViewModel>
+    public class MainFrameViewModel : BindableSingleton<MainFrameViewModel>
     {
         IUserService userService = UserService.Instance;
         IAuthenticationService authService = AuthenticationService.Instance;

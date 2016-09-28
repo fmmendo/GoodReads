@@ -255,6 +255,14 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "Newtonsoft.Json/9.0.1": {
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
       "SharpSerializer/2.20.0": {
         "compile": {
           "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
@@ -2043,6 +2051,14 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "Newtonsoft.Json/9.0.1": {
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
       "SharpSerializer/2.20.0": {
         "compile": {
           "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
@@ -3677,6 +3693,14 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "Newtonsoft.Json/9.0.1": {
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
       "SharpSerializer/2.20.0": {
         "compile": {
           "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
@@ -5307,6 +5331,14 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
       "SharpSerializer/2.20.0": {
@@ -6943,6 +6975,14 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "Newtonsoft.Json/9.0.1": {
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      },
       "SharpSerializer/2.20.0": {
         "compile": {
           "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.dll": {}
@@ -8573,6 +8613,14 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
       "SharpSerializer/2.20.0": {
@@ -10207,6 +10255,14 @@
         },
         "runtime": {
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
       "SharpSerializer/2.20.0": {
@@ -12244,13 +12300,35 @@
         "ref/xamarinmac20/_._"
       ]
     },
+    "Newtonsoft.Json/9.0.1": {
+      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+      "type": "package",
+      "files": [
+        "Newtonsoft.Json.9.0.1.nupkg.sha512",
+        "Newtonsoft.Json.nuspec",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "tools/install.ps1"
+      ]
+    },
     "SharpSerializer/2.20.0": {
       "sha512": "taSfCYbQ5O8li6L4yPbwi3+Kqzsk/qXAKuGTLVW8Q2gUhmfrTpyLAmtcQi6Q2eyHQJMDRWEnJk+OTgkzRjUqAQ==",
-      "type": "Package",
+      "type": "package",
       "files": [
+        "SharpSerializer.2.20.0.nupkg.sha512",
         "SharpSerializer.nuspec",
-        "[Content_Types].xml",
-        "_rels/.rels",
         "lib/net20/Polenter.SharpSerializer.XML",
         "lib/net20/Polenter.SharpSerializer.dll",
         "lib/portable-net4+sl4+wp+windows8+xbox/Polenter.SharpSerializer.Portable.XML",
@@ -12266,8 +12344,7 @@
         "lib/sl4/Polenter.SharpSerializer.Silverlight.dll",
         "lib/sl4/Polenter.SharpSerializer.Silverlight.xml",
         "lib/sl5/Polenter.SharpSerializer.Silverlight.dll",
-        "lib/sl5/Polenter.SharpSerializer.Silverlight.xml",
-        "package/services/metadata/core-properties/0fb837c1922545b1a133ab8d3e30087c.psmdcp"
+        "lib/sl5/Polenter.SharpSerializer.Silverlight.xml"
       ]
     },
     "System.AppContext/4.0.0": {

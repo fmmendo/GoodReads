@@ -1,7 +1,7 @@
-﻿using Mendo.UAP.Common;
-using Microsoft.AdMediator.Core.Models;
+﻿using Mendo.UWP.Common;
 using MyShelf.ViewModels;
 using System.Collections.Generic;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -11,7 +11,7 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HomePage : PageBase
+    public sealed partial class HomePage : BasePage
     {
         HomePageViewModel ViewModel => HomePageViewModel.Instance;
 

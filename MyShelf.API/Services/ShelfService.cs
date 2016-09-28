@@ -1,4 +1,4 @@
-﻿using Mendo.UAP.Common;
+﻿using Mendo.UWP.Common;
 using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using MyShelf.API.XML;
