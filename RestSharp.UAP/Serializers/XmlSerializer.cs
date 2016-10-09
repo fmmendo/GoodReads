@@ -18,7 +18,6 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Xml.Linq;
-using RestSharp.Extensions;
 
 namespace RestSharp.Serializers
 {
@@ -85,7 +84,7 @@ namespace RestSharp.Serializers
             //else
             //    Map(root, obj);
 
-			if (RootElement.HasValue()) {
+			if (string.IsNullOrEmpty(RootElement)) {
                 //var wrapper = new XElement(RootElement.AsNamespaced(Namespace), root);
                 //doc.Add(wrapper);
 			}
@@ -173,7 +172,7 @@ namespace RestSharp.Serializers
 		private string GetSerializedValue(object obj) {
 			var output = obj;
 
-			if (obj is DateTime && DateFormat.HasValue())
+			if (obj is DateTime && string.IsNullOrEmpty(DateFormat))
 			{
 				output = ((DateTime) obj).ToString(DateFormat);
 			}

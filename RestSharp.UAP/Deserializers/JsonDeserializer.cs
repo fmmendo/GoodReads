@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using RestSharp.Extensions;
 using RestSharp;
 
 namespace RestSharp.Deserializers
@@ -36,7 +35,7 @@ namespace RestSharp.Deserializers
             {
                 var objType = target.GetType();
 
-                if (RootElement.HasValue())
+                if (string.IsNullOrEmpty(RootElement))
                 {
                     var root = FindRoot(response.Content);
                     target = (T)BuildList(objType, root);
@@ -64,7 +63,7 @@ namespace RestSharp.Deserializers
         private object FindRoot(string content)
         {
             var data = (IDictionary<string, object>)SimpleJson.DeserializeObject(content);
-            if (RootElement.HasValue() && data.ContainsKey(RootElement))
+            if (string.IsNullOrEmpty(RootElement) && data.ContainsKey(RootElement))
             {
                 return data[RootElement];
             }
@@ -192,7 +191,7 @@ namespace RestSharp.Deserializers
 			else if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
 			{
 				DateTimeOffset dt;
-				if (DateFormat.HasValue())
+				if (string.IsNullOrEmpty(DateFormat))
 				{
 					dt = DateTime.ParseExact(stringValue, DateFormat, null);
 				}

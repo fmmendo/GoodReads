@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
-using RestSharp.Deserializers;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -83,9 +82,8 @@ namespace RestSharp
 		{
 			AuthenticateIfNeeded(this, request);
 
-			// add Accept header based on registered deserializers
-			var accepts = string.Join(", ", AcceptTypes.ToArray());
-			this.AddDefaultParameter("Accept", accepts, ParameterType.HttpHeader);
+            // add Accept header based on registered deserializers
+			this.AddDefaultParameter("Accept", "application/json, application/xml, text/json, text/x-json, text/javascript, text/xml", ParameterType.HttpHeader);
 
 			IRestResponse response = new RestResponse();
 			try

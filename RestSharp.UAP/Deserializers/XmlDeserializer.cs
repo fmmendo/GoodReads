@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-using RestSharp.Extensions;
 using System.Globalization;
 using System.Xml;
 using System.Reflection;
@@ -56,14 +55,14 @@ namespace RestSharp.Deserializers
 
             var doc = XDocument.Parse(response.Content);
             var root = doc.Root;
-            if (RootElement.HasValue() && doc.Root != null)
+            if (string.IsNullOrEmpty(RootElement) && doc.Root != null)
             {
                 //TODO: Fix AsNamespaced
                 //root = doc.Root.Element(RootElement.AsNamespaced(Namespace));
             }
 
             // autodetect xml namespace
-            if (!Namespace.HasValue())
+            if (!string.IsNullOrEmpty(Namespace))
             {
                 RemoveNamespace(doc);
             }

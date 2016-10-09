@@ -1,8 +1,8 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Extensions;
 using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using RestSharp;
-using RestSharp.Contrib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +63,7 @@ namespace MyShelf.API.Services
             IRestResponse requestResponse = await RequestToken();
 
             // Parse oauth token and token secret
-            var querystring = HttpUtility.ParseQueryString(requestResponse.Content);
+            var querystring = requestResponse.Content.ParseQueryString();
             if (querystring == null || querystring.Count != 2)
                 return false;
 
@@ -81,7 +81,7 @@ namespace MyShelf.API.Services
             IRestResponse accessResponse = await RequestAccessToken();
 
             // parse oauth access token and token secrets
-            var querystring2 = HttpUtility.ParseQueryString(accessResponse.Content);
+            var querystring2 = accessResponse.Content.ParseQueryString();
             if (querystring2 == null || querystring2.Count != 2)
                 return false;
 

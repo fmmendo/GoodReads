@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using RestSharp.Serializers;
 using Windows.Foundation;
 using System.Runtime.InteropServices.WindowsRuntime;
 
@@ -25,18 +24,6 @@ namespace RestSharp
 {
 	public interface IRestRequest
 	{
-		/// <summary>
-		/// Serializer to use when writing JSON request bodies. Used if RequestFormat is Json.
-		/// By default the included JsonSerializer is used (currently using JSON.NET default serialization).
-		/// </summary>
-		ISerializer JsonSerializer { get; set; }
-
-		/// <summary>
-		/// Serializer to use when writing XML request bodies. Used if RequestFormat is Xml.
-		/// By default the included XmlSerializer is used.
-		/// </summary>
-		ISerializer XmlSerializer { get; set; }
-
 		/// <summary>
 		/// Container of all HTTP parameters to be passed with the request. 
 		/// See AddParameter() for explanation of the types of parameters that can be passed
@@ -136,21 +123,6 @@ namespace RestSharp
 		/// <param name="contentType">The MIME type of the file to upload</param>
 		/// <returns>This request</returns>
 		IRestRequest AddFile (string name, [ReadOnlyArray]byte[] bytes, string fileName, string contentType);
-
-		/// <summary>
-		/// Serializes obj to format specified by RequestFormat, but passes xmlNamespace if using the default XmlSerializer
-		/// </summary>
-		/// <param name="obj">The object to serialize</param>
-		/// <param name="xmlNamespace">The XML namespace to use when serializing</param>
-		/// <returns>This request</returns>
-		IRestRequest AddBody (object obj, string xmlNamespace);
-
-		/// <summary>
-		/// Serializes obj to data format specified by RequestFormat and adds it to the request body.
-		/// </summary>
-		/// <param name="obj">The object to serialize</param>
-		/// <returns>This request</returns>
-		IRestRequest AddBody (object obj);
 
 		/// <summary>
 		/// Calls AddParameter() for all public, readable properties specified in the white list

@@ -4,15 +4,6 @@ using System.Text;
 using RestSharp.Authenticators.OAuth;
 using RestSharp.Authenticators.OAuth.Extensions;
 
-#if WINDOWS_PHONE
-using System.Net;
-#elif SILVERLIGHT
-using System.Windows.Browser;
-#else
-using RestSharp.Contrib;
-#endif
-
-
 namespace RestSharp.Authenticators
 {
     /// <seealso href="http://tools.ietf.org/html/rfc5849"/>
@@ -205,7 +196,7 @@ namespace RestSharp.Authenticators
                     parameters.Add("oauth_signature", oauth.Signature);
                     foreach (var parameter in parameters.Where(parameter => !parameter.Name.IsNullOrBlank() && parameter.Name.StartsWith("oauth_")))
                     {
-                        request.AddParameter(parameter.Name, HttpUtility.UrlDecode(parameter.Value));
+                        request.AddParameter(parameter.Name, parameter.Value.UrlDecode());
                     }
                     break;
                 default:

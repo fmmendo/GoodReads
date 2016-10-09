@@ -20,8 +20,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using RestSharp.Deserializers;
-using RestSharp.Extensions;
+using Mendo.UWP.Extensions;
 
 namespace RestSharp
 {
@@ -46,20 +45,7 @@ namespace RestSharp
             {
                 version = new Version(m.Groups["version"].Value);
             }
-
-			ContentHandlers = new Dictionary<string, IDeserializer>();
-			AcceptTypes = new List<string>();
 			DefaultParameters = new List<Parameter>();
-
-			// register default handlers
-			AddHandler("application/json", new JsonDeserializer());
-			AddHandler("application/xml", new XmlDeserializer());
-			AddHandler("text/json", new JsonDeserializer());
-			AddHandler("text/x-json", new JsonDeserializer());
-			AddHandler("text/javascript", new JsonDeserializer());
-			AddHandler("text/xml", new XmlDeserializer());
-			AddHandler("*", new XmlDeserializer());
-
 			FollowRedirects = true;
 		}
 
@@ -73,74 +59,11 @@ namespace RestSharp
 			BaseUrl = baseUrl;
 		}
 
-		private IDictionary<string, IDeserializer> ContentHandlers { get; set; }
-		private IList<string> AcceptTypes { get; set; }
-
 		/// <summary>
 		/// Parameters included with every request made with this instance of RestClient
 		/// If specified in both client and request, the request wins
 		/// </summary>
 		public IList<Parameter> DefaultParameters { get; private set; }
-
-		/// <summary>
-		/// Registers a content handler to process response content
-		/// </summary>
-		/// <param name="contentType">MIME content type of the response content</param>
-		/// <param name="deserializer">Deserializer to use to process content</param>
-		public void AddHandler(string contentType, IDeserializer deserializer)
-		{
-			ContentHandlers[contentType] = deserializer;
-			if (contentType != "*")
-			{
-				AcceptTypes.Add(contentType);
-			}
-		}
-
-		/// <summary>
-		/// Remove a content handler for the specified MIME content type
-		/// </summary>
-		/// <param name="contentType">MIME content type to remove</param>
-		public void RemoveHandler(string contentType)
-		{
-			ContentHandlers.Remove(contentType);
-			AcceptTypes.Remove(contentType);
-		}
-
-		/// <summary>
-		/// Remove all content handlers
-		/// </summary>
-		public void ClearHandlers()
-		{
-			ContentHandlers.Clear();
-			AcceptTypes.Clear();
-		}
-
-		/// <summary>
-		/// Retrieve the handler for the specified MIME content type
-		/// </summary>
-		/// <param name="contentType">MIME content type to retrieve</param>
-		/// <returns>IDeserializer instance</returns>
-		IDeserializer GetHandler(string contentType)
-		{
-			if (string.IsNullOrEmpty(contentType) && ContentHandlers.ContainsKey("*"))
-			{
-				return ContentHandlers["*"];
-			}
-
-			var semicolonIndex = contentType.IndexOf(';');
-			if (semicolonIndex > -1) contentType = contentType.Substring(0, semicolonIndex);
-			IDeserializer handler = null;
-			if (ContentHandlers.ContainsKey(contentType))
-			{
-				handler = ContentHandlers[contentType];
-			}
-			else if (ContentHandlers.ContainsKey("*"))
-			{
-				handler = ContentHandlers["*"];
-			}
-
-			return handler;
-		}
 
 		/// <summary>
 		/// Maximum number of redirects to follow if FollowRedirects is true
@@ -294,7 +217,7 @@ namespace RestSharp
 			http.Url = BuildUri(request);
 
 			var userAgent = UserAgent ?? http.UserAgent;
-			http.UserAgent = userAgent.HasValue() ? userAgent : "RestSharp " + version.ToString();
+			http.UserAgent = string.IsNullOrEmpty(userAgent) ? userAgent : "RestSharp " + version.ToString();
 
 			var timeout = request.Timeout > 0 ? request.Timeout : Timeout;
 			if (timeout > 0)

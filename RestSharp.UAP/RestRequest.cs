@@ -19,8 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-//using RestSharp.Extensions;
-using RestSharp.Serializers;
+//using RestSharp.Extension
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.Streams;
 using Windows.Storage;
@@ -35,29 +34,12 @@ namespace RestSharp
 	public sealed class RestRequest : IRestRequest
 	{
 		/// <summary>
-		/// Serializer to use when writing JSON request bodies. Used if RequestFormat is Json.
-		/// By default the included JsonSerializer is used (currently using JSON.NET default serialization).
-		/// </summary>
-		public ISerializer JsonSerializer { get; set; }
-
-		/// <summary>
-		/// Serializer to use when writing XML request bodies. Used if RequestFormat is Xml.
-		/// By default the included XmlSerializer is used.
-		/// </summary>
-		public ISerializer XmlSerializer { get; set; }
-
-		/// <summary>
 		/// Default constructor
 		/// </summary>
 		public RestRequest()
 		{
 			Parameters = new List<Parameter>();
 			Files = new List<FileParameter>();
-			XmlSerializer = new XmlSerializer();
-			JsonSerializer = new JsonSerializer();
-
-            //TODO: Add BeforeSerialization event
-			//OnBeforeDeserialization = r => { };
 		}
 
 		/// <summary>
@@ -138,52 +120,6 @@ namespace RestSharp
 		{
 			Files.Add(file);
 			return this;
-		}
-
-		/// <summary>
-		/// Serializes obj to format specified by RequestFormat, but passes xmlNamespace if using the default XmlSerializer
-		/// </summary>
-		/// <param name="obj">The object to serialize</param>
-		/// <param name="xmlNamespace">The XML namespace to use when serializing</param>
-		/// <returns>This request</returns>
-		public IRestRequest AddBody (object obj, string xmlNamespace)
-		{
-			string serialized;
-			string contentType;
-
-			switch (RequestFormat)
-			{
-				case DataFormat.Json:
-					serialized = JsonSerializer.Serialize(obj);
-					contentType = JsonSerializer.ContentType;
-					break;
-
-				case DataFormat.Xml:
-					XmlSerializer.Namespace = xmlNamespace;
-					serialized = XmlSerializer.Serialize(obj);
-					contentType = XmlSerializer.ContentType;
-					break;
-
-				default:
-					serialized = "";
-					contentType = "";
-					break;
-			}
-
-			// passing the content type as the parameter name because there can only be
-			// one parameter with ParameterType.RequestBody so name isn't used otherwise
-			// it's a hack, but it works :)
-			return AddParameter(contentType, serialized, ParameterType.RequestBody);
-		}
-
-		/// <summary>
-		/// Serializes obj to data format specified by RequestFormat and adds it to the request body.
-		/// </summary>
-		/// <param name="obj">The object to serialize</param>
-		/// <returns>This request</returns>
-		public IRestRequest AddBody (object obj)
-		{
-			return AddBody(obj, "");
 		}
 
 		/// <summary>

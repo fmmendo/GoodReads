@@ -14,10 +14,10 @@
 //   limitations under the License. 
 #endregion
 
+using Mendo.UWP.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using RestSharp.Extensions;
 
 namespace RestSharp
 {
