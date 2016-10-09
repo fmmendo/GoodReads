@@ -1,21 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0C39A16F-6B2C-4947-B7BD-612AD0F32F7D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{2A83BF11-C1C0-4031-AC08-07BD7F6EB941}</ProjectGuid>
+    <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyShelf.API</RootNamespace>
-    <AssemblyName>MyShelf.API</AssemblyName>
+    <RootNamespace>RestSharp</RootNamespace>
+    <AssemblyName>RestSharp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AllowCrossPlatformRetargeting>false</AllowCrossPlatformRetargeting>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -113,63 +118,87 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authenticators\HttpBasicAuthenticator.cs" />
+    <Compile Include="Authenticators\IAuthenticator.cs" />
+    <Compile Include="Authenticators\NtlmAuthenticator.cs" />
+    <Compile Include="Authenticators\OAuth1Authenticator.cs" />
+    <Compile Include="Authenticators\OAuth\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Authenticators\OAuth\Extensions\OAuthExtensions.cs" />
+    <Compile Include="Authenticators\OAuth\Extensions\StringExtensions.cs" />
+    <Compile Include="Authenticators\OAuth\Extensions\TimeExtensions.cs" />
+    <Compile Include="Authenticators\OAuth\HttpPostParameter.cs" />
+    <Compile Include="Authenticators\OAuth\HttpPostParameterType.cs" />
+    <Compile Include="Authenticators\OAuth\OAuthParameterHandling.cs" />
+    <Compile Include="Authenticators\OAuth\OAuthSignatureMethod.cs" />
+    <Compile Include="Authenticators\OAuth\OAuthSignatureTreatment.cs" />
+    <Compile Include="Authenticators\OAuth\OAuthTools.cs" />
+    <Compile Include="Authenticators\OAuth\OAuthType.cs" />
+    <Compile Include="Authenticators\OAuth\OAuthWebQueryInfo.cs" />
+    <Compile Include="Authenticators\OAuth\OAuthWorkflow.cs" />
+    <Compile Include="Authenticators\OAuth\WebPair.cs" />
+    <Compile Include="Authenticators\OAuth\WebPairCollection.cs" />
+    <Compile Include="Authenticators\OAuth\WebParameter.cs" />
+    <Compile Include="Authenticators\OAuth\WebParameterCollection.cs" />
+    <Compile Include="Authenticators\SimpleAuthenticator.cs" />
+    <Compile Include="Compression\ZLib\Crc32.cs" />
+    <Compile Include="Compression\ZLib\FlushType.cs" />
+    <Compile Include="Compression\ZLib\GZipStream.cs" />
+    <Compile Include="Compression\ZLib\Inflate.cs" />
+    <Compile Include="Compression\ZLib\InfTree.cs" />
+    <Compile Include="Compression\ZLib\ZLib.cs" />
+    <Compile Include="Compression\ZLib\ZLibCodec.cs" />
+    <Compile Include="Compression\ZLib\ZLibConstants.cs" />
+    <Compile Include="Compression\ZLib\ZLibStream.cs" />
+    <Compile Include="Deserializers\DeserializeAsAttribute.cs" />
+    <Compile Include="Deserializers\DotNetXmlDeserializer.cs" />
+    <Compile Include="Deserializers\IDeserializer.cs" />
+    <Compile Include="Deserializers\JsonDeserializer.cs" />
+    <Compile Include="Deserializers\XmlAttributeDeserializer.cs" />
+    <Compile Include="Deserializers\XmlDeserializer.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="Extensions\MiscExtensions.cs" />
+    <Compile Include="Extensions\MonoHttp\Helpers.cs" />
+    <Compile Include="Extensions\MonoHttp\HtmlEncoder.cs" />
+    <Compile Include="Extensions\MonoHttp\HttpUtility.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\XmlExtensions.cs" />
+    <Compile Include="FileParameter.cs" />
+    <Compile Include="Http.cs" />
+    <Compile Include="Http.Sync.cs" />
+    <Compile Include="HttpCookie.cs" />
+    <Compile Include="HttpFile.cs" />
+    <Compile Include="HttpHeader.cs" />
+    <Compile Include="HttpParameter.cs" />
+    <Compile Include="HttpResponse.cs" />
+    <Compile Include="IHttp.cs" />
+    <Compile Include="IHttpFactory.cs" />
+    <Compile Include="IHttpResponse.cs" />
+    <Compile Include="IRestClient.cs" />
+    <Compile Include="IRestRequest.cs" />
+    <Compile Include="IRestResponse.cs" />
+    <Compile Include="Parameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="Services\AuthorService.cs" />
-    <Compile Include="Services\BookService.cs" />
-    <Compile Include="Services\Interfaces\IAuthorService.cs" />
-    <Compile Include="Services\Interfaces\IBookService.cs" />
-    <Compile Include="Services\Interfaces\IAuthenticationService.cs" />
-    <Compile Include="Services\Interfaces\IUserService.cs" />
-    <Compile Include="Services\Interfaces\IShelfService.cs" />
-    <Compile Include="Services\ShelfService.cs" />
-    <Compile Include="Services\Urls.cs" />
-    <Compile Include="Services\UserService.cs" />
-    <Compile Include="Storage\MyShelfSettings.cs" />
-    <Compile Include="Web\ApiClient.cs" />
-    <Compile Include="Web\IApiClient.cs" />
-    <Compile Include="XML\Friends.cs" />
-    <Compile Include="XML\Series.cs" />
-    <Compile Include="XML\SeriesWork.cs" />
-    <Compile Include="XML\UpdateAction.cs" />
-    <Compile Include="XML\Author.cs" />
-    <Compile Include="XML\GoodreadsResponse.cs" />
-    <Compile Include="XML\NotificationBody.cs" />
-    <Compile Include="XML\Book.cs" />
-    <Compile Include="XML\BookLink.cs" />
-    <Compile Include="XML\Books.cs" />
-    <Compile Include="XML\Friend.cs" />
-    <Compile Include="XML\GroupResource.cs" />
-    <Compile Include="XML\Notification.cs" />
-    <Compile Include="XML\Notifications.cs" />
-    <Compile Include="XML\UpdateObject.cs" />
-    <Compile Include="XML\ReadStatus.cs" />
-    <Compile Include="XML\Request.cs" />
-    <Compile Include="XML\Review.cs" />
-    <Compile Include="XML\Reviews.cs" />
-    <Compile Include="XML\Search.cs" />
-    <Compile Include="XML\Shelf.cs" />
-    <Compile Include="XML\Shelves.cs" />
-    <Compile Include="XML\Update.cs" />
-    <Compile Include="XML\Updates.cs" />
-    <Compile Include="XML\User.cs" />
-    <Compile Include="XML\UserShelf.cs" />
-    <Compile Include="XML\UserStatus.cs" />
-    <Compile Include="XML\Utilities\GoodReadsSerializer.cs" />
-    <Compile Include="XML\Work.cs" />
-    <Content Include="Properties\MyShelf.API.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
+    <Compile Include="RestClient.cs" />
+    <Compile Include="RestClient.Sync.cs" />
+    <Compile Include="RestClientExtensions.cs" />
+    <Compile Include="RestRequest.cs" />
+    <Compile Include="RestResponse.cs" />
+    <Compile Include="RestResponseCookie.cs" />
+    <Compile Include="Serializers\DotNetXmlSerializer.cs" />
+    <Compile Include="Serializers\ISerializer.cs" />
+    <Compile Include="Serializers\JsonSerializer.cs" />
+    <Compile Include="Serializers\SerializeAsAttribute.cs" />
+    <Compile Include="Serializers\XmlSerializer.cs" />
+    <Compile Include="SharedAssemblyInfo.cs" />
+    <Compile Include="SimpleJson.cs" />
+    <Compile Include="Validation\Require.cs" />
+    <Compile Include="Validation\Validate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MendoTools\Mendo.UWP\Mendo.UWP.csproj">
       <Project>{39feb0bb-5790-4cc3-826f-939b7059c30d}</Project>
       <Name>Mendo.UWP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RestSharp.UAP\RestSharp.UWP.csproj">
-      <Project>{2a83bf11-c1c0-4031-ac08-07bd7f6eb941}</Project>
-      <Name>RestSharp.UWP</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
