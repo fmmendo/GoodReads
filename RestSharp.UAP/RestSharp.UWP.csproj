@@ -140,15 +140,6 @@
     <Compile Include="Authenticators\OAuth\WebParameter.cs" />
     <Compile Include="Authenticators\OAuth\WebParameterCollection.cs" />
     <Compile Include="Authenticators\SimpleAuthenticator.cs" />
-    <Compile Include="Compression\ZLib\Crc32.cs" />
-    <Compile Include="Compression\ZLib\FlushType.cs" />
-    <Compile Include="Compression\ZLib\GZipStream.cs" />
-    <Compile Include="Compression\ZLib\Inflate.cs" />
-    <Compile Include="Compression\ZLib\InfTree.cs" />
-    <Compile Include="Compression\ZLib\ZLib.cs" />
-    <Compile Include="Compression\ZLib\ZLibCodec.cs" />
-    <Compile Include="Compression\ZLib\ZLibConstants.cs" />
-    <Compile Include="Compression\ZLib\ZLibStream.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="FileParameter.cs" />
     <Compile Include="Http.cs" />
@@ -174,8 +165,6 @@
     <Compile Include="RestResponseCookie.cs" />
     <Compile Include="SharedAssemblyInfo.cs" />
     <Compile Include="SimpleJson.cs" />
-    <Compile Include="Validation\Require.cs" />
-    <Compile Include="Validation\Validate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MendoTools\Mendo.UWP\Mendo.UWP.csproj">

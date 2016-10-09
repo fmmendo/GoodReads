@@ -28,8 +28,7 @@ namespace RestSharp.Authenticators.OAuth
         {
             _parameters = new List<WebPair>(parameters);
         }
-
-#if !WINDOWS_PHONE && !SILVERLIGHT
+        
         public WebPairCollection(Dictionary<string, string> collection)
             : this()
         {
@@ -49,7 +48,6 @@ namespace RestSharp.Authenticators.OAuth
                 _parameters.Add(parameter);
             }
         }
-#endif
 
         public WebPairCollection(IDictionary<string, string> collection)
             : this()

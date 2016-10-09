@@ -8,13 +8,11 @@ namespace RestSharp.Authenticators.OAuth
             : base(parameters)
         {
         }
-
-#if !WINDOWS_PHONE && !SILVERLIGHT
+        
         public WebParameterCollection(Dictionary<string, string> collection)
             : base(collection)
         {
         }
-#endif
 
         public WebParameterCollection()
         {
