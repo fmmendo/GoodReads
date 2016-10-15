@@ -25,11 +25,6 @@ namespace RestSharp
 {
 	public interface IHttp
 	{
-        //TODO: Add support for Cookies
-		//CookieContainer CookieContainer { get; set; }
-        //TODO: Add support for Credentials
-		//ICredentials Credentials { get; set; }
-
 		string UserAgent { get; set; }
 		int Timeout { get; set; }
 
@@ -53,8 +48,5 @@ namespace RestSharp
         IAsyncOperation<HttpResponse> PatchAsync();
         IAsyncOperation<HttpResponse> AsPostAsync(string httpMethod);
         IAsyncOperation<HttpResponse> AsGetAsync(string httpMethod);
-
-        //TODO: Add support for Proxy
-		//IWebProxy Proxy { get; set; }
 	}
 }

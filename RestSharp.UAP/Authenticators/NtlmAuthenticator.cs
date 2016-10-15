@@ -55,9 +55,7 @@ namespace RestSharp
         }
 
 		public void Authenticate(IRestClient client, IRestRequest request)
-		{     
-            //TODO: Fix the Ntlm Authenticator to work
-			//request.Credentials = credentials;
+		{
 		}
 	}
 }

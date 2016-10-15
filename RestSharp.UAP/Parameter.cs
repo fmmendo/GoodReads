@@ -38,8 +38,6 @@ namespace RestSharp
 		/// Return a human-readable representation of this parameter
 		/// </summary>
 		/// <returns>String</returns>
-		public sealed override string ToString() {
-			return string.Format("{0}={1}", Name, Value);
-		}
+		public sealed override string ToString() { return string.Format("{0}={1}", Name, Value); }
 	}
 }

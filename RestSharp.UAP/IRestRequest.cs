@@ -73,11 +73,6 @@ namespace RestSharp
 		string XmlNamespace { get; set; }
 
 		/// <summary>
-		/// In general you would not need to set this directly. Used by the NtlmAuthenticator. 
-		/// </summary>
-		//ICredentials Credentials { get; set; }
-
-		/// <summary>
 		/// Timeout in milliseconds to be used for the request. This timeout value overrides a timeout set on the RestClient.
 		/// </summary>
 		int Timeout { get; set; }
@@ -162,7 +157,6 @@ namespace RestSharp
 		/// <returns></returns>
 		IRestRequest AddUrlSegment(string name, string val);
 
-		//Action<IRestResponse> OnBeforeDeserialization { get; set; }
 		void IncreaseNumAttempts();
 	}
 }

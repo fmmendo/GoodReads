@@ -30,11 +30,6 @@ namespace RestSharp
 		/// <summary>
 		/// 
 		/// </summary>
-        //TODO: Add support for Cookies
-		//CookieContainer CookieContainer { get; set; }
-		/// <summary>
-		/// 
-		/// </summary>
 		string UserAgent { get; set; }
 		/// <summary>
 		/// 
@@ -56,16 +51,8 @@ namespace RestSharp
 		/// 
 		/// </summary>
 		IList<Parameter> DefaultParameters { get; }
-		/// <summary>
-		/// X509CertificateCollection to be sent with request
-		/// </summary>
-        //TODO: Add support for X509 Certificates
-//		X509CertificateCollection ClientCertificates { get; set; }
 
 		IAsyncOperation<IRestResponse> ExecuteAsync(IRestRequest request);
-		
-        //TODO: Add support for Proxy
-//		IWebProxy Proxy { get; set; }
 
 		Uri BuildUri(IRestRequest request);
 

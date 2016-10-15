@@ -13,13 +13,6 @@ namespace RestSharp
 	public partial class RestClient
 	{
 		/// <summary>
-		/// Proxy to use for requests made by this client instance.
-		/// Passed on to underying WebRequest if set.
-		/// </summary>
-        //TODO: Add support for Proxy
-		//public IWebProxy Proxy { get; set; }
-
-		/// <summary>
 		/// Executes the specified request and downloads the response data
 		/// </summary>
 		/// <param name="request">Request to execute</param>
@@ -92,9 +85,6 @@ namespace RestSharp
 
 				ConfigureHttp(request, http);
 
-                //TODO: Add support for Proxy
-				//ConfigureProxy(http);
-
 				response = ConvertToRestResponse(request, await getResponse(http, httpMethod));
 				response.Request = request;
 				response.Request.IncreaseNumAttempts();
@@ -120,14 +110,5 @@ namespace RestSharp
         {
             return await http.AsPostAsync(method);
         }
-
-        //TODO: Add support for Proxy
-        //private void ConfigureProxy(IHttp http)
-        //{
-        //    if (Proxy != null)
-        //    {
-        //        http.Proxy = Proxy;
-        //    }
-        //}
 	}
 }

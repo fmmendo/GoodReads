@@ -77,12 +77,6 @@ namespace RestSharp
 		public bool FollowRedirects { get; set; }
 
 		/// <summary>
-		/// The CookieContainer used for requests made by this client instance
-		/// </summary>
-        //TODO: Add support for cookies
-		//public CookieContainer CookieContainer { get; set; }
-
-		/// <summary>
 		/// UserAgent to use for requests made by this client instance
 		/// </summary>
 		public string UserAgent { get; set; }
@@ -200,9 +194,6 @@ namespace RestSharp
 
 		private void ConfigureHttp(IRestRequest request, IHttp http)
 		{
-            //TODO: Add support for Cookies
-			//http.CookieContainer = CookieContainer;
-
 			// move RestClient.DefaultParameters into Request.Parameters
 			foreach(var p in DefaultParameters)
 			{
@@ -224,12 +215,6 @@ namespace RestSharp
 			{
 				http.Timeout = timeout;
 			}
-
-            //TODO: Ad support for Credentials
-            //if(request.Credentials != null)
-            //{
-            //    http.Credentials = request.Credentials;
-            //}
 
 			var headers = from p in request.Parameters
 						  where p.Type == ParameterType.HttpHeader

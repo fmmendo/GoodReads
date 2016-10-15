@@ -179,36 +179,8 @@ namespace RestSharp
         {
             var httpRequestMessage = new HttpRequestMessage(new HttpMethod(method), Url);
 
-            //HttpContent httpContent = null;
-
-            //if (HasFiles)
-            //{
-            //    var multipartHttpContent = new MultipartFormDataContent();
-
-            //    foreach (var param in Parameters)
-            //    {
-            //        multipartHttpContent.Add(new StringContent(param.Value), param.Name);
-            //    }
-
-            //    foreach (var file in Files)
-            //    {
-            //        var byteContent = new ByteArrayContent(file.Content);
-            //        byteContent.Headers.ContentType = string.IsNullOrEmpty(file.ContentType) ? new MediaTypeHeaderValue("application/octet-stream") : new MediaTypeHeaderValue(file.ContentType);
-            //        multipartHttpContent.Add( byteContent, file.Name, file.FileName );
-            //    }
-
-            //    httpContent = multipartHttpContent;
-            //}
-            //else
-            //{
-            //   httpContent = new FormUrlEncodedContent(EncodeParameters());
-            //}
-
-            //httpRequestMessage.Content = httpContent;
-
             var httpClient = ConfigureWebRequest(method, Url);
-
-            //return await GetResponse(httpClient, httpRequestMessage);
+            
             var response = new HttpResponse();
             response.ResponseStatus = ResponseStatus.None;
 
@@ -216,7 +188,7 @@ namespace RestSharp
             {
                 var p = EncodeParametersToDictionary();
                 var result = await Mendo.UWP.Network.Http.PostForString(Url.ToString(), p, httpClient);
-                //var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+
 
                 //TODO: Move the exception handling currently in GetRawResponse here and check Result
 
@@ -235,132 +207,15 @@ namespace RestSharp
         //TODO: Need to figure out what this method was supposed to be doing?
 		partial void AddSyncHeaderActions()
 		{
-			//_restrictedHeaderActions.Add("Connection", (r, v) => r.Connection = v);
-			//_restrictedHeaderActions.Add("Content-Length", (r, v) => r.Content.Headers.ContentLength = Convert.ToInt64(v));
-			//_restrictedHeaderActions.Add("Expect", (r, v) => r.Expect = v);
-			//_restrictedHeaderActions.Add("If-Modified-Since", (r, v) => r.IfModifiedSince = Convert.ToDateTime(v));
-			//_restrictedHeaderActions.Add("Referer", (r, v) => r.Referer = v);
-			//_restrictedHeaderActions.Add("Transfer-Encoding", (r, v) => { r.TransferEncoding = v; r.SendChunked = true; });
-			//_restrictedHeaderActions.Add("User-Agent", (r, v) => r.DefaultRequestHeaders.UserAgent = v);
 		}
-/*
-        private async Task<HttpResponse> GetResponse(HttpClient httpClient, HttpRequestMessage httpRequestMessage)
-		{
-			var response = new HttpResponse();
-			response.ResponseStatus = ResponseStatus.None;
 
-			try
-			{
-                var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
-
-                //TODO: Move the exception handling currently in GetRawResponse here and check Result
-
-                ExtractResponseData(response, httpResponseMessage);
-            }
-			catch (Exception ex)
-			{
-				response.ErrorMessage = ex.Message;
-				response.ErrorException = ex;
-				response.ResponseStatus = ResponseStatus.Error;
-			}
-
-			return response;
-		}
-*/
         private HttpClient ConfigureWebRequest(string method, Uri url)
 		{
-            //TODO: Port ContentLength, Credentials and UserAgent
-
-            //var httpClientHandler = new HttpClientHandler();
-            //httpClientHandler.UseDefaultCredentials = false;
-
-            //AppendCookies(httpClientHandler);
-
-            //httpClientHandler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip | DecompressionMethods.None;
-
-            //TODO: No support for Credentials
-            //if (Credentials != null)
-            //{
-            //    httpClientHandler.Credentials = Credentials;
-            //}
-
-            //TODO: No support for Proxy
-            //if (Proxy != null)
-            //{
-            //    httpClientHandler.Proxy = Proxy;
-            //}
-
-            //httpClientHandler.AllowAutoRedirect = FollowRedirects;            
-
-            //if (FollowRedirects && MaxRedirects.HasValue)
-            //{
-            //    httpClientHandler.MaxAutomaticRedirections = MaxRedirects.Value;
-            //}
-
             var httpClient = Mendo.UWP.Network.Http.CreateOptimisedClient();
-            //httpClient.DefaultRequestHeaders.ExpectContinue = false;
-            
+           
             AppendHeaders(httpClient);
 
-            //if (Timeout != 0)
-            //{
-            //    httpClient.Timeout = new TimeSpan(0,0,0,0,Timeout);
-            //}
-
             return httpClient;
-
-            #region Original Code [REMOVE]
-            //TODO: Remove this code once all of the problems are corrected above
-            //var webRequest = (HttpWebRequest)WebRequest.Create(url);
-            //webRequest.UseDefaultCredentials = false;			
-            //ServicePointManager.Expect100Continue = false;
-
-            //AppendHeaders(webRequest);
-            //AppendCookies(webRequest);
-
-            //webRequest.Method = method;
-
-            //// make sure Content-Length header is always sent since default is -1
-            //if(!HasFiles)
-            //{
-            //    webRequest.ContentLength = 0;
-            //}
-
-            //webRequest.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip | DecompressionMethods.None;
-
-            //if(ClientCertificates != null)
-            //{
-            //    webRequest.ClientCertificates = ClientCertificates;
-            //}
-
-            //if(UserAgent.HasValue())
-            //{
-            //    webRequest.UserAgent = UserAgent;
-            //}
-
-            //if(Timeout != 0)
-            //{
-            //    webRequest.Timeout = Timeout;
-            //}
-
-            //if(Credentials != null)
-            //{
-            //    webRequest.Credentials = Credentials;
-            //}
-
-            //if(Proxy != null)
-            //{
-            //    webRequest.Proxy = Proxy;
-            //}
-
-            //webRequest.AllowAutoRedirect = FollowRedirects;
-            //if(FollowRedirects && MaxRedirects.HasValue)
-            //{
-            //    webRequest.MaximumAutomaticRedirections = MaxRedirects.Value; 
-            //}
-
-            //return webRequest;
-            #endregion
         }
 	}
 }

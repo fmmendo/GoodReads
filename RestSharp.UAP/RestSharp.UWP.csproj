@@ -141,16 +141,16 @@
     <Compile Include="Authenticators\OAuth\WebParameterCollection.cs" />
     <Compile Include="Authenticators\SimpleAuthenticator.cs" />
     <Compile Include="Enum.cs" />
-    <Compile Include="Http.cs" />
-    <Compile Include="Http.Sync.cs" />
-    <Compile Include="HttpCookie.cs" />
-    <Compile Include="HttpFile.cs" />
-    <Compile Include="HttpHeader.cs" />
-    <Compile Include="HttpParameter.cs" />
-    <Compile Include="HttpResponse.cs" />
-    <Compile Include="IHttp.cs" />
-    <Compile Include="IHttpFactory.cs" />
-    <Compile Include="IHttpResponse.cs" />
+    <Compile Include="Http\Http.cs" />
+    <Compile Include="Http\Http.Sync.cs" />
+    <Compile Include="Http\HttpCookie.cs" />
+    <Compile Include="Http\HttpFile.cs" />
+    <Compile Include="Http\HttpHeader.cs" />
+    <Compile Include="Http\HttpParameter.cs" />
+    <Compile Include="Http\HttpResponse.cs" />
+    <Compile Include="Http\IHttp.cs" />
+    <Compile Include="Http\IHttpFactory.cs" />
+    <Compile Include="Http\IHttpResponse.cs" />
     <Compile Include="IRestClient.cs" />
     <Compile Include="IRestRequest.cs" />
     <Compile Include="IRestResponse.cs" />
@@ -162,7 +162,6 @@
     <Compile Include="RestRequest.cs" />
     <Compile Include="RestResponse.cs" />
     <Compile Include="RestResponseCookie.cs" />
-    <Compile Include="SharedAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MendoTools\Mendo.UWP\Mendo.UWP.csproj">
