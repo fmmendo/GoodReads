@@ -141,7 +141,6 @@
     <Compile Include="Authenticators\OAuth\WebParameterCollection.cs" />
     <Compile Include="Authenticators\SimpleAuthenticator.cs" />
     <Compile Include="Enum.cs" />
-    <Compile Include="FileParameter.cs" />
     <Compile Include="Http.cs" />
     <Compile Include="Http.Sync.cs" />
     <Compile Include="HttpCookie.cs" />

@@ -31,11 +31,6 @@ namespace RestSharp
 		IList<Parameter> Parameters { get; }
 
 		/// <summary>
-		/// Container of all the files to be uploaded with the request.
-		/// </summary>
-		IList<FileParameter> Files { get; }
-
-		/// <summary>
 		/// Determines what HTTP method to use for this request. Supported methods: GET, POST, PUT, DELETE, HEAD, OPTIONS
 		/// Default is GET
 		/// </summary>
@@ -95,34 +90,6 @@ namespace RestSharp
 		/// Useful when using Asynchronous Execution with Callbacks
 		/// </remarks>
 		int Attempts { get; }
-
-		/// <summary>
-		/// Adds a file to the Files collection to be included with a POST or PUT request 
-		/// (other methods do not support file uploads).
-		/// </summary>
-		/// <param name="name">The parameter name to use in the request</param>
-		/// <param name="path">Full path to file to upload</param>
-		/// <returns>This request</returns>
-        IAsyncOperation<IRestRequest> AddFileAsync(string name, string path);
-
-		/// <summary>
-		/// Adds the bytes to the Files collection with the specified file name
-		/// </summary>
-		/// <param name="name">The parameter name to use in the request</param>
-		/// <param name="bytes">The file data</param>
-		/// <param name="fileName">The file name to use for the uploaded file</param>
-		/// <returns>This request</returns>
-		IRestRequest AddFile (string name, [ReadOnlyArray]byte[] bytes, string fileName);
-
-		/// <summary>
-		/// Adds the bytes to the Files collection with the specified file name and content type
-		/// </summary>
-		/// <param name="name">The parameter name to use in the request</param>
-		/// <param name="bytes">The file data</param>
-		/// <param name="fileName">The file name to use for the uploaded file</param>
-		/// <param name="contentType">The MIME type of the file to upload</param>
-		/// <returns>This request</returns>
-		IRestRequest AddFile (string name, [ReadOnlyArray]byte[] bytes, string fileName, string contentType);
 
 		/// <summary>
 		/// Calls AddParameter() for all public, readable properties specified in the white list

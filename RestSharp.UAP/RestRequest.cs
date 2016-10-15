@@ -39,7 +39,6 @@ namespace RestSharp
 		public RestRequest()
 		{
 			Parameters = new List<Parameter>();
-			Files = new List<FileParameter>();
 		}
 
 		/// <summary>
@@ -64,65 +63,6 @@ namespace RestSharp
         }
 
 		/// <summary>
-		/// Adds a file to the Files collection to be included with a POST or PUT request 
-		/// (other methods do not support file uploads).
-		/// </summary>
-		/// <param name="name">The parameter name to use in the request</param>
-		/// <param name="path">Full path to file to upload</param>
-		/// <returns>This request</returns>
-        public IAsyncOperation<IRestRequest> AddFileAsync(string name, string path)
-        {
-            return (IAsyncOperation<IRestRequest>)AsyncInfo.Run((System.Threading.CancellationToken ct) => AddFileAsyncInternal(name,path));
-        }
-
-		private async Task<IRestRequest> AddFileAsyncInternal (string name, string path)
-		{
-            var file = await StorageFile.GetFileFromPathAsync(path);
-            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(file);
-
-            byte[] bytes = new byte[buffer.Length];
-            DataReader.FromBuffer(buffer).ReadBytes(bytes);
-
-            return AddFile(new FileParameter
-            {
-                Name = name,
-                FileName = Path.GetFileName(path),
-                Content = bytes
-            });
-		}
-
-		/// <summary>
-		/// Adds the bytes to the Files collection with the specified file name
-		/// </summary>
-		/// <param name="name">The parameter name to use in the request</param>
-		/// <param name="bytes">The file data</param>
-		/// <param name="fileName">The file name to use for the uploaded file</param>
-		/// <returns>This request</returns>
-		public IRestRequest AddFile (string name, [ReadOnlyArray]byte[] bytes, string fileName)
-		{
-			return AddFile(FileParameter.Create(name, bytes, fileName));
-		}
-
-		/// <summary>
-		/// Adds the bytes to the Files collection with the specified file name and content type
-		/// </summary>
-		/// <param name="name">The parameter name to use in the request</param>
-		/// <param name="bytes">The file data</param>
-		/// <param name="fileName">The file name to use for the uploaded file</param>
-		/// <param name="contentType">The MIME type of the file to upload</param>
-		/// <returns>This request</returns>
-        public IRestRequest AddFile(string name, [ReadOnlyArray]byte[] bytes, string fileName, string contentType)
-        {
-            return AddFile(FileParameter.Create(name, bytes, fileName, contentType));
-        }
-
-		private IRestRequest AddFile (FileParameter file)
-		{
-			Files.Add(file);
-			return this;
-		}
-
-		/// <summary>
 		/// Calls AddParameter() for all public, readable properties specified in the white list
 		/// </summary>
 		/// <example>
@@ -136,7 +76,6 @@ namespace RestSharp
 			// automatically create parameters from object props
 			var type = obj.GetType();
 
-			//var props = type.GetProperties();
             var props = System.Reflection.IntrospectionExtensions.GetTypeInfo(type).DeclaredProperties;
 
 			foreach (var prop in props)
@@ -251,11 +190,6 @@ namespace RestSharp
 		/// </summary>
 		public IList<Parameter> Parameters { get; private set; }
 
-		/// <summary>
-		/// Container of all the files to be uploaded with the request.
-		/// </summary>
-		public IList<FileParameter> Files { get; private set; }
-
 		private Method _method = Method.GET;
 		/// <summary>
 		/// Determines what HTTP method to use for this request. Supported methods: GET, POST, PUT, DELETE, HEAD, OPTIONS
@@ -304,13 +238,6 @@ namespace RestSharp
 		/// </summary>
 		public string RootElement { get; set; }
 
-        
-		/// <summary>
-		/// A function to run prior to deserializing starting (e.g. change settings if error encountered)
-		/// </summary>
-        //TODO: Add BeforeSerialization event
-		//public Action<IRestResponse> OnBeforeDeserialization { get; set; }
-
 		/// <summary>
 		/// Used by the default deserializers to explicitly set which date format string to use when parsing dates.
 		/// </summary>
@@ -320,12 +247,6 @@ namespace RestSharp
 		/// Used by XmlDeserializer. If not specified, XmlDeserializer will flatten response by removing namespaces from element names.
 		/// </summary>
 		public string XmlNamespace { get; set; }
-
-		/// <summary>
-		/// In general you would not need to set this directly. Used by the NtlmAuthenticator. 
-		/// </summary>
-        //TODO: Add support for Credentials
-		//public ICredentials Credentials { get; set; }
 
 		/// <summary>
 		/// Gets or sets a user-defined state object that contains information about a request and which can be later 
