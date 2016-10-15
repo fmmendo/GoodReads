@@ -163,7 +163,6 @@
     <Compile Include="RestResponse.cs" />
     <Compile Include="RestResponseCookie.cs" />
     <Compile Include="SharedAssemblyInfo.cs" />
-    <Compile Include="SimpleJson.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MendoTools\Mendo.UWP\Mendo.UWP.csproj">

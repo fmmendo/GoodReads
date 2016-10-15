@@ -289,57 +289,6 @@ namespace RestSharp
                     //response.Headers.Add(new HttpHeader { Name = header.Key, Value = header.Value });
                 }
             }
-
-            #region Original Code [REMOVE]
-            //TODO: Remove this code once we resolved all conflicts
-            //using (webResponse)
-            //{
-            //    response.ContentEncoding = webResponse.ContentEncoding;
-            //    response.Server = webResponse.Server;
-            //    response.ContentType = webResponse.ContentType;
-            //    response.ContentLength = webResponse.ContentLength;
-
-            //    response.RawBytes = webResponse.GetResponseStream().ReadAsBytes();
-
-            //    //response.Content = GetString(response.RawBytes);
-
-            //    response.StatusCode = webResponse.StatusCode;
-            //    response.StatusDescription = webResponse.StatusDescription;
-            //    response.ResponseUri = webResponse.ResponseUri;
-            //    response.ResponseStatus = ResponseStatus.Completed;
-
-            //    if (webResponse.Cookies != null)
-            //    {
-            //        foreach (Cookie cookie in webResponse.Cookies)
-            //        {
-            //            response.Cookies.Add(new HttpCookie {
-            //                Comment = cookie.Comment,
-            //                CommentUri = cookie.CommentUri,
-            //                Discard = cookie.Discard,
-            //                Domain = cookie.Domain,
-            //                Expired = cookie.Expired,
-            //                Expires = cookie.Expires,
-            //                HttpOnly = cookie.HttpOnly,
-            //                Name = cookie.Name,
-            //                Path = cookie.Path,
-            //                Port = cookie.Port,
-            //                Secure = cookie.Secure,
-            //                TimeStamp = cookie.TimeStamp,
-            //                Value = cookie.Value,
-            //                Version = cookie.Version
-            //            });
-            //        }
-            //    }
-
-            //    foreach (var headerName in webResponse.Headers.AllKeys)
-            //    {
-            //        var headerValue = webResponse.Headers[headerName];
-            //        response.Headers.Add(new HttpHeader { Name = headerName, Value = headerValue });
-            //    }
-
-            //    webResponse.Close();
-            //}
-            #endregion
         }
 
         private void AddRange(HttpRequestMessage r, string range)
