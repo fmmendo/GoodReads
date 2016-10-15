@@ -111,7 +111,7 @@ namespace MyShelf.API.Web
             await _apiSemaphore.WaitAsync(_cts.Token);
 
             try
-            { 
+            {
                 _client.Authenticator = GetProtectedResourceAuthenticator(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
                 var request = new RestRequest(url, method);
@@ -145,27 +145,15 @@ namespace MyShelf.API.Web
         {
             string httpResponse = null;
 
-            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(url);
-            Request.Method = "GET";
-            Request.ContentType = "application/x-www-form-urlencoded";
-
             await _apiSemaphore.WaitAsync(_cts.Token);
-            try
+
+            var result = await Mendo.UWP.Network.Http.GetStringAsync(url);
+            if (result != null && result.Success)
             {
-                HttpWebResponse response = (HttpWebResponse)await Request.GetResponseAsync();
-                if (response != null)
-                {
-                    StreamReader data = new StreamReader(response.GetResponseStream());
-                    httpResponse = await data.ReadToEndAsync();
-                }
+                httpResponse = result.Content;
             }
-            catch (WebException)
-            {
-            }
-            finally
-            {
-                ApiCooldown();
-            }
+            
+            ApiCooldown();
 
             return httpResponse;
         }

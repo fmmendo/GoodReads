@@ -1,4 +1,5 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Network;
 using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using MyShelf.API.XML;
@@ -32,7 +33,7 @@ namespace MyShelf.API.Services
         /// Returns the logged in User
         /// </summary>
         /// <returns>User</returns>
-        public async Task<User> GetUserID(bool refresh = false)
+        public async Task<User> GetUserID(bool refresh = false, CacheMode cacheMode = CacheMode.Skip)
         {
             if (_currentUser == null || timestamp_friendUpdates.AddMinutes(15) <= DateTime.Now)
             {
@@ -57,7 +58,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="userID">goodreads user ID</param>
         /// <returns>User</returns>
-        public async Task<User> GetUserInfo(string userID = null)
+        public async Task<User> GetUserInfo(string userID = null, CacheMode cacheMode = CacheMode.Skip)
         {
             if (String.IsNullOrEmpty(userID))
             {
@@ -92,7 +93,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates)
+        public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates, CacheMode cacheMode = CacheMode.Skip)
         {
             if (timestamp_friendUpdates.AddMinutes(15) <= DateTime.Now)
             {
@@ -113,7 +114,7 @@ namespace MyShelf.API.Services
         /// <param name="page"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public async Task<Friends> GetFriends(string page = null, string sort = null)
+        public async Task<Friends> GetFriends(string page = null, string sort = null, CacheMode cacheMode = CacheMode.Skip)
         {
             if (timestamp_friends.AddMinutes(15) <= DateTime.Now)
             {
@@ -134,7 +135,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<bool> LikeResource(string resourceId, string resourceType)
+        public async Task<bool> LikeResource(string resourceId, string resourceType, CacheMode cacheMode = CacheMode.Skip)
         {
             var param = new Dictionary<string, object>();
             param.Add("rating[rating]", 1);
@@ -155,7 +156,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<bool> UnlikeResource(string resourceId/*, string resourceType*/)
+        public async Task<bool> UnlikeResource(string resourceId/*, string resourceType*/, CacheMode cacheMode = CacheMode.Skip)
         {
             var param = new Dictionary<string, object>();
             //param.Add("rating[rating]", 1);
@@ -208,7 +209,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<string> AddComment(string id, string type, string comment)
+        public async Task<string> AddComment(string id, string type, string comment, CacheMode cacheMode = CacheMode.Skip)
         {
             var param = new Dictionary<string, object>();
             param.Add("type", type);
@@ -242,7 +243,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<String> PostStatusUpdate(string bookId, string page, string percent, string body)
+        public async Task<String> PostStatusUpdate(string bookId, string page, string percent, string body, CacheMode cacheMode = CacheMode.Skip)
         {
             var param = new Dictionary<string, object>();
             if (!String.IsNullOrEmpty(bookId)) param.Add("user_status[book_id]", bookId);

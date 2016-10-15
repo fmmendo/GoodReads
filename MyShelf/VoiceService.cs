@@ -28,23 +28,12 @@ namespace MyShelf
 
             switch (voiceCommandName)
             {
-                case "sgrjhjhb":
-
-                    //TODO: search in local area for the best rated Indian
-
-                    break;
                 case "findBook":
-                    // Access the value of the {cuisine} phrase in the voice command
+                    // Access the value of the {book} phrase in the voice command
                     book = SemanticInterpretation("book", speechRecognitionResult);
-
                     NavigationService.Navigate(typeof(SearchPage), book);
-
                     break;
-
-
-
                 default:
-
                     break;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Network;
 using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using MyShelf.API.XML;
@@ -15,7 +16,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Author> GetAuthorInfo(string id)
+        public async Task<Author> GetAuthorInfo(string id, CacheMode cacheMode = CacheMode.Skip)
         {
             string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorShow, id, MyShelfSettings.Instance.ConsumerKey));
 
@@ -30,7 +31,7 @@ namespace MyShelf.API.Services
         /// <param name="id"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public async Task<Books> GetAuthorBooks(string id/*, int page = 1*/)
+        public async Task<Books> GetAuthorBooks(string id/*, int page = 1*/, CacheMode cacheMode = CacheMode.Skip)
         {
             string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorBooks, id, MyShelfSettings.Instance.ConsumerKey)); /*, page.ToString()*/
 

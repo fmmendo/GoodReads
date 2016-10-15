@@ -1,4 +1,5 @@
-﻿using MyShelf.API.XML;
+﻿using Mendo.UWP.Network;
+using MyShelf.API.XML;
 using System.Threading.Tasks;
 
 namespace MyShelf.API.Services
@@ -10,7 +11,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<Author> GetAuthorInfo(string id);
+        Task<Author> GetAuthorInfo(string id, CacheMode cacheMode = CacheMode.Skip);
 
         /// <summary>
         /// Returns an author's books
@@ -18,6 +19,6 @@ namespace MyShelf.API.Services
         /// <param name="id"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        Task<Books> GetAuthorBooks(string id/*, int page = 1*/);
+        Task<Books> GetAuthorBooks(string id/*, int page = 1*/, CacheMode cacheMode = CacheMode.Skip);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Network;
 using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using MyShelf.API.XML;
@@ -23,7 +24,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<Reviews> GetBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200")
+        public async Task<Reviews> GetBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200", CacheMode cacheMode = CacheMode.Skip)
         {
 
             if (!timestamp_shelfbooks.ContainsKey(shelf) || timestamp_shelfbooks[shelf].AddMinutes(15) <= DateTime.Now)
@@ -96,7 +97,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Book> GetBookInfo(string id)
+        public async Task<Book> GetBookInfo(string id, CacheMode cacheMode = CacheMode.Skip)
         {
             string results = await ApiClient.Instance.HttpGet(String.Format(Urls.BookShow, id, MyShelfSettings.Instance.ConsumerKey));
 
@@ -110,7 +111,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="query">string to search for</param>
         /// <returns>List of Work items</returns>
-        public async Task<Search> Search(string query)
+        public async Task<Search> Search(string query, CacheMode cacheMode = CacheMode.Skip)
         {
             if (string.IsNullOrEmpty(query))
                 return null;
@@ -122,7 +123,7 @@ namespace MyShelf.API.Services
             return result.Search;
         }
 
-        public async Task<string> CreateReview(string bookId, string body, string rating, string readAt, string shelf)
+        public async Task<string> CreateReview(string bookId, string body, string rating, string readAt, string shelf, CacheMode cacheMode = CacheMode.Skip)
         {
             var param = new Dictionary<string, object>();
             if (!String.IsNullOrEmpty(bookId)) param.Add("book_id", bookId);
@@ -152,7 +153,7 @@ namespace MyShelf.API.Services
             //    return false;
         }
 
-        public async Task<bool> EditReview(string reviewId, string finished, string body, string rating, string readAt, string shelf)
+        public async Task<bool> EditReview(string reviewId, string finished, string body, string rating, string readAt, string shelf, CacheMode cacheMode = CacheMode.Skip)
         {
 
             var param = new Dictionary<string, object>();
@@ -169,7 +170,7 @@ namespace MyShelf.API.Services
             return (response.StatusCode == 200 && response.StatusDescription == "OK" && response.ResponseStatus == ResponseStatus.Completed);
         }
 
-        public async Task<Review> GetUserReview(string bookId, string userId = null)
+        public async Task<Review> GetUserReview(string bookId, string userId = null, CacheMode cacheMode = CacheMode.Skip)
         {
             if (string.IsNullOrEmpty(userId))
                 userId = MyShelfSettings.Instance.GoodreadsUserID;

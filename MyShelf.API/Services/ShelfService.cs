@@ -1,4 +1,5 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Network;
 using MyShelf.API.Storage;
 using MyShelf.API.Web;
 using MyShelf.API.XML;
@@ -25,7 +26,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="query">string to search for</param>
         /// <returns>List of Work items</returns>
-        public async Task<List<UserShelf>> GetShelvesList()
+        public async Task<List<UserShelf>> GetShelvesList(CacheMode cacheMode = CacheMode.Skip)
         {
             if (timestamp_shelves.AddMinutes(15) <= DateTime.Now)
             {
@@ -52,7 +53,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<bool> AddBookToShelf(string shelfName, string bookId, bool remove = false)
+        public async Task<bool> AddBookToShelf(string shelfName, string bookId, bool remove = false, CacheMode cacheMode = CacheMode.Skip)
         {
             //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 
