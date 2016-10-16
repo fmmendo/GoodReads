@@ -61,7 +61,7 @@ namespace MyShelf.ViewModels
 
         private void PopulateData(User friend)
         {
-                Id = friend.Id;
+            Id = friend.Id;
             Name = friend.Name;
             ImageUrl = friend.ImageUrl;
             Link = friend.Link;
@@ -82,21 +82,24 @@ namespace MyShelf.ViewModels
             try
             {
                 CurrentlyReading.Clear();
-                foreach (var userStatus in friend.UserStatuses)
+                if (friend.UserStatuses != null && friend.UserStatuses.Count > 0)
                 {
-                    CurrentlyReading.Add(new UserStatusViewModel(userStatus));
+                    foreach (var userStatus in friend.UserStatuses)
+                        CurrentlyReading.Add(new UserStatusViewModel(userStatus));
                 }
 
                 Updates.Clear();
-                foreach (var userUpdate in friend.Updates.Update)
+                if (friend.Updates != null && friend.Updates.Update != null && friend.Updates.Update.Count > 0)
                 {
-                    Updates.Add(new UpdateViewModel(userUpdate));
+                    foreach (var userUpdate in friend.Updates.Update)
+                        Updates.Add(new UpdateViewModel(userUpdate));
                 }
 
                 Shelves.Clear();
-                foreach (var shelf in friend.UserShelves)
+                if (friend.UserShelves != null && friend.UserShelves.Count > 0)
                 {
-                    Shelves.Add(new ShelfViewModel(shelf));
+                    foreach (var shelf in friend.UserShelves)
+                        Shelves.Add(new ShelfViewModel(shelf));
                 }
             }//);
             catch { }
@@ -110,7 +113,7 @@ namespace MyShelf.ViewModels
         public void BooksClick()
         {
         }
-        
+
         public void FriendsClick()
         {
         }
