@@ -25,6 +25,7 @@ using Windows.Storage.Streams;
 using Windows.Storage;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Mendo.UWP.Network;
 
 namespace RestSharp
 {
@@ -280,5 +281,8 @@ namespace RestSharp
 		{
 			get { return _attempts; }
 		}
+
+        public CacheMode CacheMode { get; set; }
+        public TimeSpan? CacheExpiry { get; set; }
 	}
 }

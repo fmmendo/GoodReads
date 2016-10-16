@@ -1,14 +1,11 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Network;
 using RestSharp;
+using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using RestSharp.Authenticators;
-using System.Net;
-using System.IO;
 
 namespace MyShelf.API.Web
 {
@@ -105,9 +102,10 @@ namespace MyShelf.API.Web
         /// <param name="url"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public async Task<IRestResponse> ExecuteForProtectedResourceAsync(string url, Method method, string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret, Dictionary<string, object> parameters = null)
+        public async Task<IRestResponse> ExecuteForProtectedResourceAsync(string url, Method method, string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret, Dictionary<string, object> parameters = null, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null)
         {
             IRestResponse requestResponse = null;
+
             await _apiSemaphore.WaitAsync(_cts.Token);
 
             try
@@ -115,6 +113,8 @@ namespace MyShelf.API.Web
                 _client.Authenticator = GetProtectedResourceAuthenticator(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
                 var request = new RestRequest(url, method);
+                request.CacheMode = cacheMode;
+                request.CacheExpiry = cacheExpiry;
 
                 if (parameters != null)
                 {
@@ -130,7 +130,8 @@ namespace MyShelf.API.Web
             }
             finally
             {
-                ApiCooldown();
+                var needsCooldown = !requestResponse.FromCache || (requestResponse.FromCache && requestResponse.CacheExpired);
+                ApiCooldown(needsCooldown);
             }
 
             return requestResponse;
@@ -141,30 +142,40 @@ namespace MyShelf.API.Web
         /// </summary>
         /// <param name="url">Target URL</param>
         /// <returns>Text returned by the response.</returns>
-        public async Task<string> HttpGet(string url)
+        public async Task<string> HttpGet(string url, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null)
         {
             string httpResponse = null;
 
             await _apiSemaphore.WaitAsync(_cts.Token);
 
-            var result = await Mendo.UWP.Network.Http.GetStringAsync(url);
+            var result = await Mendo.UWP.Network.Http.GetStringAsync(url, cacheMode);
             if (result != null && result.Success)
             {
                 httpResponse = result.Content;
+
+                var needsCooldown = !result.FromCache || (result.FromCache && result.CacheExpired);
+
+                ApiCooldown(needsCooldown);
             }
-            
-            ApiCooldown();
+            else
+            {
+                ApiCooldown();
+            }
 
             return httpResponse;
         }
 
+
+
         /// <summary>
         /// Adds a 1second delay before releasing the api call semaphore
         /// </summary>
+        /// <param name="needsCooldown">Set to false if cache was used AND not updated</param>
         /// <returns></returns>
-        private async Task ApiCooldown()
+        private async Task ApiCooldown(bool needsCooldown = true)
         {
-            await Task.Delay(COOLDOWN);
+            if (needsCooldown)
+                await Task.Delay(COOLDOWN);
 
             _apiSemaphore.Release();
         }

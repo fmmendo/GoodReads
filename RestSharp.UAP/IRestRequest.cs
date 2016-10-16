@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Net;
 using Windows.Foundation;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Mendo.UWP.Network;
 
 namespace RestSharp
 {
@@ -35,6 +36,9 @@ namespace RestSharp
 		/// Default is GET
 		/// </summary>
 		Method Method { get; set; }
+
+        CacheMode CacheMode { get; set; }
+        TimeSpan? CacheExpiry { get; set; }
 
 		/// <summary>
 		/// The Resource URL to make the request against.

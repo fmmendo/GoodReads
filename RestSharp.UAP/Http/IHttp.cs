@@ -20,6 +20,7 @@ using System.Net;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Mendo.UWP.Network;
 
 namespace RestSharp
 {
@@ -47,6 +48,6 @@ namespace RestSharp
         IAsyncOperation<HttpResponse> PutAsync();
         IAsyncOperation<HttpResponse> PatchAsync();
         IAsyncOperation<HttpResponse> AsPostAsync(string httpMethod);
-        IAsyncOperation<HttpResponse> AsGetAsync(string httpMethod);
+        IAsyncOperation<HttpResponse> AsGetAsync(string httpMethod, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null);
 	}
 }

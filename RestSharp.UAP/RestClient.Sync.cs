@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Collections;
+using Mendo.UWP.Network;
 
 namespace RestSharp
 {
@@ -71,7 +72,7 @@ namespace RestSharp
             return await ExecuteInternal(request, httpMethod, DoExecuteAsPostAsync);
         }
 
-		private async Task<IRestResponse> ExecuteInternal(IRestRequest request, string httpMethod, Func<IHttp, string, Task<HttpResponse>> getResponse)
+		private async Task<IRestResponse> ExecuteInternal(IRestRequest request, string httpMethod, Func<IHttp, string, CacheMode, TimeSpan?, Task<HttpResponse>> getResponse)
 		{
 			AuthenticateIfNeeded(this, request);
 
@@ -85,7 +86,7 @@ namespace RestSharp
 
 				ConfigureHttp(request, http);
 
-				response = ConvertToRestResponse(request, await getResponse(http, httpMethod));
+				response = ConvertToRestResponse(request, await getResponse(http, httpMethod, request.CacheMode, request.CacheExpiry));
 				response.Request = request;
 				response.Request.IncreaseNumAttempts();
 
@@ -101,12 +102,12 @@ namespace RestSharp
 		}
 
         
-		private async static Task<HttpResponse> DoExecuteAsGetAsync(IHttp http, string method)
+		private async static Task<HttpResponse> DoExecuteAsGetAsync(IHttp http, string method, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null)
 		{
-			return await http.AsGetAsync(method);
+			return await http.AsGetAsync(method, cacheMode, cacheExpiry);
 		}
 
-        private async static Task<HttpResponse> DoExecuteAsPostAsync(IHttp http, string method)
+        private async static Task<HttpResponse> DoExecuteAsPostAsync(IHttp http, string method, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null)
         {
             return await http.AsPostAsync(method);
         }

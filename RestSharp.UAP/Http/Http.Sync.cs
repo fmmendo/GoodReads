@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Windows.Foundation;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Linq;
+using Mendo.UWP.Network;
 
 namespace RestSharp
 {
@@ -124,13 +125,13 @@ namespace RestSharp
 		/// </summary>
 		/// <param name="httpMethod">The HTTP method to execute.</param>
 		/// <returns></returns>
-        public IAsyncOperation<HttpResponse> AsGetAsync(string httpMethod)
+        public IAsyncOperation<HttpResponse> AsGetAsync(string httpMethod, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null)
         {
-            return (IAsyncOperation<HttpResponse>)AsyncInfo.Run((System.Threading.CancellationToken ct) => AsGetInternal(httpMethod));
+            return (IAsyncOperation<HttpResponse>)AsyncInfo.Run((System.Threading.CancellationToken ct) => AsGetInternal(httpMethod, cacheMode, cacheExpiry));
         }
-        private async Task<HttpResponse> AsGetInternal(string httpMethod)
+        private async Task<HttpResponse> AsGetInternal(string httpMethod, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null)
 		{
-			return await GetStyleMethodInternal(httpMethod.ToUpperInvariant());
+			return await GetStyleMethodInternal(httpMethod.ToUpperInvariant(), cacheMode, cacheExpiry);
 		}
 
 		/// <summary>
@@ -147,7 +148,7 @@ namespace RestSharp
             return await PostPutInternal(httpMethod.ToUpperInvariant());
         }
 
-        private async Task<HttpResponse> GetStyleMethodInternal(string method)
+        private async Task<HttpResponse> GetStyleMethodInternal(string method, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null)
         {
             var httpRequestMessage = new HttpRequestMessage(new HttpMethod(method), Url);
             var httpClient = ConfigureWebRequest(method, Url);
@@ -158,7 +159,7 @@ namespace RestSharp
 
             try
             {
-                var result = await Mendo.UWP.Network.Http.GetStringAsync(Url.ToString(), Mendo.UWP.Network.CacheMode.Skip, null, httpClient);
+                var result = await Mendo.UWP.Network.Http.GetStringAsync(Url.ToString(), cacheMode, cacheExpiry, httpClient);
                 //var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
                 //TODO: Move the exception handling currently in GetRawResponse here and check Result

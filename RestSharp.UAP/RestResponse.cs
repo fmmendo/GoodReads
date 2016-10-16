@@ -128,5 +128,16 @@ namespace RestSharp
 		/// The exception thrown during the request, if any
 		/// </summary>
 		public Exception ErrorException { get; set; }
-	}
+
+        /// <summary>
+        /// If true, data has come from the local cache
+        /// </summary>
+        public bool FromCache { get; set; }
+
+        /// <summary>
+        /// If true, data came from cache, but an HTTP request was still done 
+        /// to update the cache.
+        /// </summary>
+        public bool CacheExpired { get; set; }
+    }
 }

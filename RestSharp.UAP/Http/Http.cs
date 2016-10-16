@@ -231,6 +231,9 @@ namespace RestSharp
                                               //response.ResponseUri = httpResponseMessage
             response.ResponseStatus = ResponseStatus.Completed;
 
+            response.FromCache = httpResponseMessage.FromCache;
+            response.CacheExpired = httpResponseMessage.CacheExpired;
+
             //foreach (var header in httpResponseMessage.Headers.ToArray() )
             {
                 //var headerValue = httpResponseMessage.Headers.GetValues(header.Key);

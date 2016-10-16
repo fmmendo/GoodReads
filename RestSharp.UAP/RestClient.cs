@@ -283,8 +283,10 @@ namespace RestSharp
 			restResponse.StatusCode = httpResponse.StatusCode;
 			restResponse.StatusDescription = httpResponse.StatusDescription;
 			restResponse.Request = request;
+            restResponse.FromCache = httpResponse.FromCache;
+            restResponse.CacheExpired = httpResponse.CacheExpired;
 
-			foreach (var header in httpResponse.Headers)
+            foreach (var header in httpResponse.Headers)
 			{
 				restResponse.Headers.Add(new Parameter { Name = header.Name, Value = header.Value, Type = ParameterType.HttpHeader });
 			}

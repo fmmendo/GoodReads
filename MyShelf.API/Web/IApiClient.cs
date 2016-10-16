@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Mendo.UWP.Network;
+using RestSharp;
 using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
@@ -57,13 +58,15 @@ namespace MyShelf.API.Web
                                                              string consumerSecret,
                                                              string accessToken,
                                                              string accessTokenSecret,
-                                                             Dictionary<string, object> parameters = null);
+                                                             Dictionary<string, object> parameters = null,
+                                                             CacheMode cacheMode = CacheMode.Skip,
+                                                             TimeSpan? cacheExpiry = null);
 
         /// <summary>
         /// Performs an HTTP GET request to the given URL and returns the result.
         /// </summary>
         /// <param name="url">Target URL</param>
         /// <returns>Text returned by the response.</returns>
-        Task<string> HttpGet(string url);
+        Task<string> HttpGet(string url, CacheMode cacheMode = CacheMode.Skip, TimeSpan? cacheExpiry = null);
     }
 }
