@@ -1,4 +1,5 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Network;
 using MyShelf.API.Storage;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,6 @@ namespace MyShelf.Pages
 {
     public sealed partial class SettingsPage : BasePage
     {
-
-
-
         public SettingsPage()
         {
             this.InitializeComponent();
@@ -23,6 +21,43 @@ namespace MyShelf.Pages
             API.Web.ApiClient.Instance.ResetQueue();
 
             base.SaveState(e, pageState);
+        }
+
+        private async void ClearCache_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var dialog = new MessageDialog("If you are experiencing issues or the app is displaying out-of-date information, please try clearing the cache.", "Clear Cache");
+
+            var primary = new UICommand { Id = 1, Label = "Clear Cache" };
+            dialog.Commands.Add(primary);
+
+            dialog.CancelCommandIndex = 1;
+            var secondary = new UICommand { Id = 2, Label = "Cancel" };
+            dialog.Commands.Add(secondary);
+
+            var result = await dialog.ShowAsync();
+
+            if (result.Label.Equals("Clear Cache"))
+            {                
+                Http.DefaultCache.ClearCacheAsync().ContinueWith(clearCache =>
+                {
+                    if (clearCache.IsCompleted)
+                    {
+                        Dispatcher.RunAsync( Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            var md = new MessageDialog("Cache has been cleared. Try reloading the app if you were experiencing any issues.", "Success");
+                            md.ShowAsync();
+                        });
+                    }
+                    else
+                    {
+                        Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            var md = new MessageDialog("Sorry, something went wrong. Please try again later.", "Failed");
+                            md.ShowAsync();
+                        });
+                    }
+                });
+            }
         }
 
         private async void Rate_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
