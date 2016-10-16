@@ -1,4 +1,5 @@
 ﻿using Mendo.UWP.Common;
+using Mendo.UWP.Network;
 using MyShelf.Controls;
 using MyShelf.Pages;
 using System;
@@ -45,6 +46,8 @@ namespace MyShelf
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            Http.DefaultCache = SQLiteCache.CompressedInstance;
         }
 
         /// <summary>

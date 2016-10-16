@@ -148,7 +148,7 @@ namespace MyShelf.API.Web
 
             await _apiSemaphore.WaitAsync(_cts.Token);
 
-            var result = await Mendo.UWP.Network.Http.GetStringAsync(url, cacheMode);
+            var result = await Mendo.UWP.Network.Http.GetStringAsync(url, cacheMode, cacheExpiry);
             if (result != null && result.Success)
             {
                 httpResponse = result.Content;

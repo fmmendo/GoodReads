@@ -18,31 +18,25 @@ namespace MyShelf.API.Services
         private SemaphoreSlim shelfSemaphore = new SemaphoreSlim(1, 1);
         public List<UserShelf> UserShelves { get; } = new List<UserShelf>();
 
-        private DateTime timestamp_shelves;
-        private string response_shelves;
-
         /// <summary>
         /// Returns the shelves for the logged in user
         /// </summary>
         /// <param name="query">string to search for</param>
         /// <returns>List of Work items</returns>
-        public async Task<List<UserShelf>> GetShelvesList(CacheMode cacheMode = CacheMode.Skip)
+        public async Task<List<UserShelf>> GetShelvesList()
         {
-            if (timestamp_shelves.AddMinutes(15) <= DateTime.Now)
+            string response = string.Empty;
+            await shelfSemaphore.WaitAsync();
+            try
             {
-                await shelfSemaphore.WaitAsync();
-                try
-                {
-                    response_shelves = await ApiClient.Instance.HttpGet(String.Format(Urls.ShelvesList, MyShelfSettings.Instance.ConsumerKey));
-                }
-                finally
-                {
-                    shelfSemaphore.Release();
-                    timestamp_shelves = DateTime.Now;
-                }
+                response = await ApiClient.Instance.HttpGet(String.Format(Urls.ShelvesList, MyShelfSettings.Instance.ConsumerKey), CacheMode.UpdateAsyncIfExpired, TimeSpan.FromDays(7));
+            }
+            finally
+            {
+                shelfSemaphore.Release();
             }
 
-            var result = GoodReadsSerializer.DeserializeResponse(response_shelves);
+            var result = GoodReadsSerializer.DeserializeResponse(response);
 
             return result.Shelves.UserShelf;
         }
@@ -53,7 +47,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<bool> AddBookToShelf(string shelfName, string bookId, bool remove = false, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<bool> AddBookToShelf(string shelfName, string bookId, bool remove = false)
         {
             //client.Authenticator = OAuth1Authenticator.ForProtectedResource(API_KEY, OAUTH_SECRET, UserSettings.Settings.OAuthAccessToken, UserSettings.Settings.OAuthAccessTokenSecret);
 

@@ -16,9 +16,9 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Author> GetAuthorInfo(string id, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Author> GetAuthorInfo(string id)
         {
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorShow, id, MyShelfSettings.Instance.ConsumerKey));
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorShow, id, MyShelfSettings.Instance.ConsumerKey), CacheMode.UpdateAsyncIfExpired, TimeSpan.FromDays(30));
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
@@ -31,9 +31,9 @@ namespace MyShelf.API.Services
         /// <param name="id"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public async Task<Books> GetAuthorBooks(string id/*, int page = 1*/, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Books> GetAuthorBooks(string id/*, int page = 1*/)
         {
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorBooks, id, MyShelfSettings.Instance.ConsumerKey)); /*, page.ToString()*/
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.AuthorBooks, id, MyShelfSettings.Instance.ConsumerKey), CacheMode.UpdateAsyncIfExpired, TimeSpan.FromDays(15)); /*, page.ToString()*/
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 

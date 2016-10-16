@@ -11,7 +11,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<Author> GetAuthorInfo(string id, CacheMode cacheMode = CacheMode.Skip);
+        Task<Author> GetAuthorInfo(string id);
 
         /// <summary>
         /// Returns an author's books
@@ -19,6 +19,6 @@ namespace MyShelf.API.Services
         /// <param name="id"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        Task<Books> GetAuthorBooks(string id/*, int page = 1*/, CacheMode cacheMode = CacheMode.Skip);
+        Task<Books> GetAuthorBooks(string id/*, int page = 1*/);
     }
 }

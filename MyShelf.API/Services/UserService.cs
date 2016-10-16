@@ -18,38 +18,26 @@ namespace MyShelf.API.Services
 
         private User _currentUser = null;
 
-        #region pseudo-cache
-        private DateTime timestamp_userId;
-        private string response_userId;
-
-        private DateTime timestamp_friendUpdates;
-        private string response_friendUpdates = string.Empty;
-
-        private DateTime timestamp_friends;
-        private string response_friends = string.Empty;
-        #endregion
-
         /// <summary>
         /// Returns the logged in User
         /// </summary>
         /// <returns>User</returns>
-        public async Task<User> GetUserID(bool refresh = false, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<User> GetUserID(bool refresh = false)
         {
-            if (_currentUser == null || timestamp_friendUpdates.AddMinutes(15) <= DateTime.Now)
+            if (_currentUser == null || refresh)
             {
-                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.AuthUser, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
-                response_userId = response.Content.ToString();
+                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.AuthUser, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, null, CacheMode.UpdateAsyncIfExpired, TimeSpan.FromDays(30));
+                var result = GoodReadsSerializer.DeserializeResponse(response.Content.ToString());
 
-                timestamp_userId = DateTime.Now;
+                _currentUser = result.User;
+
+
+                MyShelfSettings.Instance.GoodreadsUserID = result.User.Id;
+                MyShelfSettings.Instance.GoodreadsUsername = result.User.UserName;
+                MyShelfSettings.Instance.GoodreadsUserLink = result.User.Link;
             }
 
-            var result = GoodReadsSerializer.DeserializeResponse(response_userId);
-
-            MyShelfSettings.Instance.GoodreadsUserID = result.User.Id;
-            MyShelfSettings.Instance.GoodreadsUsername = result.User.UserName;
-            MyShelfSettings.Instance.GoodreadsUserLink = result.User.Link;
-
-            return result.User;
+            return _currentUser;
         }
 
         /// <summary>
@@ -58,7 +46,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="userID">goodreads user ID</param>
         /// <returns>User</returns>
-        public async Task<User> GetUserInfo(string userID = null, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<User> GetUserInfo(string userID = null)
         {
             if (String.IsNullOrEmpty(userID))
             {
@@ -76,11 +64,9 @@ namespace MyShelf.API.Services
                 //we want someone else
             }
 
+            //TODO bail out if someone messed this up :P
 
-            //if (userID == MyShelfSettings.Instance.GoodreadsUserID)
-            //    return authenticatedUser;
-
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.UserShow, userID, MyShelfSettings.Instance.ConsumerKey));
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.UserShow, userID, MyShelfSettings.Instance.ConsumerKey), CacheMode.UpdateAsyncIfExpired, TimeSpan.FromDays(1));
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
@@ -93,17 +79,11 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates)
         {
-            if (timestamp_friendUpdates.AddMinutes(15) <= DateTime.Now)
-            {
-                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.FriendUpdates, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
-                response_friendUpdates = response.Content.ToString();
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(Urls.FriendUpdates, Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, null, CacheMode.UpdateAsyncIfExpired, TimeSpan.FromMinutes(10));
 
-                timestamp_friendUpdates = DateTime.Now;
-            }
-
-            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response_friendUpdates);
+            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content);
 
             return result.Updates;
         }
@@ -114,17 +94,11 @@ namespace MyShelf.API.Services
         /// <param name="page"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public async Task<Friends> GetFriends(string page = null, string sort = null, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Friends> GetFriends(string page = null, string sort = null)
         {
-            if (timestamp_friends.AddMinutes(15) <= DateTime.Now)
-            {
-                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(string.Format(Urls.FriendList, MyShelfSettings.Instance.GoodreadsUserID), Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
-                response_friends = response.Content.ToString();
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(string.Format(Urls.FriendList, MyShelfSettings.Instance.GoodreadsUserID), Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret, null, CacheMode.UpdateAsyncIfExpired, TimeSpan.FromDays(1));
 
-                timestamp_friends = DateTime.Now;
-            }
-
-            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response_friends);
+            GoodreadsResponse result = GoodReadsSerializer.DeserializeResponse(response.Content);
 
             return result.Friends;
         }
@@ -135,7 +109,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<bool> LikeResource(string resourceId, string resourceType, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<bool> LikeResource(string resourceId, string resourceType)
         {
             var param = new Dictionary<string, object>();
             param.Add("rating[rating]", 1);
@@ -156,7 +130,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<bool> UnlikeResource(string resourceId/*, string resourceType*/, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<bool> UnlikeResource(string resourceId/*, string resourceType*/)
         {
             var param = new Dictionary<string, object>();
             //param.Add("rating[rating]", 1);
@@ -209,7 +183,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<string> AddComment(string id, string type, string comment, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<string> AddComment(string id, string type, string comment)
         {
             var param = new Dictionary<string, object>();
             param.Add("type", type);
@@ -243,7 +217,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<String> PostStatusUpdate(string bookId, string page, string percent, string body, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<String> PostStatusUpdate(string bookId, string page, string percent, string body)
         {
             var param = new Dictionary<string, object>();
             if (!String.IsNullOrEmpty(bookId)) param.Add("user_status[book_id]", bookId);

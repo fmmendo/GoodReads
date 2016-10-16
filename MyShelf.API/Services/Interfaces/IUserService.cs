@@ -12,7 +12,7 @@ namespace MyShelf.API.Services
         /// Returns the logged in User
         /// </summary>
         /// <returns>User</returns>
-        Task<User> GetUserID(bool refresh = false, CacheMode cacheMode = CacheMode.Skip);
+        Task<User> GetUserID(bool refresh = false);
 
         /// <summary>
         /// Returns a goodreads User object for the given Id. If no ID is passed
@@ -20,7 +20,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="userID">goodreads user ID</param>
         /// <returns>User</returns>
-        Task<User> GetUserInfo(string userID = null, CacheMode cacheMode = CacheMode.Skip);
+        Task<User> GetUserInfo(string userID = null);
 
         /// <summary>
         /// Returns the friend update feed for the logged in user
@@ -28,9 +28,9 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates, CacheMode cacheMode = CacheMode.Skip);
+        Task<Updates> GetFriendUpdates(string type, string filter, string maxUpdates);
 
-        Task<Friends> GetFriends(string page = null, string sort = null, CacheMode cacheMode = CacheMode.Skip);
+        Task<Friends> GetFriends(string page = null, string sort = null);
 
         /// <summary>
         /// Likes a resource
@@ -38,7 +38,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        Task<bool> LikeResource(string resourceId, string resourceType, CacheMode cacheMode = CacheMode.Skip);
+        Task<bool> LikeResource(string resourceId, string resourceType);
 
         /// <summary>
         /// Unlike a resource
@@ -46,7 +46,7 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        Task<bool> UnlikeResource(string resourceId/*, string resourceType*/, CacheMode cacheMode = CacheMode.Skip);
+        Task<bool> UnlikeResource(string resourceId/*, string resourceType*/);
 
         /// <summary>
         /// Adds a Comment
@@ -54,8 +54,8 @@ namespace MyShelf.API.Services
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        Task<string> AddComment(string id, string type, string comment, CacheMode cacheMode = CacheMode.Skip);
+        Task<string> AddComment(string id, string type, string comment);
 
-        Task<string> PostStatusUpdate(string bookId, string page, string percent, string body, CacheMode cacheMode = CacheMode.Skip);
+        Task<string> PostStatusUpdate(string bookId, string page, string percent, string body);
     }
 }

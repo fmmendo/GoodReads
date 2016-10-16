@@ -15,32 +15,31 @@ namespace MyShelf.API.Services
 {
     public class BookService : Singleton<BookService>, IBookService
     {
-        private Dictionary<string, DateTime> timestamp_shelfbooks = new Dictionary<string, DateTime>();
-        private Dictionary<string, string> response_shelfbooks = new Dictionary<string, string>();
-
         /// <summary>
         /// Returns the books for the logged in user
         /// </summary>
         /// <param name="type"></param>
         /// <param name="filter"></param>
         /// <param name="maxUpdates"></param>
-        public async Task<Reviews> GetBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200", CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Reviews> GetBooks(string shelf = null, string sort = null, string query = null, string order = null, string page = null, string per_page = "200")
         {
+            string url = Urls.ShelfBooks + MyShelfSettings.Instance.GoodreadsUserID + ".xml?key=" + MyShelfSettings.Instance.ConsumerKey + "&format=xml&v=2";
 
-            if (!timestamp_shelfbooks.ContainsKey(shelf) || timestamp_shelfbooks[shelf].AddMinutes(15) <= DateTime.Now)
-            {
-                string url = Urls.ShelfBooks + MyShelfSettings.Instance.GoodreadsUserID + ".xml?key=" + MyShelfSettings.Instance.ConsumerKey + "&format=xml&v=2";
+            if (!String.IsNullOrEmpty(shelf))
+                url += "&shelf=" + shelf;
+            if (!String.IsNullOrEmpty(per_page))
+                url += "&per_page=" + per_page;
 
-                if (!String.IsNullOrEmpty(shelf))
-                    url += "&shelf=" + shelf;
-                if (!String.IsNullOrEmpty(per_page))
-                    url += "&per_page=" + per_page;
+            var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(url, RestSharp.Method.GET,
+                MyShelfSettings.Instance.ConsumerKey,
+                MyShelfSettings.Instance.ConsumerSecret,
+                MyShelfSettings.Instance.OAuthAccessToken,
+                MyShelfSettings.Instance.OAuthAccessTokenSecret,
+                null,
+                CacheMode.UpdateAsyncIfExpired,
+                TimeSpan.FromHours(6)
+                );
 
-                var response = await ApiClient.Instance.ExecuteForProtectedResourceAsync(url, RestSharp.Method.GET, MyShelfSettings.Instance.ConsumerKey, MyShelfSettings.Instance.ConsumerSecret, MyShelfSettings.Instance.OAuthAccessToken, MyShelfSettings.Instance.OAuthAccessTokenSecret);
-
-                response_shelfbooks[shelf] = response.Content.ToString();
-                timestamp_shelfbooks[shelf] = DateTime.Now;
-            }
 
 
             //if (shelf == null && justRefreshedReviews)
@@ -85,7 +84,7 @@ namespace MyShelf.API.Services
 
             //ApiCooldown();
 
-            var result = GoodReadsSerializer.DeserializeResponse(response_shelfbooks[shelf]);
+            var result = GoodReadsSerializer.DeserializeResponse(response.Content);
             //GoodreadsReviews = result.Reviews;
             //}
 
@@ -97,9 +96,11 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Book> GetBookInfo(string id, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Book> GetBookInfo(string id)
         {
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.BookShow, id, MyShelfSettings.Instance.ConsumerKey));
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.BookShow, id, MyShelfSettings.Instance.ConsumerKey),
+                CacheMode.UpdateAsyncIfExpired,
+                TimeSpan.FromDays(30));
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
@@ -111,7 +112,7 @@ namespace MyShelf.API.Services
         /// </summary>
         /// <param name="query">string to search for</param>
         /// <returns>List of Work items</returns>
-        public async Task<Search> Search(string query, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Search> Search(string query)
         {
             if (string.IsNullOrEmpty(query))
                 return null;
@@ -123,7 +124,7 @@ namespace MyShelf.API.Services
             return result.Search;
         }
 
-        public async Task<string> CreateReview(string bookId, string body, string rating, string readAt, string shelf, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<string> CreateReview(string bookId, string body, string rating, string readAt, string shelf)
         {
             var param = new Dictionary<string, object>();
             if (!String.IsNullOrEmpty(bookId)) param.Add("book_id", bookId);
@@ -153,7 +154,7 @@ namespace MyShelf.API.Services
             //    return false;
         }
 
-        public async Task<bool> EditReview(string reviewId, string finished, string body, string rating, string readAt, string shelf, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<bool> EditReview(string reviewId, string finished, string body, string rating, string readAt, string shelf)
         {
 
             var param = new Dictionary<string, object>();
@@ -170,12 +171,14 @@ namespace MyShelf.API.Services
             return (response.StatusCode == 200 && response.StatusDescription == "OK" && response.ResponseStatus == ResponseStatus.Completed);
         }
 
-        public async Task<Review> GetUserReview(string bookId, string userId = null, CacheMode cacheMode = CacheMode.Skip)
+        public async Task<Review> GetUserReview(string bookId, string userId = null)
         {
             if (string.IsNullOrEmpty(userId))
                 userId = MyShelfSettings.Instance.GoodreadsUserID;
-            
-            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.UserReview, bookId, MyShelfSettings.Instance.ConsumerKey, userId));
+
+            string results = await ApiClient.Instance.HttpGet(String.Format(Urls.UserReview, bookId, MyShelfSettings.Instance.ConsumerKey, userId),
+                CacheMode.UpdateAsyncIfExpired,
+                TimeSpan.FromDays(30));
 
             var result = GoodReadsSerializer.DeserializeResponse(results);
 
