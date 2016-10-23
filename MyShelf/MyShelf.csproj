@@ -23,6 +23,7 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>B9BBE529E4A737B611EC4C5EEA6482B454E12D5C</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>MyShelf_StoreKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageDir>C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -104,8 +105,6 @@
     <Content Include="AdMediator.config" />
     <Content Include="Assets\Fonts\Lato\Lato-Regular.ttf" />
     <Content Include="Assets\Fonts\Merriweather\Merriweather-Regular.ttf" />
-    <None Include="MyShelf_StoreKey.pfx" />
-    <None Include="MyShelf_TemporaryKey.pfx" />
     <None Include="project.json" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
   </ItemGroup>

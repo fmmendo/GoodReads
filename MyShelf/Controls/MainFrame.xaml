@@ -57,10 +57,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="gTitleBar" Background="{StaticResource DarkBrown}" Canvas.ZIndex="1">
+        <Grid x:Name="gTitleBar" Background="{StaticResource LightBrown}" Canvas.ZIndex="1" BorderThickness="0,0,0,1" BorderBrush="#DCDAD7">
             <Grid.ChildrenTransitions>
                 <TransitionCollection>
-                    <RepositionThemeTransition />
+                    <EntranceThemeTransition />
                 </TransitionCollection>
             </Grid.ChildrenTransitions>
             <Grid.ColumnDefinitions>
@@ -70,36 +70,31 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <Button x:Name="bMenu"
-                    Background="{StaticResource DarkBrown}"
-                    Foreground="White" 
+                    Background="Transparent"
+                    Foreground="{StaticResource DarkText}" 
                     Width="48" Height="48"
                     VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                     Click="{x:Bind ViewModel.MenuClick}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE700;"/>
             </Button>
-            <!--<TextBlock Grid.Column="1"
-                       Text=" myShelf"
-                       VerticalAlignment="Center"
-                       FontSize="32"
-                       FontWeight="Light"
-                       Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" />-->
+
             <Viewbox Grid.Column="1" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Canvas x:Name="Layer_1" Height="133" Canvas.Left="0" Canvas.Top="0" Width="490">
-                    <Path Fill="White" Height="55.319" Canvas.Left="97.983" Stretch="None" Canvas.Top="53.452" Width="72.563" Data="F1M70.711,55.319L70.711,22.834C70.711,14.173 68.35,9.477 66.223,6.735 64.096,3.993 60.129,2.089 54.484,2.089 50.23,2.089 46.202,3.225 43.109,6.881 40.015,10.537 38.192,12.964 37.76,20.927L37.76,55.319 35.908,55.319 35.908,20.715C35.908,6.964 31.359,2.048 20.192,2.048 14.484,2.048 9.9,3.173 6.229,7.941 3.366,11.658 1.852,15.369 1.852,21.205L1.852,55.319 0,55.319 0,1.319 1.852,1.319 1.852,10.283 2.063,10.283C6.067,2.298 12.109,0 20.568,0 24.506,0 29.022,1.072 31.817,3.339 34.612,5.607 36.352,8.649 37.336,12.34 39.024,8.438 41.107,5.247 44.254,3.085 47.4,0.923 51.152,-0.015 54.844,0 66.192,0.048 72.563,7.313 72.563,21.938L72.563,55.319z"/>
-                    <Path Fill="White" Height="78.365" Canvas.Left="179.932" Stretch="None" Canvas.Top="54.771" Width="45.727" Data="F1M19.987,65.021C18.018,69.873 15.838,72.476 13.448,74.832 11.057,77.187 7.981,78.365 4.219,78.365 2.637,78.365 1.231,78.119 0,77.627L0.001,75.678C1.266,76.17 3.337,76.446 5.024,76.479 9.837,76.572 15.237,71.863 17.733,65.887L22.118,53.947 0.024,0 2.129,0 20.769,45.257C21.191,46.21 20.129,43.991 20.769,45.257 21.107,45.924 22.78,51.053 23.233,51.322L23.306,51.416 25.91,44.812 43.676,0 45.727,0z"/>
-                    <Path Fill="White" Height="56.531" Canvas.Left="231.612" Stretch="None" Canvas.Top="53.505" Width="38.338" Data="F1M0,53.578L0,42.24C4.57,45.721 9.615,47.461 15.135,47.461 22.518,47.461 26.209,45.281 26.209,40.922 26.209,39.691 25.893,38.645 25.26,37.784 24.627,36.923 23.774,36.158 22.702,35.49 21.63,34.822 20.364,34.225 18.905,33.697 17.446,33.17 15.82,32.572 14.027,31.904 11.813,31.025 9.817,30.094 8.042,29.109 6.267,28.125 4.79,27.009 3.612,25.761 2.435,24.513 1.547,23.098 0.949,21.516 0.352,19.934 0.053,18.088 0.053,15.978 0.053,13.377 0.668,11.083 1.898,9.097 3.129,7.11 4.781,5.44 6.855,4.087 8.93,2.733 11.285,1.714 13.922,1.028 16.559,0.343 19.283,0 22.096,0 27.088,0 31.553,0.756 35.49,2.268L35.49,12.973C31.693,10.371 27.334,9.07 22.412,9.07 20.865,9.07 19.468,9.228 18.22,9.545 16.972,9.861 15.908,10.301 15.029,10.863 14.15,11.426 13.465,12.103 12.973,12.894 12.48,13.685 12.234,14.555 12.234,15.504 12.234,16.664 12.48,17.648 12.973,18.457 13.465,19.266 14.194,19.978 15.161,20.593 16.128,21.208 17.288,21.77 18.642,22.28 19.995,22.79 21.551,23.344 23.309,23.941 25.629,24.891 27.712,25.857 29.558,26.842 31.403,27.826 32.977,28.942 34.277,30.19 35.578,31.438 36.58,32.88 37.283,34.515 37.986,36.149 38.338,38.092 38.338,40.342 38.338,43.084 37.705,45.475 36.439,47.514 35.174,49.553 33.486,51.24 31.377,52.576 29.268,53.912 26.833,54.905 24.073,55.556 21.313,56.206 18.404,56.531 15.346,56.531 9.439,56.531 4.324,55.547 0,53.578"/>
-                    <Path Fill="White" Height="79.946" Canvas.Left="281.551" Stretch="None" Canvas.Top="28.825" Width="47.989" Data="F1M47.989,79.946L35.755,79.946 35.755,50.414C35.755,39.727 32.187,34.383 25.05,34.383 21.463,34.383 18.44,35.93 15.979,39.024 13.518,42.117 12.288,46.073 12.288,50.889L12.288,79.946 0,79.946 0,0 12.288,0 12.288,34.91 12.499,34.91C16.577,28.09 22.413,24.68 30.007,24.68 41.995,24.68 47.989,32.01 47.989,46.67z"/>
-                    <Path Fill="White" Height="56.531" Canvas.Left="340.931" Stretch="None" Canvas.Top="53.505" Width="49.201" Data="F1M37.389,22.939C37.353,18.545 36.316,15.126 34.277,12.683 32.238,10.239 29.426,9.018 25.84,9.018 22.324,9.018 19.344,10.301 16.9,12.867 14.457,15.434 12.955,18.791 12.392,22.939z M49.201,31.588L12.392,31.588C12.533,36.58 14.07,40.43 17.006,43.137 19.941,45.844 23.976,47.197 29.109,47.197 34.875,47.197 40.166,45.475 44.982,42.029L44.982,51.891C40.06,54.984 33.557,56.531 25.471,56.531 17.525,56.531 11.293,54.079 6.775,49.175 2.258,44.27 0,37.371 0,28.477 0,20.074 2.486,13.228 7.461,7.937 12.435,2.645 18.615,0 25.998,0 33.381,0 39.094,2.373 43.137,7.119 47.18,11.865 49.201,18.457 49.201,26.895z"/>
-                    <Path Fill="White" Height="79.945" Canvas.Left="401.786" Stretch="None" Canvas.Top="28.826" Width="12.287" Data="F1M12.287,79.945L0,79.945 0,0 12.287,0z"/>
-                    <Path Fill="White" Height="81.159" Canvas.Left="424.568" Stretch="None" Canvas.Top="27.612" Width="35.964" Data="F1M35.964,11.18C34.312,10.231 32.431,9.756 30.322,9.756 24.38,9.756 21.41,13.114 21.41,19.829L21.41,27.159 33.961,27.159 33.961,36.756 21.462,36.756 21.462,81.159 9.228,81.159 9.228,36.756 0,36.756 0,27.159 9.228,27.159 9.228,18.405C9.228,12.709 11.091,8.218 14.818,4.931 18.545,1.644 23.203,0 28.793,0 31.816,0 34.207,0.334 35.964,1.002z"/>
-                    <Path Data="F1M482.429,5.669L0,5.669 0,0 482.429,0z" Fill="White" Height="5" Canvas.Left="0" Stretch="None" Canvas.Top="113.242" Width="490.429"/>
-                    <Path Data="F1M5.669,85.039L0,85.039 0,0 5.669,0z" Fill="White" Height="85" Canvas.Left="465.938" Stretch="None" Canvas.Top="42.844" Width="5.669"/>
-                    <Path Data="F1M5.669,85.039L0,85.039 0,0 5.669,0z" Fill="White" Height="85" Canvas.Left="7.702" Stretch="None" Canvas.Top="42.842" Width="5.669"/>
-                    <Path Data="F1M18,87.667L0,87.667 0,0 18,0z" Fill="White" Height="87.667" Canvas.Left="16.259" Stretch="None" Canvas.Top="22.429" Width="22"/>
-                    <Path Data="F1M18.667,100.078L0,100.078 0,0 18.667,0z" Fill="White" Height="100.078" Canvas.Left="36.592" Stretch="None" Canvas.Top="10" Width="22.667"/>
-                    <Path Data="F1M29.607,91.699L11.088,94.281 0,2.582 18.519,0z" Fill="White" Height="94.281" Canvas.Left="57.549" Stretch="None" Canvas.Top="15.786" Width="33.607"/>
+                    <Path Fill="{StaticResource DarkText}" Height="55.319" Canvas.Left="97.983" Stretch="None" Canvas.Top="53.452" Width="72.563" Data="F1M70.711,55.319L70.711,22.834C70.711,14.173 68.35,9.477 66.223,6.735 64.096,3.993 60.129,2.089 54.484,2.089 50.23,2.089 46.202,3.225 43.109,6.881 40.015,10.537 38.192,12.964 37.76,20.927L37.76,55.319 35.908,55.319 35.908,20.715C35.908,6.964 31.359,2.048 20.192,2.048 14.484,2.048 9.9,3.173 6.229,7.941 3.366,11.658 1.852,15.369 1.852,21.205L1.852,55.319 0,55.319 0,1.319 1.852,1.319 1.852,10.283 2.063,10.283C6.067,2.298 12.109,0 20.568,0 24.506,0 29.022,1.072 31.817,3.339 34.612,5.607 36.352,8.649 37.336,12.34 39.024,8.438 41.107,5.247 44.254,3.085 47.4,0.923 51.152,-0.015 54.844,0 66.192,0.048 72.563,7.313 72.563,21.938L72.563,55.319z"/>
+                    <Path Fill="{StaticResource DarkText}" Height="78.365" Canvas.Left="179.932" Stretch="None" Canvas.Top="54.771" Width="45.727" Data="F1M19.987,65.021C18.018,69.873 15.838,72.476 13.448,74.832 11.057,77.187 7.981,78.365 4.219,78.365 2.637,78.365 1.231,78.119 0,77.627L0.001,75.678C1.266,76.17 3.337,76.446 5.024,76.479 9.837,76.572 15.237,71.863 17.733,65.887L22.118,53.947 0.024,0 2.129,0 20.769,45.257C21.191,46.21 20.129,43.991 20.769,45.257 21.107,45.924 22.78,51.053 23.233,51.322L23.306,51.416 25.91,44.812 43.676,0 45.727,0z"/>
+                    <Path Fill="{StaticResource DarkText}" Height="56.531" Canvas.Left="231.612" Stretch="None" Canvas.Top="53.505" Width="38.338" Data="F1M0,53.578L0,42.24C4.57,45.721 9.615,47.461 15.135,47.461 22.518,47.461 26.209,45.281 26.209,40.922 26.209,39.691 25.893,38.645 25.26,37.784 24.627,36.923 23.774,36.158 22.702,35.49 21.63,34.822 20.364,34.225 18.905,33.697 17.446,33.17 15.82,32.572 14.027,31.904 11.813,31.025 9.817,30.094 8.042,29.109 6.267,28.125 4.79,27.009 3.612,25.761 2.435,24.513 1.547,23.098 0.949,21.516 0.352,19.934 0.053,18.088 0.053,15.978 0.053,13.377 0.668,11.083 1.898,9.097 3.129,7.11 4.781,5.44 6.855,4.087 8.93,2.733 11.285,1.714 13.922,1.028 16.559,0.343 19.283,0 22.096,0 27.088,0 31.553,0.756 35.49,2.268L35.49,12.973C31.693,10.371 27.334,9.07 22.412,9.07 20.865,9.07 19.468,9.228 18.22,9.545 16.972,9.861 15.908,10.301 15.029,10.863 14.15,11.426 13.465,12.103 12.973,12.894 12.48,13.685 12.234,14.555 12.234,15.504 12.234,16.664 12.48,17.648 12.973,18.457 13.465,19.266 14.194,19.978 15.161,20.593 16.128,21.208 17.288,21.77 18.642,22.28 19.995,22.79 21.551,23.344 23.309,23.941 25.629,24.891 27.712,25.857 29.558,26.842 31.403,27.826 32.977,28.942 34.277,30.19 35.578,31.438 36.58,32.88 37.283,34.515 37.986,36.149 38.338,38.092 38.338,40.342 38.338,43.084 37.705,45.475 36.439,47.514 35.174,49.553 33.486,51.24 31.377,52.576 29.268,53.912 26.833,54.905 24.073,55.556 21.313,56.206 18.404,56.531 15.346,56.531 9.439,56.531 4.324,55.547 0,53.578"/>
+                    <Path Fill="{StaticResource DarkText}" Height="79.946" Canvas.Left="281.551" Stretch="None" Canvas.Top="28.825" Width="47.989" Data="F1M47.989,79.946L35.755,79.946 35.755,50.414C35.755,39.727 32.187,34.383 25.05,34.383 21.463,34.383 18.44,35.93 15.979,39.024 13.518,42.117 12.288,46.073 12.288,50.889L12.288,79.946 0,79.946 0,0 12.288,0 12.288,34.91 12.499,34.91C16.577,28.09 22.413,24.68 30.007,24.68 41.995,24.68 47.989,32.01 47.989,46.67z"/>
+                    <Path Fill="{StaticResource DarkText}" Height="56.531" Canvas.Left="340.931" Stretch="None" Canvas.Top="53.505" Width="49.201" Data="F1M37.389,22.939C37.353,18.545 36.316,15.126 34.277,12.683 32.238,10.239 29.426,9.018 25.84,9.018 22.324,9.018 19.344,10.301 16.9,12.867 14.457,15.434 12.955,18.791 12.392,22.939z M49.201,31.588L12.392,31.588C12.533,36.58 14.07,40.43 17.006,43.137 19.941,45.844 23.976,47.197 29.109,47.197 34.875,47.197 40.166,45.475 44.982,42.029L44.982,51.891C40.06,54.984 33.557,56.531 25.471,56.531 17.525,56.531 11.293,54.079 6.775,49.175 2.258,44.27 0,37.371 0,28.477 0,20.074 2.486,13.228 7.461,7.937 12.435,2.645 18.615,0 25.998,0 33.381,0 39.094,2.373 43.137,7.119 47.18,11.865 49.201,18.457 49.201,26.895z"/>
+                    <Path Fill="{StaticResource DarkText}" Height="79.945" Canvas.Left="401.786" Stretch="None" Canvas.Top="28.826" Width="12.287" Data="F1M12.287,79.945L0,79.945 0,0 12.287,0z"/>
+                    <Path Fill="{StaticResource DarkText}" Height="81.159" Canvas.Left="424.568" Stretch="None" Canvas.Top="27.612" Width="35.964" Data="F1M35.964,11.18C34.312,10.231 32.431,9.756 30.322,9.756 24.38,9.756 21.41,13.114 21.41,19.829L21.41,27.159 33.961,27.159 33.961,36.756 21.462,36.756 21.462,81.159 9.228,81.159 9.228,36.756 0,36.756 0,27.159 9.228,27.159 9.228,18.405C9.228,12.709 11.091,8.218 14.818,4.931 18.545,1.644 23.203,0 28.793,0 31.816,0 34.207,0.334 35.964,1.002z"/>
+                    <Path Data="F1M482.429,5.669L0,5.669 0,0 482.429,0z" Fill="{StaticResource DarkText}" Height="5" Canvas.Left="0" Stretch="None" Canvas.Top="113.242" Width="490.429"/>
+                    <Path Data="F1M5.669,85.039L0,85.039 0,0 5.669,0z" Fill="{StaticResource DarkText}" Height="85" Canvas.Left="465.938" Stretch="None" Canvas.Top="42.844" Width="5.669"/>
+                    <Path Data="F1M5.669,85.039L0,85.039 0,0 5.669,0z" Fill="{StaticResource DarkText}" Height="85" Canvas.Left="7.702" Stretch="None" Canvas.Top="42.842" Width="5.669"/>
+                    <Path Data="F1M18,87.667L0,87.667 0,0 18,0z" Fill="{StaticResource DarkText}" Height="87.667" Canvas.Left="16.259" Stretch="None" Canvas.Top="22.429" Width="22"/>
+                    <Path Data="F1M18.667,100.078L0,100.078 0,0 18.667,0z" Fill="{StaticResource DarkText}" Height="100.078" Canvas.Left="36.592" Stretch="None" Canvas.Top="10" Width="22.667"/>
+                    <Path Data="F1M29.607,91.699L11.088,94.281 0,2.582 18.519,0z" Fill="{StaticResource DarkText}" Height="94.281" Canvas.Left="57.549" Stretch="None" Canvas.Top="15.786" Width="33.607"/>
                 </Canvas>
             </Viewbox>
 
@@ -111,10 +106,10 @@
                                   VerticalContentAlignment="Stretch">
             </ContentPresenter>
             <Button x:Name="btnSearch"
-                   Background="{StaticResource DarkBrown}"
+                   Background="Transparent"
                    Grid.Column="2"
                    Click="{x:Bind ViewModel.SearchClick}"
-                   Foreground="White" 
+                   Foreground="{StaticResource DarkText}" 
                    MinWidth="48" Height="48"
                    VerticalAlignment="Stretch" HorizontalContentAlignment="Center">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE094;"/>
@@ -122,29 +117,29 @@
 
         </Grid>
 
-        <Grid x:Name="ContentRoot" Grid.Row="1">
+        <Grid x:Name="ContentRoot" Grid.Row="2">
             <SplitView x:Name="splitView"
                        CompactPaneLength="48"
                        OpenPaneLength="220"
                        DisplayMode="Overlay"
                        IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
-                    <Grid Background="{StaticResource VeryDarkBrown}">
+                    <Grid Background="{StaticResource LightBrown}" BorderThickness="0,0,1,0" BorderBrush="#DCDAD7">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <StackPanel>
-                            <controls:SplitViewItem x:Name="svHome" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsHomeChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.HomeClick}" Text="Home" Icon="&#xE10F;"/>
-                            <controls:SplitViewItem x:Name="svBooks" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsMyBooksChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.MyBooksClick}" Text="My Books" Icon="&#xE1D3;"/>
+                            <controls:SplitViewItem Foreground="{StaticResource DarkText}"  x:Name="svHome" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsHomeChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.HomeClick}" Text="Home" Icon="&#xE10F;"/>
+                            <controls:SplitViewItem Foreground="{StaticResource DarkText}"  x:Name="svBooks" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsMyBooksChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.MyBooksClick}" Text="My Books" Icon="&#xE1D3;"/>
                             <!--<controls:SplitViewItem Text="Groups" GroupName="Sidebar" Icon="&#xE72D;"/>-->
                             <!--<controls:SplitViewItem Text="Recomendations" GroupName="Sidebar" Icon="&#xE1CE;"/>-->
-                            <controls:SplitViewItem x:Name="svFriends" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsFriendsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.FriendsClick}" Text="Friends" Icon="&#xE716;"/>
+                            <controls:SplitViewItem Foreground="{StaticResource DarkText}"  x:Name="svFriends" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsFriendsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.FriendsClick}" Text="Friends" Icon="&#xE716;"/>
                             <!--<controls:SplitViewItem Text="Reading Challenge" GroupName="Sidebar" Icon="&#xE82D;"/>-->
                         </StackPanel>
                         <StackPanel VerticalAlignment="Bottom" Padding="0,0,0,24">
-                            <controls:SplitViewItem x:Name="svProfile" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsProfileChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.ProfileClick}" Text="Profile" Icon="&#xE13D;"/>
-                            <controls:SplitViewItem x:Name="svSettings" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;" />
+                            <controls:SplitViewItem Foreground="{StaticResource DarkText}"  x:Name="svProfile" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsProfileChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.ProfileClick}" Text="Profile" Icon="&#xE13D;"/>
+                            <controls:SplitViewItem Foreground="{StaticResource DarkText}"  x:Name="svSettings" GroupName="Sidebar" IsChecked="{x:Bind ViewModel.IsSettingsChecked, Mode=TwoWay}" Click="{x:Bind ViewModel.SettingsClick}" Text="Settings" Icon="&#xE115;" />
                             <!--<Viewbox Width="220">
                                 <adduplex:AdControl Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" AdUnitId="168691" AppKey="512dfb2a-abb1-4cee-a27f-0610d0ac532c" />
                             </Viewbox>-->
@@ -152,7 +147,7 @@
                     </Grid>
                 </SplitView.Pane>
 
-                <Grid Background="White">
+                <Grid Background="{StaticResource LightBrownBackground}">
                     <Frame x:Name="RootFrame" x:FieldModifier="Public" Loaded="RootFrame_Loaded"/>
                 </Grid>
             </SplitView>

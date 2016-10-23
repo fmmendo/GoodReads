@@ -17,7 +17,7 @@
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
-                <RepositionThemeTransition/>
+                <!--<RepositionThemeTransition/>-->
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <VisualStateManager.VisualStateGroups>
@@ -119,12 +119,12 @@
             </ListView.ItemContainerTransitions>
             <ListView.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <TextBlock Text="UPDATES" Style="{StaticResource ListHeaderTextBlock}"/>
                 </DataTemplate>
             </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="data:UpdateViewModel">
-                    <Grid Background="White" Margin="0,0,0,12">
+                    <Grid Background="White" Margin="24,0,0,0" Padding="0,0,0,12" BorderBrush="{StaticResource LightGray}" BorderThickness="1" CornerRadius="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -132,11 +132,11 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto" MaxHeight="120"/>
+                            <RowDefinition Height="Auto" MaxHeight="158"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Ellipse Height="48" Width="48" VerticalAlignment="Top" Margin="12">
+                        <Ellipse Height="48" Width="48" VerticalAlignment="Top" Margin="-24,12,12,12">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="None"/>
                             </Ellipse.Fill>
@@ -147,24 +147,26 @@
                         </StackPanel>
                         <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
 
-                        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="120" Background="White" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="158" Background="White" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="105"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Image Grid.RowSpan="3" MaxHeight="120" Margin="0" Stretch="Uniform" VerticalAlignment="Top">
+                            <Image Grid.RowSpan="4" MaxHeight="158" Margin="0" Stretch="UniformToFill" VerticalAlignment="Top" HorizontalAlignment="Center">
                                 <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="120" DecodePixelType="Logical" />
+                                    <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
                                 </Image.Source>
                             </Image>
                             <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" FontSize="18" VerticalAlignment="Top" Padding="0" />
-                            <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
-                            <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}"></controls:AddToShelfControl>
+                            <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,4" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
+                            <controls:AddToShelfControl VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}" Margin="12,0,0,4" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" Margin="12,4,0,0" FontSize="14" LineHeight="20" Text="{x:Bind BookDescription, Mode=OneWay}" FontFamily="{StaticResource Lato}" MaxLines="3" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
 
                             <ProgressRing Visibility="Visible" IsActive="{x:Bind IsBookLoading, Mode=OneWay}" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
                         </Grid>
@@ -179,7 +181,7 @@
 
         <ListView x:Name="lvReading"
                   Visibility="Collapsed"
-                  Background="White"
+                  Background="Transparent"
                   ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
                   ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}"
                   Header="Currently Reading"
@@ -196,7 +198,7 @@
             </ListView.Footer>-->
             <ListView.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <TextBlock Text="CURRENTLY READING" Style="{StaticResource ListHeaderTextBlock}"/>
                 </DataTemplate>
             </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
@@ -228,8 +230,8 @@
                                     <BitmapImage UriSource="{Binding BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png', FallbackValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
                                 </Image.Source>
                             </Image>
-                            <HyperlinkButton Grid.Column="1" Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Margin="12,-6,0,0" FontSize="18" VerticalAlignment="Top" />
-                            <HyperlinkButton Grid.Column="1" Grid.Row="1" Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Margin="12,0,0,0" FontSize="14" VerticalAlignment="Top"/>
+                                <HyperlinkButton Grid.Column="1" Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}"  Click="{x:Bind BookClick, Mode=OneWay}" Margin="12,-6,0,0" FontSize="16" VerticalAlignment="Top" />
+                                <HyperlinkButton Grid.Column="1" Grid.Row="1" Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}"  Click="{x:Bind AuthorClick, Mode=OneWay}" Margin="12,0,0,0" FontSize="14" FontWeight="Normal" VerticalAlignment="Top"/>
 
 
                             <!--<HyperlinkButton Grid.Column="1" Grid.Row="2" Content="update" Click="{x:Bind StartUpdate, Mode=OneWay}" Padding="6,6,6,18" FontSize="8" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"/>
@@ -304,9 +306,9 @@
     </Grid>
 
     <common:BasePage.TopBarContent>
-        <CommandBar x:Name="tabletBar" d:IsHidden="True"  Visibility="Visible" Foreground="White" Background="{StaticResource DarkBrown}" VerticalAlignment="Stretch">
+        <CommandBar x:Name="tabletBar" d:IsHidden="True"  Visibility="Visible" Foreground="{StaticResource DarkText}" Background="{StaticResource LightBrown}" VerticalAlignment="Stretch">
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="abbReading" Click="abbReading_Click" Foreground="White" Label="Currently Reading" Visibility="Collapsed">
+                <AppBarButton x:Name="abbReading" Click="abbReading_Click" Foreground="{StaticResource DarkText}" Label="Currently Reading" Visibility="Collapsed">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE82D;"/>
                     </AppBarButton.Icon>
@@ -315,9 +317,9 @@
         </CommandBar>
     </common:BasePage.TopBarContent>
     <common:BasePage.BottomAppBar>
-        <CommandBar x:Name="phoneBar" Visibility="Collapsed" Foreground="White" Background="{StaticResource DarkBrown}" ClosedDisplayMode="Minimal" VerticalAlignment="Stretch">
+        <CommandBar x:Name="phoneBar" Visibility="Collapsed" Foreground="{StaticResource DarkText}" Background="{StaticResource LightBrown}" ClosedDisplayMode="Minimal" VerticalAlignment="Stretch">
             <CommandBar.PrimaryCommands>
-                <AppBarButton Foreground="White" Click="abbReading_Click" Label="Currently Reading">
+                <AppBarButton Foreground="{StaticResource DarkText}" Click="abbReading_Click" Label="Currently Reading">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE82D;"/>
                     </AppBarButton.Icon>

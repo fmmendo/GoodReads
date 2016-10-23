@@ -47,7 +47,7 @@
                                 <ColumnDefinition Width="44"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="44"/>
+                                <RowDefinition Height="36"/>
                                 <!--<RowDefinition Height="*"/>-->
                             </Grid.RowDefinitions>
                             <VisualStateManager.VisualStateGroups>
@@ -361,8 +361,8 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal" Height="44">
-        <ToggleButton Content="Want to read" Checked="ToggleButton_Checked" BorderThickness="0" Unchecked="ToggleButton_Unchecked" Height="44" Background="{StaticResource Green}" FontFamily="{StaticResource Lato}" Foreground="White" Style="{StaticResource ToggleButtonStyle}"/>
+    <StackPanel Orientation="Horizontal" Height="36">
+        <ToggleButton Content="Want to read" Checked="ToggleButton_Checked" BorderThickness="0" Unchecked="ToggleButton_Unchecked" Height="36" Background="{StaticResource Green}" FontFamily="{StaticResource Lato}" Foreground="White" Style="{StaticResource ToggleButtonStyle}"/>
         <ComboBox x:Name="cbShelves" Style="{StaticResource ComboBoxStyle}" Background="{StaticResource Green}" Margin="0,0,0,0" ItemsSource="{x:Bind Shelves, Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged" Header="Header">
             <ComboBox.ItemTemplate>
                 <DataTemplate>

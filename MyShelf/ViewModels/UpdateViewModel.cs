@@ -35,6 +35,7 @@ namespace MyShelf.ViewModels
         public Uri BookImageUrl { get; set; }
         public string BookAuthor { get; set; }
         public string BookTitle { get; set; }
+        public string BookDescription { get; set; }
 
         public string BookId { get; set; }
         private string UserId;
@@ -101,6 +102,7 @@ namespace MyShelf.ViewModels
             BookImageUrl = new Uri(result.ImageUrl);
             BookAuthor = result.Authors.FirstOrDefault().Name;//string.Join(", ", result.Authors.Select(a => a.Name));
             BookTitle = result.Title;
+            BookDescription = result.Description;
 
             BookId = result.Id;
             AuthorId = result.Authors.FirstOrDefault().Id;
@@ -109,6 +111,7 @@ namespace MyShelf.ViewModels
             OnPropertyChanged("BookAuthor");
             OnPropertyChanged("BookTitle");
             OnPropertyChanged("BookId");
+            OnPropertyChanged("BookDescription");
             //IsBook = true;
             IsBookLoading = false;
             OnPropertyChanged("IsBookLoading");

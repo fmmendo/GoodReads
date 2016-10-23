@@ -140,7 +140,7 @@ namespace MyShelf
                         await SuspensionManager.RestoreAsync();
                         await SuspensionManager.DeleteSavedStatesAsync();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                     }
                 }
@@ -159,6 +159,29 @@ namespace MyShelf
 
             // Ensure the current window is active
             Window.Current.Activate();
+
+            if (DeviceInformation.Instance.IsPhone)
+            {
+                var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
+                    statusBar.ForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
+                }
+
+            }
+            else
+            {
+                var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
+                if (titleBar != null)
+                {
+                    titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
+                    titleBar.ButtonForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
+                    titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
+                    titleBar.ForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
+                }
+            }
         }
 
         /// <summary>
