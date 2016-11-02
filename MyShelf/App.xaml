@@ -36,12 +36,17 @@
             <SolidColorBrush x:Key="DarkerText" Color="#FF181818" />
             <SolidColorBrush x:Key="DarkText" Color="#FF333333" />
 
-            <SolidColorBrush x:Key="DarkBrown" Color="#FF6E5A42" />
-            <SolidColorBrush x:Key="DarkBrownOverlay" Color="#706E5A42" />
             <SolidColorBrush x:Key="LightBrownBackground" Color="#FFFAF8F5" />
             <SolidColorBrush x:Key="LightBrown" Color="#FFF4F1EA" />
-            <SolidColorBrush x:Key="VeryDarkBrown" Color="#FF382110" />
             <SolidColorBrush x:Key="MidBrown" Color="#FFBAAD6A" />
+            <SolidColorBrush x:Key="DarkBrown" Color="#FF6E5A42" />
+            <SolidColorBrush x:Key="DarkBrownOverlay" Color="#706E5A42" />
+            <SolidColorBrush x:Key="VeryDarkBrown" Color="#FF382110" />
+
+            <SolidColorBrush x:Key="ProgressBarBrown" Color="#FF927F64" />
+            <SolidColorBrush x:Key="ProgressBarLightBrown" Color="#FFD6D0C4" />
+            <SolidColorBrush x:Key="ProgressBarGray" Color="#FF767676" />
+
 
             <SolidColorBrush x:Key="Green" Color="#FF409D69" />
             <SolidColorBrush x:Key="DarkGreen" Color="#FF00635D" />
@@ -291,6 +296,7 @@
                 <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
                 <Setter Property="BorderThickness" Value="{ThemeResource HyperlinkButtonBorderThemeThickness}"/>
                 <Setter Property="Padding" Value="0,6,0,6"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="FontFamily" Value="{StaticResource Lato}"/>
@@ -328,13 +334,12 @@
                                 </VisualStateManager.VisualStateGroups>
                                 <ContentPresenter x:Name="ContentPresenter"
                                                   AutomationProperties.AccessibilityView="Raw"
-                                                  FontWeight="SemiBold"
+                                                  FontWeight="{TemplateBinding FontWeight}"
                                                   BorderBrush="{TemplateBinding BorderBrush}"
                                                   BorderThickness="{TemplateBinding BorderThickness}"
                                                   Background="{TemplateBinding Background}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   ContentTransitions="{TemplateBinding ContentTransitions}"
-
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   Padding="{TemplateBinding Padding}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">

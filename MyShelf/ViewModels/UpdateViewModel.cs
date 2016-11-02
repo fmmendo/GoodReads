@@ -102,7 +102,7 @@ namespace MyShelf.ViewModels
             BookImageUrl = new Uri(result.ImageUrl);
             BookAuthor = result.Authors.FirstOrDefault().Name;//string.Join(", ", result.Authors.Select(a => a.Name));
             BookTitle = result.Title;
-            BookDescription = result.Description;
+            BookDescription = HtmlUtilities.ConvertToText(result.Description);
 
             BookId = result.Id;
             AuthorId = result.Authors.FirstOrDefault().Id;

@@ -1,4 +1,4 @@
-﻿<common:BasePage xmlns:Universal="using:Microsoft.AdMediator.Universal" 
+﻿<common:BasePage 
     x:Class="MyShelf.Pages.HomePage"    
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,18 +8,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:MyShelf.Controls"
     xmlns:data="using:MyShelf.ViewModels"
-    xmlns:adduplex="using:AdDuplex"
     xmlns:triggers="using:WindowsStateTriggers"
     mc:Ignorable="d"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
-        <Grid.ChildrenTransitions>
+        <!--<Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
-                <!--<RepositionThemeTransition/>-->
+                <RepositionThemeTransition/>
             </TransitionCollection>
-        </Grid.ChildrenTransitions>
+        </Grid.ChildrenTransitions>-->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="DeviceTypeStates">
                 <VisualState x:Name="Mobile">
@@ -77,40 +76,27 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--<Setter Target="tabletBar.Visibility" Value="Collapsed"/>-->
+                        <Setter Target="lvUpdates.Padding" Value="24,0"/>
+                        <Setter Target="lvUpdates.MaxWidth" Value="920"/>
+                        <Setter Target="lvUpdates.HorizontalAlignment" Value="Right"/>
                         <Setter Target="lvReading.Visibility" Value="Visible"/>
                         <Setter Target="lvReading.(Grid.Column)" Value="1"/>
-                        <Setter Target="lvUpdates.Padding" Value="24,0"/>
                         <Setter Target="lvReading.Padding" Value="12,0"/>
+                        <Setter Target="lvReading.HorizontalAlignment" Value="Left"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <!--<VisualStateGroup x:Name="DisplayStates">
-                <VisualState x:Name="Main">
-                    <VisualState.StateTriggers>
-                        <triggers:EqualsStateTrigger Value="{x:Bind ViewModel.ShowCurrentlyReading}" EqualTo="False"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState x:Name="CurrentlyReading">
-                    <VisualState.StateTriggers>
-                        <triggers:EqualsStateTrigger Value="{x:Bind ViewModel.ShowCurrentlyReading}" EqualTo="True"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="lvReading.(Grid.Column)" Value="0"/>
-                        <Setter Target="lvReading.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>-->
         </VisualStateManager.VisualStateGroups>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="3*" MaxWidth="512" x:Name="cdReading"/>
+            <ColumnDefinition Width="3*" x:Name="cdReading"/>
         </Grid.ColumnDefinitions>
         <ListView x:Name="lvUpdates"
                   ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
                   ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
                   Header="Updates"
                   SelectionMode="None"
-                  Padding="0,0,0,24">
+                  Padding="6,0,6,24">
             <ListView.ItemContainerTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition/>
@@ -119,7 +105,7 @@
             </ListView.ItemContainerTransitions>
             <ListView.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="UPDATES" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <TextBlock Text="UPDATES" Style="{StaticResource ListHeaderTextBlock}" Margin="24,9,12,6"/>
                 </DataTemplate>
             </ListView.HeaderTemplate>
             <ListView.ItemTemplate>
@@ -147,7 +133,7 @@
                         </StackPanel>
                         <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
 
-                        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="158" Background="White" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="158" Background="White" Padding="0,0,24,0" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="105"/>
                                 <ColumnDefinition Width="*"/>
@@ -180,8 +166,8 @@
         </ListView>
 
         <ListView x:Name="lvReading"
-                  Visibility="Collapsed"
-                  Background="Transparent"
+                  Visibility="Collapsed" MaxWidth="512" 
+                  Background="{StaticResource LightBrownBackground}"
                   ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
                   ItemsSource="{x:Bind ViewModel.CurrentlyReading, Mode=OneWay}"
                   Header="Currently Reading"
@@ -204,96 +190,103 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="data:UserStatusViewModel">
                     <Grid>
-                    <StackPanel Padding="12" >
-                        <StackPanel.ChildrenTransitions>
-                            <TransitionCollection>
-                                <RepositionThemeTransition/>
-                            </TransitionCollection>
-                        </StackPanel.ChildrenTransitions>
-                        <Grid MaxHeight="158" Tapped="{x:Bind ToggleUpdating}" Background="White">
-                            <Grid.ChildrenTransitions>
+                        <StackPanel Padding="12" >
+                            <StackPanel.ChildrenTransitions>
                                 <TransitionCollection>
                                     <RepositionThemeTransition/>
                                 </TransitionCollection>
-                            </Grid.ChildrenTransitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MinWidth="72"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Image x:Name="imgReadingBook" Grid.RowSpan="3" Stretch="Uniform" VerticalAlignment="Top" Margin="0">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{Binding BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png', FallbackValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                                <HyperlinkButton Grid.Column="1" Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}"  Click="{x:Bind BookClick, Mode=OneWay}" Margin="12,-6,0,0" FontSize="16" VerticalAlignment="Top" />
-                                <HyperlinkButton Grid.Column="1" Grid.Row="1" Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}"  Click="{x:Bind AuthorClick, Mode=OneWay}" Margin="12,0,0,0" FontSize="14" FontWeight="Normal" VerticalAlignment="Top"/>
-
-
-                            <!--<HyperlinkButton Grid.Column="1" Grid.Row="2" Content="update" Click="{x:Bind StartUpdate, Mode=OneWay}" Padding="6,6,6,18" FontSize="8" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"/>
-                            <HyperlinkButton Grid.Column="1" Grid.Row="2" Content="cancel" Click="{x:Bind EndUpdate, Mode=OneWay}" Padding="6,6,6,18" FontSize="8" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
-
-                            <ProgressBar Grid.Column="1" Grid.Row="2" Foreground="{StaticResource DarkBrown}" Background="{StaticResource LightBrown}" VerticalAlignment="Bottom" Height="12" Margin="12,0,0,0"  Value="{x:Bind Percent, Mode=OneWay}" />
-                            <!--<Slider Grid.Column="1" Grid.Row="5" Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Bottom"  Margin="12,0,0,0"  Value="{x:Bind Percent, Mode=OneWay}" />-->
-                        </Grid>
-                        <Grid Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0" >
-                                <StackPanel.ChildrenTransitions>
+                            </StackPanel.ChildrenTransitions>
+                            <Grid MaxHeight="158">
+                                <Grid.ChildrenTransitions>
                                     <TransitionCollection>
                                         <RepositionThemeTransition/>
                                     </TransitionCollection>
-                                </StackPanel.ChildrenTransitions>
-                                <TextBlock Text="I'm" Style="{StaticResource NormalTextBlock}" Margin="0" Padding="0,6,6,0" />
+                                </Grid.ChildrenTransitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" MinWidth="72"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
 
-                                <!--percent-->
-                                <TextBox Text="{Binding UpdatePercentage, Mode=TwoWay}"
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="imgReadingBook" Grid.RowSpan="5" Stretch="Uniform" VerticalAlignment="Top" Margin="0">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{Binding BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png', FallbackValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
+                                    </Image.Source>
+                                </Image>
+                                <HyperlinkButton Grid.Column="1" Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}"  Click="{x:Bind BookClick, Mode=OneWay}" Margin="12,-6,0,0" FontSize="16" VerticalAlignment="Top" />
+                                <HyperlinkButton Grid.Column="1" Grid.Row="1" Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}"  Click="{x:Bind AuthorClick, Mode=OneWay}" Margin="12,-6,0,0" FontSize="14" FontWeight="Light" VerticalAlignment="Top"/>
+
+
+                                <!--<HyperlinkButton Grid.Column="1" Grid.Row="2" Content="update" Click="{x:Bind StartUpdate, Mode=OneWay}" Padding="6,6,6,18" FontSize="8" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"/>
+                            <HyperlinkButton Grid.Column="1" Grid.Row="2" Content="cancel" Click="{x:Bind EndUpdate, Mode=OneWay}" Padding="6,6,6,18" FontSize="8" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+
+                                <ProgressBar Grid.Column="1" Grid.Row="2" Foreground="{StaticResource ProgressBarBrown}" Background="{StaticResource ProgressBarLightBrown}" VerticalAlignment="Bottom" Height="6" Margin="12,24,0,0" Width="120" HorizontalAlignment="Left" Value="{x:Bind Percent, Mode=OneWay}" />
+                                <TextBlock Grid.Column="1" Grid.Row="3" Margin="12,0,0,12" FontSize="12" FontFamily="{StaticResource Lato}" Foreground="{StaticResource ProgressBarGray}"><Run Text="{x:Bind Percent}"/><Run Text="%"/></TextBlock>
+                                <HyperlinkButton Grid.Column="1" Grid.Row="4" Content="Update Progress" Foreground="{StaticResource DarkGreen}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind ToggleUpdating}" Margin="12,-6,0,0" FontSize="14" FontWeight="Light" VerticalAlignment="Top"/>
+
+                                <!--<Slider Grid.Column="1" Grid.Row="5" Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Bottom"  Margin="12,0,0,0"  Value="{x:Bind Percent, Mode=OneWay}" />-->
+                            </Grid>
+                            <Grid Visibility="{x:Bind Updating, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal" Margin="0,12,0,0" >
+                                    <StackPanel.ChildrenTransitions>
+                                        <TransitionCollection>
+                                            <RepositionThemeTransition/>
+                                        </TransitionCollection>
+                                    </StackPanel.ChildrenTransitions>
+                                    <TextBlock Text="I'm" Style="{StaticResource NormalTextBlock}" Margin="0" Padding="0,6,6,0" />
+
+                                    <!--percent-->
+                                    <TextBox Text="{Binding UpdatePercentage, Mode=TwoWay}"
                                          Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"
                                          VerticalAlignment="Center"
                                          IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
                                          Width="48"
                                          Margin="0,0,6,0"/>
-                                <HyperlinkButton Content="%" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}" Click="{x:Bind ToggleUpdateMode}" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"/>
-                                <TextBlock Text=" done" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"  Style="{StaticResource NormalTextBlock}"/>
+                                    <HyperlinkButton Content="%" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}" Click="{x:Bind ToggleUpdateMode}" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"/>
+                                    <TextBlock Text=" done" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=reverse}"  Style="{StaticResource NormalTextBlock}"/>
 
-                                <!--page-->
-                                <TextBlock Text="on" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
-                                <HyperlinkButton Content="page" Padding="0,0,6,0" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}" Click="{x:Bind ToggleUpdateMode}" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                <TextBox Text="{Binding UpdatePageNum, Mode=TwoWay}"
+                                    <!--page-->
+                                    <TextBlock Text="on" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
+                                    <HyperlinkButton Content="page" Padding="0,0,6,0" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}" Click="{x:Bind ToggleUpdateMode}" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBox Text="{Binding UpdatePageNum, Mode=TwoWay}"
                                          Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                          VerticalAlignment="Center"
                                          Width="48"
                                          IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
                                          Margin="0,0,6,0"/>
-                                <TextBlock Text="of" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
-                                <TextBlock Text="{Binding BookPages}" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
+                                    <TextBlock Text="of" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
+                                    <TextBlock Text="{Binding BookPages}" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
 
-                                <!--i'm finished-->
-                                <TextBlock Text="or" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
-                                <HyperlinkButton Content="I'm finished" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}" Padding="0,0,6,0" Click="HyperlinkButton_Click" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                            </StackPanel>
+                                    <!--i'm finished-->
+                                    <TextBlock Text="or" Margin="0" Padding="0,6,6,0" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource NormalTextBlock}"/>
+                                    <HyperlinkButton Content="I'm finished" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}" Padding="0,0,6,0" Click="HyperlinkButton_Click" Visibility="{x:Bind UpdatingPage, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </StackPanel>
 
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox  Text="{x:Bind UpdateText, Mode=TwoWay}" Margin="0,6,6,0"/>
-                                <Button Grid.Column="1" Height="32" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox  Text="{x:Bind UpdateText, Mode=TwoWay}" Margin="0,6,6,0"/>
+                                    <Button Grid.Column="1" Height="32" IsEnabled="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
                                         VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="{x:Bind PostUpdate}">Update</Button>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </StackPanel>
-                            <Border Background="{StaticResource DarkBrownOverlay}" Visibility="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <ProgressRing IsActive="{x:Bind Posting, Mode=OneWay}" Width="50" Height="50"/>
-                            </Border>
+                        </StackPanel>
+                        <Border Background="{StaticResource DarkBrownOverlay}" Visibility="{x:Bind Posting, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ProgressRing IsActive="{x:Bind Posting, Mode=OneWay}" Width="50" Height="50"/>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
