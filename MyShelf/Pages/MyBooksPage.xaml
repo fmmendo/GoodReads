@@ -221,7 +221,7 @@
         <Pivot ItemsSource="{x:Bind ViewModel.Shelves}" Style="{StaticResource PivotStyle}" BorderBrush="{StaticResource DarkText}">
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="datatype:ShelfViewModel">
-                    <TextBlock Text="{x:Bind Name}"/>
+                    <TextBlock Text="{x:Bind Name, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:U\}}" Style="{StaticResource ListHeaderTextBlock}" />
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
@@ -255,7 +255,9 @@
                                             </LinearGradientBrush>
                                         </Border.Background>
                                     </Border>
-                                    <TextBlock Grid.Row="1" Visibility="{x:Bind IsTitleVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{x:Bind BookTitle, Mode=OneWay}" Margin="4" MaxLines="2" FontWeight="SemiBold" FontSize="18" TextAlignment="Center" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Bottom" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords"/>
+                                    <TextBlock Grid.Row="1" Visibility="{x:Bind IsTitleVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                               Text="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" 
+                                               Margin="4" MaxLines="2" FontWeight="SemiBold" FontSize="18" TextAlignment="Center" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Bottom" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords"/>
                                     <!--<TextBlock Grid.Row="2" Text="{x:Bind BookAuthor, Mode=OneWay}"/>-->
                                 </Grid>
                             </DataTemplate>

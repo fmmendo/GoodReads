@@ -90,7 +90,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
-                    <TextBlock Text="Details" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <TextBlock Text="DETAILS" Style="{StaticResource ListHeaderTextBlock}"/>
                     <Grid x:Name="gDetails" Grid.Row="1" Margin="0,4">
                         <Grid.ChildrenTransitions>
                             <TransitionCollection>
@@ -146,7 +146,7 @@
                 <ListView x:Name="lvUpdates"
                           ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource ListViewStretchItemStyle}"
-                          Header="Updates"
+                          Header="UPDATES"
                           Grid.Row="2" Grid.Column="0"
                           SelectionMode="None"
                           Padding="0,0,0,24">

@@ -89,7 +89,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
-                    <TextBlock Text="Details" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <TextBlock Text="DETAILS" Style="{StaticResource ListHeaderTextBlock}"/>
                     <Grid x:Name="gDetails" Grid.Row="1" Margin="0,4">
                         <Grid.ChildrenTransitions>
                             <TransitionCollection>
@@ -143,7 +143,7 @@
                 </StackPanel>
                 
                 <StackPanel x:Name="spAbout" Grid.Row="2" Grid.Column="0">
-                    <TextBlock Text="About" Style="{StaticResource ListHeaderTextBlock}"/>
+                    <TextBlock Text="ABOUT" Style="{StaticResource ListHeaderTextBlock}"/>
                     <TextBlock  Text="{x:Bind ViewModel.About, Mode=OneWay}"  Style="{StaticResource NormalSerifTextBlock}" TextAlignment="Justify" TextWrapping="WrapWholeWords" LineHeight="22"/>
                 </StackPanel>
                 <!--<ListView x:Name="lvUpdates"
