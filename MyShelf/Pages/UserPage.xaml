@@ -33,7 +33,7 @@
                         <Setter Target="spHeader.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="lvUpdates.(Grid.Row)" Value="1"/>
                         <Setter Target="lvUpdates.(Grid.Column)" Value="1"/>
-                        <Setter Target="lvUpdates.Padding" Value="0,0,24,24"/>
+                        <Setter Target="lvUpdates.Padding" Value="6,0,24,24"/>
                         <Setter Target="cdUser.Width" Value="380"/>
                         <Setter Target="cdDetails.Width" Value="*"/>
                     </VisualState.Setters>
@@ -49,7 +49,7 @@
                         <Setter Target="spHeader.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="lvUpdates.(Grid.Row)" Value="1"/>
                         <Setter Target="lvUpdates.(Grid.Column)" Value="1"/>
-                        <Setter Target="lvUpdates.Padding" Value="0,0,24,24"/>
+                        <Setter Target="lvUpdates.Padding" Value="6,0,24,24"/>
                         <Setter Target="cdUser.Width" Value="380"/>
                         <Setter Target="cdDetails.Width" Value="*"/>
                     </VisualState.Setters>
@@ -149,7 +149,7 @@
                           Header="UPDATES"
                           Grid.Row="2" Grid.Column="0"
                           SelectionMode="None"
-                          Padding="0,0,0,24">
+                          Padding="6,0,6,24">
                     <ListView.ItemContainerTransitions>
                         <TransitionCollection>
                             <EntranceThemeTransition/>
@@ -158,12 +158,12 @@
                     </ListView.ItemContainerTransitions>
                     <ListView.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}"/>
+                            <TextBlock Text="{Binding}" Style="{StaticResource ListHeaderTextBlock}" Margin="18,9,12,6"/>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:UpdateViewModel">
-                            <Grid x:Name="mainGrid">
+                            <Grid Background="White" Margin="20,0,0,0" Padding="0,0,0,12" BorderBrush="{StaticResource LightGray}" BorderThickness="1" CornerRadius="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -171,12 +171,12 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto" MaxHeight="120"/>
+                                    <RowDefinition Height="Auto" MaxHeight="158"/>
                                     <!--<RowDefinition Height="Auto"/>-->
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
-                                <Ellipse Height="48" Width="48" VerticalAlignment="Top" Margin="12">
+                                <Ellipse Height="48" Width="48" VerticalAlignment="Top" Margin="-24,12,12,12">
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="None"/>
                                     </Ellipse.Fill>
@@ -195,6 +195,7 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
+                                        <!--<RowDefinition Height="Auto"/>-->
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Image Grid.RowSpan="3" MaxHeight="120" Margin="0" Stretch="Uniform" VerticalAlignment="Top">
@@ -202,9 +203,10 @@
                                             <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="120" DecodePixelType="Logical" />
                                         </Image.Source>
                                     </Image>
-                                    <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" VerticalAlignment="Top" Padding="0" />
-                                    <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
-                                    <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}"></controls:AddToShelfControl>
+                                    <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" FontSize="18" VerticalAlignment="Top" Padding="0" />
+                                    <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
+                                    <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}" Margin="12,0,0,0" />
+                                    <!--<TextBlock Grid.Row="3" Grid.Column="1" Margin="12,4,0,0" FontSize="14" LineHeight="20" Text="{x:Bind BookDescription, Mode=OneWay}" FontFamily="{StaticResource Lato}" MaxLines="3" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>-->
                                 </Grid>
                                 <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
                             <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
