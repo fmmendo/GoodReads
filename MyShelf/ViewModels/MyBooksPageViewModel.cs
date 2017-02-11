@@ -27,7 +27,6 @@ namespace MyShelf.ViewModels
 
         public async Task GetUserShelves()
         {
-            IsLoading = true;
             if (authService.State != AuthState.Authenticated)
             {
                 authService.Authenticate();
@@ -40,6 +39,7 @@ namespace MyShelf.ViewModels
 
             if (except.Count() > 0)
             {
+                IsLoading = true;
                 Shelves.Clear();
                 foreach (var shelf in shelves)
                     Shelves.Add(new ShelfViewModel(shelf));

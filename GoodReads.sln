@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShelf", "MyShelf\MyShelf.csproj", "{F3A0D7F1-218D-4A7E-9427-2F3687E85297}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2A83BF11-C1C0-4031-AC08-07BD7F6EB941} = {2A83BF11-C1C0-4031-AC08-07BD7F6EB941}
+		{0C39A16F-6B2C-4947-B7BD-612AD0F32F7D} = {0C39A16F-6B2C-4947-B7BD-612AD0F32F7D}
+		{39FEB0BB-5790-4CC3-826F-939B7059C30D} = {39FEB0BB-5790-4CC3-826F-939B7059C30D}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShelf.API", "MyShelf.API\MyShelf.API.csproj", "{0C39A16F-6B2C-4947-B7BD-612AD0F32F7D}"
@@ -23,10 +25,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mendo.UWP", "..\MendoTools\Mendo.UWP\Mendo.UWP.csproj", "{39FEB0BB-5790-4CC3-826F-939B7059C30D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharp.UWP", "RestSharp.UAP\RestSharp.UWP.csproj", "{2A83BF11-C1C0-4031-AC08-07BD7F6EB941}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39FEB0BB-5790-4CC3-826F-939B7059C30D} = {39FEB0BB-5790-4CC3-826F-939B7059C30D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		GoodReads\GoodReads.Shared\GoodReads.Shared.projitems*{3d75efec-3207-4e41-8ebe-ca49b986c6bf}*SharedItemsImports = 13
 		GoodReads\GoodReads.Shared\GoodReads.Shared.projitems*{92967367-e842-4f36-8157-1ec08e17a62f}*SharedItemsImports = 4
+		GoodReads\GoodReads.Shared\GoodReads.Shared.projitems*{e0d11105-407e-405f-a9fd-9299af45b0c4}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

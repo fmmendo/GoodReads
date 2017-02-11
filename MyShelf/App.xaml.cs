@@ -173,14 +173,19 @@ namespace MyShelf
             }
             else
             {
-                var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
-                if (titleBar != null)
-                {
-                    titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
-                    titleBar.ButtonForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
-                    titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
-                    titleBar.ForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
-                }
+                SetTitleBar();
+            }
+        }
+
+        public void SetTitleBar()
+        {
+            var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
+            if (titleBar != null)
+            {
+                titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
+                titleBar.ButtonForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
+                titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
+                titleBar.ForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
             }
         }
 

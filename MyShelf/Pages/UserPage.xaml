@@ -34,7 +34,7 @@
                         <Setter Target="lvUpdates.(Grid.Row)" Value="1"/>
                         <Setter Target="lvUpdates.(Grid.Column)" Value="1"/>
                         <Setter Target="lvUpdates.Padding" Value="0,0,24,24"/>
-                        <Setter Target="cdUser.Width" Value="Auto"/>
+                        <Setter Target="cdUser.Width" Value="380"/>
                         <Setter Target="cdDetails.Width" Value="*"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -50,7 +50,7 @@
                         <Setter Target="lvUpdates.(Grid.Row)" Value="1"/>
                         <Setter Target="lvUpdates.(Grid.Column)" Value="1"/>
                         <Setter Target="lvUpdates.Padding" Value="0,0,24,24"/>
-                        <Setter Target="cdUser.Width" Value="Auto"/>
+                        <Setter Target="cdUser.Width" Value="380"/>
                         <Setter Target="cdDetails.Width" Value="*"/>
                     </VisualState.Setters>
                 </VisualState>

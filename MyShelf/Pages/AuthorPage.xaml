@@ -31,7 +31,7 @@
                         <Setter Target="spAbout.(Grid.Row)" Value="1"/>
                         <Setter Target="spAbout.(Grid.Column)" Value="1"/>
                         <Setter Target="spAbout.Padding" Value="0,0,24,24"/>
-                        <Setter Target="cdUser.Width" Value="320"/>
+                        <Setter Target="cdUser.Width" Value="380"/>
                         <!--<Setter Target="cdUser.MaxWidth" Value="320"/>-->
                         <Setter Target="cdDetails.Width" Value="*"/>
                     </VisualState.Setters>
@@ -47,7 +47,7 @@
                         <Setter Target="spAbout.(Grid.Row)" Value="1"/>
                         <Setter Target="spAbout.(Grid.Column)" Value="1"/>
                         <Setter Target="spAbout.Padding" Value="0,0,24,24"/>
-                        <Setter Target="cdUser.Width" Value="320"/>
+                        <Setter Target="cdUser.Width" Value="380"/>
                         <!--<Setter Target="cdUser.MaxWidth" Value="320"/>-->
                         <Setter Target="cdDetails.Width" Value="*"/>
                         <Setter Target="mainGrid.Margin" Value="12,0,12,0"/>

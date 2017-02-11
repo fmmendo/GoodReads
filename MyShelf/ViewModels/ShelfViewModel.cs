@@ -51,11 +51,16 @@ namespace MyShelf.ViewModels
 
         public async Task LoadShelfBooks(IBookService bookService)
         {
-            ShelfBooks.Clear();
-
             var reviews = await bookService.GetBooks(Name);
-            foreach (var r in reviews.Review)
-                ShelfBooks.Add(new BookViewModel(r.Book));
+
+            if (reviews.Review.Count != ShelfBooks.Count)
+            {
+                ShelfBooks.Clear();
+                foreach (var r in reviews.Review)
+                {
+                    ShelfBooks.Add(new BookViewModel(r.Book));
+                }
+            }
         }
 
         private async Task GetBooks(IBookService bookService)
