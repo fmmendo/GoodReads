@@ -1,5 +1,5 @@
-MainPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\bin\ARM\Release\Upload\MyShelf_1.0.0.0_ARM.appx
-SymbolPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\AppPackages\MyShelf_1.0.0.0\MyShelf_1.0.0.0_ARM.appxsym
+MainPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\bin\ARM\Release\Upload\MyShelf_1.1.2111.0_ARM.appx
+SymbolPackage=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\MyShelf_1.1.2111.0\MyShelf_1.1.2111.0_ARM.appxsym
 ResourcePack=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\_scale-100.appx
 ResourcePack=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\_scale-125.appx
 ResourcePack=C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\_scale-150.appx
