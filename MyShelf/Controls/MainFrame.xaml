@@ -20,8 +20,6 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--<Setter Target="splitView.DisplayMode" Value="Overlay"/>-->
-                        <!--<Setter Target="splitView.IsPaneOpen" Value="False"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -31,7 +29,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="splitView.DisplayMode" Value="CompactOverlay"/>
-                        <!--<Setter Target="splitView.IsPaneOpen" Value="False"/>-->
+                        <Setter Target="splitGrid.Background" Value="{StaticResource LightBrownAcrylic_App}"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -57,7 +55,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="gTitleBar" Background="{StaticResource LightBrown}" Canvas.ZIndex="1" BorderThickness="0,0,0,1" BorderBrush="#DCDAD7">
+
+        <Grid x:Name="gTitleBar" Background="{StaticResource LightBrownAcrylic_Host}" Canvas.ZIndex="1" BorderThickness="0,0,0,1" BorderBrush="#DCDAD7">
             <Grid.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition />
@@ -71,16 +70,20 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
+            <Border Background="{StaticResource LightBrownAcrylic_Host}" Height="28" Padding="12,0,0,0" VerticalAlignment="Top">
+                <TextBlock Text="My Shelf" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Border>
+
             <Button x:Name="bMenu"
                     Background="Transparent"
                     Foreground="{StaticResource DarkText}" 
-                    Width="48" Height="48"
+                    Width="48" Height="48" Margin="0,28,0,0"
                     VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                     Click="{x:Bind ViewModel.MenuClick}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE700;"/>
             </Button>
 
-            <Viewbox Grid.Column="1" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Viewbox Grid.Column="1" Grid.RowSpan="2" Height="48" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Canvas x:Name="Layer_1" Height="133" Canvas.Left="0" Canvas.Top="0" Width="490">
                     <Path Fill="{StaticResource DarkText}" Height="55.319" Canvas.Left="97.983" Stretch="None" Canvas.Top="53.452" Width="72.563" Data="F1M70.711,55.319L70.711,22.834C70.711,14.173 68.35,9.477 66.223,6.735 64.096,3.993 60.129,2.089 54.484,2.089 50.23,2.089 46.202,3.225 43.109,6.881 40.015,10.537 38.192,12.964 37.76,20.927L37.76,55.319 35.908,55.319 35.908,20.715C35.908,6.964 31.359,2.048 20.192,2.048 14.484,2.048 9.9,3.173 6.229,7.941 3.366,11.658 1.852,15.369 1.852,21.205L1.852,55.319 0,55.319 0,1.319 1.852,1.319 1.852,10.283 2.063,10.283C6.067,2.298 12.109,0 20.568,0 24.506,0 29.022,1.072 31.817,3.339 34.612,5.607 36.352,8.649 37.336,12.34 39.024,8.438 41.107,5.247 44.254,3.085 47.4,0.923 51.152,-0.015 54.844,0 66.192,0.048 72.563,7.313 72.563,21.938L72.563,55.319z"/>
                     <Path Fill="{StaticResource DarkText}" Height="78.365" Canvas.Left="179.932" Stretch="None" Canvas.Top="54.771" Width="45.727" Data="F1M19.987,65.021C18.018,69.873 15.838,72.476 13.448,74.832 11.057,77.187 7.981,78.365 4.219,78.365 2.637,78.365 1.231,78.119 0,77.627L0.001,75.678C1.266,76.17 3.337,76.446 5.024,76.479 9.837,76.572 15.237,71.863 17.733,65.887L22.118,53.947 0.024,0 2.129,0 20.769,45.257C21.191,46.21 20.129,43.991 20.769,45.257 21.107,45.924 22.78,51.053 23.233,51.322L23.306,51.416 25.91,44.812 43.676,0 45.727,0z"/>
@@ -100,6 +103,7 @@
 
             <ContentPresenter x:Name="topAppBar"
                                   VerticalAlignment="Stretch"
+                              Margin="0,28,0,0"
                                   Grid.Column="3"
                                   HorizontalAlignment="Right"
                                   Content="{Binding Content.TopBarContent, ElementName=RootFrame}"
@@ -111,11 +115,13 @@
                    Click="{x:Bind ViewModel.SearchClick}"
                    Foreground="{StaticResource DarkText}" 
                    MinWidth="48" Height="48"
+                              Margin="0,28,0,0"
                    VerticalAlignment="Stretch" HorizontalContentAlignment="Center">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE094;"/>
             </Button>
 
         </Grid>
+
 
         <Grid x:Name="ContentRoot" Grid.Row="2">
             <SplitView x:Name="splitView"
@@ -124,7 +130,7 @@
                        DisplayMode="Overlay"
                        IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
-                    <Grid Background="{StaticResource LightBrown}" BorderThickness="0,0,1,0" BorderBrush="#DCDAD7">
+                    <Grid x:Name="splitGrid" Background="{StaticResource LightBrownAcrylic_Host}" BorderThickness="0,0,1,0" BorderBrush="#DCDAD7">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
