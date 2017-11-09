@@ -140,9 +140,6 @@
     <Compile Include="Pages\MyBooksPage.xaml.cs">
       <DependentUpon>MyBooksPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\NavigationRoot.xaml.cs">
-      <DependentUpon>NavigationRoot.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
@@ -253,10 +250,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\MyBooksPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\NavigationRoot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
