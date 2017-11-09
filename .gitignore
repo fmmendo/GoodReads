@@ -228,3 +228,4 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+/.vs/GoodReads/v15/Server/sqlite3
