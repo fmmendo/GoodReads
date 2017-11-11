@@ -25,14 +25,39 @@ namespace MyShelf.Controls
 
         private async void RootFrame_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Window.Current.Bounds.Width >= 1280)
-                VisualStateManager.GoToState(this, "WideState", false);
+            //if (Window.Current.Bounds.Width >= 1280)
+            //    VisualStateManager.GoToState(this, "WideState", false);
 
             ViewModel.RootFrame = RootFrame;
 
             if (!EnsureLoadedAsync.IsCompleted)
             {
                 _tcs.TrySetResult(true);
+            }
+        }
+
+        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.IsSettingsInvoked)
+            {
+                ViewModel.SettingsClick();
+                return;
+            }
+
+            switch (args.InvokedItem as string)
+            {
+                case "Home":
+                    ViewModel.HomeClick();
+                    break;
+                case "My Books":
+                    ViewModel.MyBooksClick();
+                    break;
+                case "Friends":
+                    ViewModel.FriendsClick();
+                    break;
+                case "Profile":
+                    ViewModel.ProfileClick();
+                    break;
             }
         }
     }

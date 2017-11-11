@@ -61,7 +61,7 @@
             <AcrylicBrush x:Key="LightBrownAcrylic_App"
                           BackgroundSource="Backdrop"
                           TintColor="#FFF4F1EA"
-                          TintOpacity="0.8"
+                          TintOpacity="0.0"
                           FallbackColor="#FFF4F1EA"/>
             <!--#endregion-->
 
@@ -188,7 +188,7 @@
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="TabNavigation" Value="Local"/>
                 <Setter Property="IsHoldingEnabled" Value="True"/>
-                <Setter Property="Padding" Value="0,4"/>
+                <Setter Property="Padding" Value="0,8"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
