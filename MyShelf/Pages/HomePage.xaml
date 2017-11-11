@@ -35,7 +35,7 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="lvUpdates.Padding" Value="6,0,6,24"/>
+                        <Setter Target="lvUpdates.Padding" Value="6,96,6,24"/>
                         <Setter Target="Logo.HorizontalAlignment" Value="Center" ></Setter>
                         <Setter Target="cdReading.Width" Value="0"/>
                     </VisualState.Setters>
@@ -47,7 +47,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Logo.HorizontalAlignment" Value="Center" ></Setter>
-                        <Setter Target="lvUpdates.Padding" Value="24,64,24,24"/>
+                        <Setter Target="lvUpdates.Padding" Value="24,96,24,24"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -57,7 +57,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Logo.HorizontalAlignment" Value="Left" />
-                        <Setter Target="lvUpdates.Padding" Value="24,64,24,24"/>
+                        <Setter Target="lvUpdates.Padding" Value="24,96,24,24"/>
                     </VisualState.Setters>
                 </VisualState>
 

@@ -103,7 +103,7 @@ namespace MyShelf.Pages
                 var offsetAnimation = Window.Current.Compositor.CreateScalarKeyFrameAnimation();
                 offsetAnimation.InsertKeyFrame(0f, 100);
                 offsetAnimation.InsertKeyFrame(1f, 0, easingFunction);
-                offsetAnimation.Target = "Translation.X";
+                offsetAnimation.Target = "Translation.Y";
                 offsetAnimation.DelayBehavior = AnimationDelayBehavior.SetInitialValueBeforeDelay;
                 offsetAnimation.Duration = TimeSpan.FromMilliseconds(700);
                 offsetAnimation.DelayTime = TimeSpan.FromMilliseconds(relativeIndex * 100);
@@ -116,7 +116,7 @@ namespace MyShelf.Pages
                 fadeAnimation.DelayTime = TimeSpan.FromMilliseconds(relativeIndex * 100);
 
                 // Start animations
-                itemVisual.StartAnimation("Translation.X", offsetAnimation);
+                itemVisual.StartAnimation("Translation.Y", offsetAnimation);
                 itemVisual.StartAnimation("Opacity", fadeAnimation);
             }
             else

@@ -15,10 +15,21 @@
                    HorizontalAlignment="Left" Height="1000" Width="48"/>
 
         <NavigationView IsSettingsVisible="True" x:Name="navview" AlwaysShowHeader="False" ItemInvoked="NavView_ItemInvoked" Header=" ">
+            <NavigationView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Height="0"/>
+                </DataTemplate>
+            </NavigationView.HeaderTemplate>
+
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Home" IsSelected="True">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE10F;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Currently Reading" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE82D;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Content="My Books" >
