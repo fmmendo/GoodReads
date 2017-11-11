@@ -87,12 +87,6 @@
                   Header="Updates"
                   SelectionMode="None"
                   Padding="6,64,6,24">
-            <!--<ListView.ItemContainerTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition/>
-                    <RepositionThemeTransition/>
-                </TransitionCollection>
-            </ListView.ItemContainerTransitions>-->
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="UPDATES" Style="{StaticResource ListHeaderTextBlock}" Margin="24,9,12,15"/>
@@ -158,8 +152,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{StaticResource NavigationViewDefaultPaneBackground}">
-        </Rectangle>
+        <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{StaticResource NavigationViewDefaultPaneBackground}"/>
 
         <Viewbox x:Name="Logo" Height="64" VerticalAlignment="Top" Margin="24,12">
             <Canvas x:Name="Layer_1" Height="133" Canvas.Left="0" Canvas.Top="0" Width="490">
