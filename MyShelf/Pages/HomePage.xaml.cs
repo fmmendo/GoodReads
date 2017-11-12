@@ -24,7 +24,7 @@ namespace MyShelf.Pages
         public HomePage()
         {
             InitializeComponent();
-            WriteReviewControl.Hide();
+            //WriteReviewControl.Hide();
 
             ConfigureComposition();
         }
@@ -64,8 +64,8 @@ namespace MyShelf.Pages
             if (vm == null)
                 return;
 
-            WriteReviewControl.Review = vm;
-            WriteReviewControl.Show();
+            //WriteReviewControl.Review = vm;
+            //WriteReviewControl.Show();
         }
 
         private void abbReading_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

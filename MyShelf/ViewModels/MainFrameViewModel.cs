@@ -103,6 +103,10 @@ namespace MyShelf.ViewModels
         {
             NavigationService.Navigate(typeof(Pages.HomePage));
         }
+        public void CurrentlyReadingClick()
+        {
+            NavigationService.Navigate(typeof(Pages.CurrentlyReadingPage));
+        }
         public void MyBooksClick()
         {
             NavigationService.Navigate(typeof(Pages.MyBooksPage));

@@ -23,12 +23,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrl, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>
-                        <!--<Setter Target="cdBook.Width" Value="120"/>-->
-                        <!--<Setter Target="rdDescription.Height" Value="0"/>-->
-                        <!--<Setter Target="skDetails.(Grid.RowSpan)" Value="2"/>-->
-                        <!--<Setter Target="tbDescription.(Grid.Row)" Value="2"/>-->
-                        <!--<Setter Target="tbDescription.(Grid.Column)" Value="0"/>-->
-                        <!--<Setter Target="tbDescription.(Grid.ColumnSpan)" Value="2"/>-->
+                        <Setter Target="blurredImaged.MaxHeight" Value="200"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -45,7 +40,6 @@
                         <Setter Target="cdBook.Width" Value="*"/>
                         <Setter Target="cdBook.MaxWidth" Value="288"/>
                         <Setter Target="cdDetails.Width" Value="3*"/>
-                        <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
                         <Setter Target="border.MaxHeight" Value="640"/>
                         <Setter Target="border.Width" Value="480"/>
                         <Setter Target="border.HorizontalAlignment" Value="Center"/>
@@ -66,9 +60,7 @@
                         <Setter Target="cdBook.Width" Value="*"/>
                         <Setter Target="cdBook.MaxWidth" Value="288"/>
                         <Setter Target="cdDetails.Width" Value="3*"/>
-                        <Setter Target="mainGrid.Margin" Value="12,0,12,0"/>
-                        <!--<Setter Target="bCover.UriSource" Value="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"/>-->
-
+                        <Setter Target="mainGrid.Margin" Value="0"/>
                         <Setter Target="border.MaxHeight" Value="640"/>
                         <Setter Target="border.Width" Value="480"/>
                         <Setter Target="border.HorizontalAlignment" Value="Center"/>
@@ -106,12 +98,20 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Image Grid.RowSpan="2" VerticalAlignment="Top" Margin="12" Stretch="Uniform">
+                
+                <Image x:Name="blurredImaged" Grid.RowSpan="2" MaxHeight="356" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill">
+                    <Image.Source>
+                        <BitmapImage x:Name="bCover2" UriSource="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"></BitmapImage>
+                    </Image.Source>
+                </Image>
+                <Rectangle Fill="{StaticResource SystemControlChromeMediumLowAcrylicElementMediumBrush }" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                
+                <Image Grid.RowSpan="2" VerticalAlignment="Top" Margin="12,48,12,12" Stretch="Uniform">
                     <Image.Source>
                         <BitmapImage x:Name="bCover" UriSource="{x:Bind ViewModel.BookImageUrlLarge, Mode=OneWay, FallbackValue='ms-appx:///Assets/book_placeholder_111.png', TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}"></BitmapImage>
                     </Image.Source>
                 </Image>
-                <StackPanel x:Name="skInfo" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top">
+                <StackPanel x:Name="skInfo" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top" Margin="0,48,0,0">
                     <TextBlock Text="{x:Bind ViewModel.BookTitle, Mode=OneWay}" Style="{StaticResource ListHeaderTextBlock}" MaxLines="2" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
                     <TextBlock Text="{x:Bind ViewModel.BookAuthor, Mode=OneWay}" Style="{StaticResource SubtitleTextBlock}"/>
                     <TextBlock Text="{x:Bind ViewModel.Stats, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}"/>
@@ -130,9 +130,9 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <TextBlock x:Name="tbDescription" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" LineHeight="22" Text="{x:Bind ViewModel.Description, Mode=OneWay}" Margin="12" Style="{StaticResource NormalSerifTextBlock}" TextAlignment="Justify" TextWrapping="WrapWholeWords"/>
+                <TextBlock x:Name="tbDescription" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" LineHeight="26" Text="{x:Bind ViewModel.Description, Mode=OneWay}" Margin="24" Style="{StaticResource NormalSerifTextBlock}" TextAlignment="Justify" TextWrapping="WrapWholeWords"/>
 
-                <Grid x:Name="adGrid" Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="2" HorizontalAlignment="Left" Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,12,0,12">
+                <Grid x:Name="adGrid" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Center" Visibility="{x:Bind ShowAds, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,12,0,12">
                 </Grid>
 
                 <GridView Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{x:Bind ViewModel.Reviews, Mode=OneWay}" SelectionChanged="GridView_SelectionChanged" Header="REVIEWS">

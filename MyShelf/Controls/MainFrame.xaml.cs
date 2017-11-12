@@ -49,6 +49,9 @@ namespace MyShelf.Controls
                 case "Home":
                     ViewModel.HomeClick();
                     break;
+                case "Currently Reading":
+                    ViewModel.CurrentlyReadingClick();
+                    break;
                 case "My Books":
                     ViewModel.MyBooksClick();
                     break;

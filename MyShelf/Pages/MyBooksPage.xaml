@@ -218,7 +218,12 @@
     </common:BasePage.Resources>
 
     <Grid>
-        <Pivot ItemsSource="{x:Bind ViewModel.Shelves}" Style="{StaticResource PivotStyle}" BorderBrush="{StaticResource DarkText}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Pivot ItemsSource="{x:Bind ViewModel.Shelves}" Style="{StaticResource PivotStyle}" BorderBrush="{StaticResource DarkText}" Grid.RowSpan="2" Padding="0,96,0,0">
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="datatype:ShelfViewModel">
                     <TextBlock Text="{x:Bind Name, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:U\}}" Style="{StaticResource ListHeaderTextBlock}" />
@@ -266,6 +271,10 @@
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>
+
+        <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{StaticResource NavigationViewDefaultPaneBackground}"/>
+        <TextBlock Text="MY BOOKS"  Style="{StaticResource ListHeaderTextBlock}" Margin="24,36,24,24"/>
+
         <Border Background="{StaticResource DarkBrownOverlay}"  Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
