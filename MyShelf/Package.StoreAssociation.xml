@@ -365,10 +365,12 @@
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>2472fmmendo.7-MinuteWorkout</MainPackageIdentityName>
+    <MainPackageIdentityName>2472fmmendo.FitMark</MainPackageIdentityName>
     <MainPackageIdentityName>2472fmmendo.Muse.muApp</MainPackageIdentityName>
     <MainPackageIdentityName>2472fmmendo.PrimalNews</MainPackageIdentityName>
     <MainPackageIdentityName>2472fmmendo.StrongliftsTracker</MainPackageIdentityName>
     <MainPackageIdentityName>2472fmmendo.UV</MainPackageIdentityName>
+    <MainPackageIdentityName>2472fmmendo.ZeroFlip</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9WZDNCRDR8RZ" />
 </StoreAssociation>

@@ -21,9 +21,9 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>782A00736C71C3167CA60862D92B91E30B1DAFC7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>8E64B96B378EC60458CC634E310A041737E6DFF2</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>MyShelf_StoreKey.pfx</PackageCertificateKeyFile>
-    <AppxPackageDir>C:\Users\fmmen\Documents\Visual Studio 2015\Projects\GoodReads\MyShelf\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\fmmen\Source\GoodReads\MyShelf\AppPackages\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
