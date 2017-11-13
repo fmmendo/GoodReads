@@ -194,7 +194,8 @@ FakesAssemblies/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -228,3 +229,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+/.vs/GoodReads/v15/Server/sqlite3
+.vs/GoodReads/v15/sqlite3/
+.vs/GoodReads/v15/sqlite3/storage.ide

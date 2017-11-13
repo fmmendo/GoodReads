@@ -1,4 +1,4 @@
-﻿<common:BasePage
+﻿<common:PageBase
     x:Class="MyShelf.Pages.FriendsPage"
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,10 +8,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:MyShelf.ViewModels"
     mc:Ignorable="d"
+    EnableTitleBarBackButton="True"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
-        <GridView ItemsSource="{x:Bind ViewModel.Friends}" Padding="12" SelectedItem="{Binding ViewModel.SelectedFriend, Mode=TwoWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <GridView Padding="24,96,24,48" Grid.RowSpan="2" ItemsSource="{x:Bind ViewModel.Friends}" SelectedItem="{Binding ViewModel.SelectedFriend, Mode=TwoWay}">
             <GridView.ItemContainerTransitions>
                 <TransitionCollection>
                     <RepositionThemeTransition/>
@@ -37,9 +44,11 @@
             </GridView.ItemTemplate>
         </GridView>
 
-
+        <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{StaticResource NavigationViewDefaultPaneBackground}"/>
+        <TextBlock Text="FRIENDS"  Style="{StaticResource ListHeaderTextBlock}" Margin="24,36,24,24"/>
+        
         <Border Background="{StaticResource DarkBrownOverlay}"  Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
     </Grid>
-</common:BasePage>
+</common:PageBase>

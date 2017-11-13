@@ -18,15 +18,6 @@ namespace MyShelf.ViewModels
         private IUserService userService = UserService.Instance;
         
         public BindableCollection<UpdateViewModel> Updates { get; } = new BindableCollection<UpdateViewModel>();
-        public BindableCollection<UserStatusViewModel> CurrentlyReading { get; } = new BindableCollection<UserStatusViewModel>();
-
-        private bool showCurrentlyReading = false;
-        public bool ShowCurrentlyReading
-        {
-            get { return showCurrentlyReading; }
-            set {showCurrentlyReading = value; OnPropertyChanged(); }
-        }
-
 
         public HomePageViewModel()
         {
@@ -41,10 +32,7 @@ namespace MyShelf.ViewModels
 
                 return;
             }
-
-            // if currently reading is 2nd it will only load after 
-            // all books from updates have finished loading...
-            RefreshCurrentlyReading();
+            
             RefreshUpdates();
         }
 
@@ -58,48 +46,6 @@ namespace MyShelf.ViewModels
                 Updates.Add(new UpdateViewModel(update));
 
             Updates.LoadState = LoadState.Loaded;
-        }
-
-        public async Task RefreshCurrentlyReading()
-        {
-            CurrentlyReading.LoadState = LoadState.Loading;
-            if (!userService.IsUserIdAvailable)
-                await userService.GetUserID();
-
-            if (userService.IsUserIdAvailable)
-            {
-                var user = await userService.GetUserInfo();
-
-                CurrentlyReading.Clear();
-
-                foreach (var status in user.UserStatuses)
-                {
-                    CurrentlyReading.Add(new UserStatusViewModel(status));
-                }
-
-                //TODO: this might give me crap later
-                foreach (var update in user.Updates.Update.Where(u => u.Type.Equals("readstatus")))
-                {
-                    var id = update?.Object?.ReadStatus?.Review?.Book?.Id;
-                    if ((update.ActionText.StartsWith("started reading") || update.ActionText.StartsWith("is currently reading"))
-                        && !String.IsNullOrEmpty(id)
-                        && !CurrentlyReading.Select(cr => cr.BookId).Contains(update?.Object?.ReadStatus?.Review?.Book?.Id)
-                        && !user.Updates.Update.Where(u => u.Type.Equals("review")).Any(r => r.Object.Book.Id.Equals(id)))
-
-                        CurrentlyReading.Add(new UserStatusViewModel(update));
-                }
-
-                CurrentlyReading.LoadState = LoadState.Loaded;
-            }
-            else
-            {
-                CurrentlyReading.SetFaulted();
-            }
-        }
-
-        public void CurrentlyReadingClick()
-        {
-            ShowCurrentlyReading = true;
         }
     }
 }

@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -124,12 +124,14 @@
       <DependentUpon>ReviewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SplitViewItem.cs" />
-    <Compile Include="BasePage.cs" />
     <Compile Include="Pages\AuthorPage.xaml.cs">
       <DependentUpon>AuthorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CurrentlyReadingPage.xaml.cs">
+      <DependentUpon>CurrentlyReadingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
@@ -152,6 +154,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AuthorViewModel.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
+    <Compile Include="ViewModels\CurrentlyReadingViewModel.cs" />
     <Compile Include="ViewModels\FriendsPageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\MainFrameViewModel.cs" />
@@ -172,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\book_placeholder_111.png" />
+    <Content Include="Assets\logo-goodreads.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
@@ -240,6 +244,10 @@
     <Page Include="Pages\BookPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CurrentlyReadingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\FriendsPage.xaml">
       <SubType>Designer</SubType>

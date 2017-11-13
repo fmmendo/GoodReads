@@ -7,7 +7,7 @@ namespace MyShelf.API.Services
         /// <summary>
         /// Base Goodreads URL
         /// </summary>
-        public static string BaseUrl => "http://www.goodreads.com";
+        public static string BaseUrl => "https://www.goodreads.com";
 
         #region Auth
         /// <summary>

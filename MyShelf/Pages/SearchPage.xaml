@@ -1,4 +1,4 @@
-﻿<common:BasePage
+﻿<common:PageBase
     x:Class="MyShelf.Pages.SearchPage"
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    EnableTitleBarBackButton="True"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
@@ -20,8 +21,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Text="{x:Bind ViewModel.SearchTerm, Mode=TwoWay}" Margin="0,0,12,0"/>
-            <Button Grid.Column="1" Content="Search" Click="{x:Bind ViewModel.SearchClick}"/>
+            <!--<TextBox Text="{x:Bind ViewModel.SearchTerm, Mode=TwoWay}" Margin="0,0,12,0"/>
+            <Button Grid.Column="1" Content="Search" Click="{x:Bind ViewModel.SearchClick}"/>-->
+            <AutoSuggestBox x:Name="Search" Grid.Row="0" Width="296" PlaceholderText="Search..." Margin="0,36,24,0" QueryIcon="Find"
+                        QuerySubmitted="Search_QuerySubmitted" RequestedTheme="Light" />
         </Grid>
         <GridView Padding="12" ItemsSource="{x:Bind ViewModel.Results, Mode=OneWay}" Grid.Row="1" SelectedItem="{x:Bind ViewModel.SelectedWork, Mode=TwoWay}" SelectionChanged="{x:Bind ViewModel.SelectionChanged}" Grid.ColumnSpan="2">
             <GridView.ItemContainerTransitions>
@@ -63,4 +66,4 @@
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
     </Grid>
-</common:BasePage>
+</common:PageBase>

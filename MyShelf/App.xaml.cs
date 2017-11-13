@@ -10,11 +10,13 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.ExtendedExecution;
 using Windows.ApplicationModel.Store;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -182,10 +184,15 @@ namespace MyShelf
             var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
             if (titleBar != null)
             {
-                titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
+
+                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                //titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
                 titleBar.ButtonForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
-                titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
-                titleBar.ForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
+                //titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
+                //titleBar.ForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
             }
         }
 

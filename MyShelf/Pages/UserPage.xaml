@@ -1,4 +1,4 @@
-﻿<common:BasePage
+﻿<common:PageBase
     x:Class="MyShelf.Pages.UserPage"
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,6 +10,7 @@
     xmlns:controls="using:MyShelf.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    EnableTitleBarBackButton="True"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid x:Name="LayoutRoot">
@@ -163,55 +164,59 @@
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:UpdateViewModel">
-                            <Grid Background="White" Margin="20,0,0,0" Padding="0,0,0,12" BorderBrush="{StaticResource LightGray}" BorderThickness="1" CornerRadius="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto" MaxHeight="158"/>
-                                    <!--<RowDefinition Height="Auto"/>-->
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid Background="White" Margin="24,0,0,0" Padding="36,12,0,12" BorderBrush="{StaticResource LightGray}" BorderThickness="1" CornerRadius="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto" MaxHeight="158"/>
+                                        <!--<RowDefinition Height="Auto"/>-->
+                                    </Grid.RowDefinitions>
 
-                                <Ellipse Height="48" Width="48" VerticalAlignment="Top" Margin="-24,12,12,12">
+
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <HyperlinkButton Content="{x:Bind UserName, Mode=OneWay}" Padding="0" Click="{x:Bind UserClick, Mode=OneWay}"/>
+                                        <TextBlock Text="{x:Bind ActionText, Mode=OneWay}" TextWrapping="WrapWholeWords" MaxLines="2" TextTrimming="WordEllipsis"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1" Text="{x:Bind UpdatedAt, Mode=OneWay}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Foreground="#999999" Margin="12,0,12,0" />
+
+                                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="158" Background="White" Padding="0,0,24,0" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="105"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.RowSpan="4" MaxHeight="158" Margin="0" Stretch="UniformToFill" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="158" DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" FontSize="18" VerticalAlignment="Top" Padding="0" />
+                                        <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,4" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
+                                        <controls:AddToShelfControl VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}" Margin="12,0,0,4" />
+                                        <!--<TextBlock Grid.Row="3" Grid.Column="1" Margin="12,4,0,0" FontSize="14" HorizontalAlignment="Left" LineHeight="20" Text="{x:Bind BookDescription, Mode=OneWay}" MaxWidth="600" FontFamily="{StaticResource Lato}" MaxLines="3" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>-->
+
+                                        <ProgressRing Visibility="Visible" IsActive="{x:Bind IsBookLoading, Mode=OneWay}" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+                                    </Grid>
+                                    <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
+                            <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
+                            <Button Click="{x:Bind CommentClick}" Width="100">Comment</Button>
+                        </StackPanel>-->
+                                </Grid>
+
+                                <Ellipse Height="48" Width="48" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,12,12,12">
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="{x:Bind ImageUrl, Mode=OneWay}" Stretch="None"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <HyperlinkButton Content="{x:Bind UserName, Mode=OneWay}" Padding="0" Click="{x:Bind UserClick, Mode=OneWay}"/>
-                                    <TextBlock Text="{x:Bind ActionText, Mode=OneWay}" Style="{StaticResource NormalTextBlock}" TextWrapping="WrapWholeWords" Margin="0" MaxLines="2" TextTrimming="WordEllipsis"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="{x:Bind UpdatedAt, Mode=OneWay}" Style="{StaticResource SubtleTextBlock}" TextAlignment="Center" FontSize="10" MaxWidth="48" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="2" Margin="12,0,12,0" />
-
-                                <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="120" Visibility="{x:Bind IsBook, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <!--<RowDefinition Height="Auto"/>-->
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Image Grid.RowSpan="3" MaxHeight="120" Margin="0" Stretch="Uniform" VerticalAlignment="Top">
-                                        <Image.Source>
-                                            <BitmapImage UriSource="{x:Bind BookImageUrl, Mode=OneWay, TargetNullValue='ms-appx:///Assets/book_placeholder_111.png'}" DecodePixelHeight="120" DecodePixelType="Logical" />
-                                        </Image.Source>
-                                    </Image>
-                                    <HyperlinkButton Content="{x:Bind BookTitle, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind BookClick, Mode=OneWay}" Grid.Column="1" Margin="12,4,0,4" FontSize="18" VerticalAlignment="Top" Padding="0" />
-                                    <HyperlinkButton Content="{x:Bind BookAuthor, Mode=OneWay}" FontFamily="{StaticResource Merriweather}" Click="{x:Bind AuthorClick, Mode=OneWay}" Grid.Column="1" Margin="12,0,0,0" FontSize="14" Grid.Row="1" VerticalAlignment="Top" Padding="0"/>
-                                    <controls:AddToShelfControl VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" BookId="{x:Bind BookId}" Shelves="{x:Bind Shelves, Mode=OneWay}" Margin="12,0,0,0" />
-                                    <!--<TextBlock Grid.Row="3" Grid.Column="1" Margin="12,4,0,0" FontSize="14" LineHeight="20" Text="{x:Bind BookDescription, Mode=OneWay}" FontFamily="{StaticResource Lato}" MaxLines="3" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>-->
-                                </Grid>
-                                <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="2">
-                            <Button Click="{x:Bind LikeClick}" Width="100">Like</Button>
-                            <Button Click="{x:Bind CommentClick}" Width="100">Comment</Button>
-                        </StackPanel>-->
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -223,4 +228,4 @@
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
     </Grid>
-</common:BasePage>
+</common:PageBase>

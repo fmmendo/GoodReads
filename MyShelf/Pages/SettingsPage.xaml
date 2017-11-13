@@ -1,4 +1,4 @@
-﻿<common:BasePage
+﻿<common:PageBase
     x:Class="MyShelf.Pages.SettingsPage"
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,8 +6,9 @@
     xmlns:local="using:MyShelf.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    EnableTitleBarBackButton="True"
     mc:Ignorable="d">
-    <common:BasePage.Resources>
+    <common:PageBase.Resources>
         <Style x:Key="ToggleSwitchStyle" TargetType="ToggleSwitch">
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -220,16 +221,30 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </common:BasePage.Resources>
+    </common:PageBase.Resources>
 
     <Grid>
-        <StackPanel Padding="12">
-            <!--<ToggleSwitch Header="Live Tile" Style="{StaticResource ToggleSwitchStyle}"/>-->
-            <HyperlinkButton Content="Remove Ads" Click="Button_Click" Margin="0,0,0,0"/>
-            <HyperlinkButton Content="Rate this app" Click="Rate_Click"/>
-            <HyperlinkButton Content="Clear Cache" Click="ClearCache_Click"/>
-            <HyperlinkButton Content="Send Feedback" Click="Feedback_Click"/>
-            <HyperlinkButton Content="Privacy Policy" Click="Privacy_Click"/>
+    <StackPanel Padding="24">
+        <TextBlock Text="SETTINGS"  Style="{StaticResource ListHeaderTextBlock}" Margin="0,9,12,15"/>
+        <!--<ToggleSwitch Header="Live Tile" Style="{StaticResource ToggleSwitchStyle}"/>-->
+        <HyperlinkButton Content="Remove Ads" Click="Button_Click" Margin="0,0,0,0"/>
+        <HyperlinkButton Content="Rate this app" Click="Rate_Click"/>
+        <HyperlinkButton Content="Clear Cache" Click="ClearCache_Click"/>
+        <HyperlinkButton Content="Send Feedback" Click="Feedback_Click"/>
+
+        <TextBlock Text="About this application" FontSize="20" Style="{StaticResource ListHeaderTextBlock}" Margin="0,48,12,6"/>
+        <TextBlock Text="myShelf v."/>
+        <TextBlock Text="A Goodreads client for Windows 10."/>
+
+        <HyperlinkButton Content="Privacy Policy" Click="Privacy_Click"/>
+
+
+    </StackPanel>
+
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="24">
+            <TextBlock Text="Powered by"/>
+            <Image MaxHeight="48" Margin="0" Stretch="Uniform" Source="ms-appx:///Assets/logo-goodreads.png"/>
         </StackPanel>
     </Grid>
-</common:BasePage>
+</common:PageBase>
