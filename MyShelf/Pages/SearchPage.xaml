@@ -20,8 +20,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Text="{x:Bind ViewModel.SearchTerm, Mode=TwoWay}" Margin="0,0,12,0"/>
-            <Button Grid.Column="1" Content="Search" Click="{x:Bind ViewModel.SearchClick}"/>
+            <!--<TextBox Text="{x:Bind ViewModel.SearchTerm, Mode=TwoWay}" Margin="0,0,12,0"/>
+            <Button Grid.Column="1" Content="Search" Click="{x:Bind ViewModel.SearchClick}"/>-->
+            <AutoSuggestBox x:Name="Search" Grid.Row="0" Width="296" PlaceholderText="Search..." Margin="0,36,24,0" QueryIcon="Find"
+                        QuerySubmitted="Search_QuerySubmitted" RequestedTheme="Light" />
         </Grid>
         <GridView Padding="12" ItemsSource="{x:Bind ViewModel.Results, Mode=OneWay}" Grid.Row="1" SelectedItem="{x:Bind ViewModel.SelectedWork, Mode=TwoWay}" SelectionChanged="{x:Bind ViewModel.SelectionChanged}" Grid.ColumnSpan="2">
             <GridView.ItemContainerTransitions>

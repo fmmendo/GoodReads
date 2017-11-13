@@ -8,6 +8,7 @@ using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -24,7 +25,6 @@ namespace MyShelf.Pages
         public HomePage()
         {
             InitializeComponent();
-            //WriteReviewControl.Hide();
 
             ConfigureComposition();
         }
@@ -32,7 +32,7 @@ namespace MyShelf.Pages
         private void ConfigureComposition()
         {
             Logo.EnableLayoutImplicitAnimations(TimeSpan.FromMilliseconds(100));
-            //this.Search.EnableLayoutImplicitAnimations(TimeSpan.FromMilliseconds(100));
+            this.Search.EnableLayoutImplicitAnimations(TimeSpan.FromMilliseconds(100));
         }
 
         private async void Instance_AuthStateChanged(object sender, API.Services.AuthState e)
@@ -56,24 +56,6 @@ namespace MyShelf.Pages
             API.Services.AuthenticationService.Instance.AuthStateChanged -= Instance_AuthStateChanged;
 
             base.SaveState(e, pageState);
-        }
-
-        private void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            var vm = (e.OriginalSource as HyperlinkButton)?.DataContext as UserStatusViewModel;
-            if (vm == null)
-                return;
-
-            //WriteReviewControl.Review = vm;
-            //WriteReviewControl.Show();
-        }
-
-        private void abbReading_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            //if (lvReading.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
-            //    lvReading.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            //else
-            //    lvReading.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private void lvUpdates_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -125,6 +107,14 @@ namespace MyShelf.Pages
             }
 
             itemContainer.Loaded -= this.ItemContainer_Loaded;
+        }
+
+        private void Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Search", Search);
+
+
+            NavigationService.Navigate(typeof(Pages.SearchPage), args.QueryText);
         }
     }
 }

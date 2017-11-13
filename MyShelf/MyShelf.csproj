@@ -124,7 +124,6 @@
       <DependentUpon>ReviewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SplitViewItem.cs" />
-    <Compile Include="BasePage.cs" />
     <Compile Include="Pages\AuthorPage.xaml.cs">
       <DependentUpon>AuthorPage.xaml</DependentUpon>
     </Compile>
@@ -176,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\book_placeholder_111.png" />
+    <Content Include="Assets\logo-goodreads.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />

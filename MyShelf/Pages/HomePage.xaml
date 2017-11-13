@@ -35,9 +35,9 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="lvUpdates.Padding" Value="6,96,6,24"/>
-                        <Setter Target="Logo.HorizontalAlignment" Value="Center" ></Setter>
-                        <Setter Target="cdReading.Width" Value="0"/>
+                        <Setter Target="lvUpdates.Padding" Value="6,144,6,24"/>
+                        <Setter Target="Logo.HorizontalAlignment" Value="Center" />
+                        <Setter Target="Search.Margin" Value="0,96,0,12" ></Setter>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -46,8 +46,9 @@
                         <AdaptiveTrigger MinWindowWidth="640"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Logo.HorizontalAlignment" Value="Center" ></Setter>
-                        <Setter Target="lvUpdates.Padding" Value="24,96,24,24"/>
+                        <Setter Target="Logo.HorizontalAlignment" Value="Center" />
+                        <Setter Target="lvUpdates.Padding" Value="24,144,24,24"/>
+                        <Setter Target="Search.Margin" Value="0,96,0,12" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -58,6 +59,8 @@
                     <VisualState.Setters>
                         <Setter Target="Logo.HorizontalAlignment" Value="Left" />
                         <Setter Target="lvUpdates.Padding" Value="24,96,24,24"/>
+                        <Setter Target="Search.HorizontalAlignment" Value="Right" />
+                        <Setter Target="Search.Margin" Value="0,48,12,12" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -68,6 +71,8 @@
                     <VisualState.Setters>
                         <Setter Target="Logo.HorizontalAlignment" Value="Left" />
                         <Setter Target="lvUpdates.Padding" Value="24,96,24,24"/>
+                        <Setter Target="Search.HorizontalAlignment" Value="Right" />
+                        <Setter Target="Search.Margin" Value="0,48,12,12" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -171,12 +176,14 @@
                 <Path Data="F1M29.607,91.699L11.088,94.281 0,2.582 18.519,0z" Fill="{StaticResource DarkText}" Height="94.281" Canvas.Left="57.549" Stretch="None" Canvas.Top="15.786" Width="33.607"/>
             </Canvas>
         </Viewbox>
-  
+        <AutoSuggestBox x:Name="Search" Grid.Row="0" Width="296" PlaceholderText="Search..." Margin="0,68,24,0" QueryIcon="Find"
+                        QuerySubmitted="Search_QuerySubmitted" RequestedTheme="Light" />
+
         <ProgressRing x:Name="pRingUpdates" Grid.Column="0" IsActive="{x:Bind ViewModel.Updates.IsLoading, Mode=OneWay}" Height="50" Width="50"/>
         
     </Grid>
 
-    <common:BasePage.TopBarContent>
+    <!--<common:BasePage.TopBarContent>
         <CommandBar x:Name="tabletBar" d:IsHidden="True"  Visibility="Visible" Foreground="{StaticResource DarkText}" Background="{StaticResource LightBrown}" VerticalAlignment="Stretch">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Name="abbReading" Click="abbReading_Click" Foreground="{StaticResource DarkText}" Label="Currently Reading" Visibility="Collapsed">
@@ -197,5 +204,5 @@
                 </AppBarButton>
             </CommandBar.PrimaryCommands>
         </CommandBar>
-    </common:BasePage.BottomAppBar>
+    </common:BasePage.BottomAppBar>-->
 </common:BasePage>

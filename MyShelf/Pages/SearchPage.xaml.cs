@@ -1,6 +1,7 @@
 ﻿using Mendo.UWP.Common;
 using MyShelf.ViewModels;
 using System.Collections.Generic;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -24,12 +25,19 @@ namespace MyShelf.Pages
         {
             base.LoadState(parameter, pageState);
 
+            ConnectedAnimation searchAniamtion = ConnectedAnimationService.GetForCurrentView().GetAnimation("Search");
+            if (searchAniamtion != null)
+            {
+                searchAniamtion.TryStart(Search);
+            }
+
             if (parameter != null)
             {
-                if (parameter is string)
+                if (parameter is string query)
                 {
+                    Search.Text = query;
                     ViewModel = new SearchPageViewModel();
-                    ViewModel.SearchTerm = parameter as string;
+                    ViewModel.SearchTerm = query;
                     ViewModel.SearchClick();
                 }
                 else if (parameter is SearchPageViewModel)
@@ -42,6 +50,12 @@ namespace MyShelf.Pages
             API.Web.ApiClient.Instance.ResetQueue();
 
             base.SaveState(e, pageState);
+        }
+
+        private void Search_QuerySubmitted(Windows.UI.Xaml.Controls.AutoSuggestBox sender, Windows.UI.Xaml.Controls.AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ViewModel.SearchTerm = args.QueryText;
+            ViewModel.SearchClick();
         }
     }
 }

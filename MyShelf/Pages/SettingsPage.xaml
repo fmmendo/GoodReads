@@ -222,7 +222,7 @@
         </Style>
     </common:BasePage.Resources>
 
-
+    <Grid>
     <StackPanel Padding="24">
         <TextBlock Text="SETTINGS"  Style="{StaticResource ListHeaderTextBlock}" Margin="0,9,12,15"/>
         <!--<ToggleSwitch Header="Live Tile" Style="{StaticResource ToggleSwitchStyle}"/>-->
@@ -236,6 +236,14 @@
         <TextBlock Text="A Goodreads client for Windows 10."/>
 
         <HyperlinkButton Content="Privacy Policy" Click="Privacy_Click"/>
+
+
     </StackPanel>
 
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="24">
+            <TextBlock Text="Powered by"/>
+            <Image MaxHeight="48" Margin="0" Stretch="Uniform" Source="ms-appx:///Assets/logo-goodreads.png"/>
+        </StackPanel>
+    </Grid>
 </common:BasePage>
