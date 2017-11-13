@@ -29,7 +29,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            
+
             <VisualStateGroup x:Name="WidthStates">
                 <VisualState x:Name="NarrowState">
                     <VisualState.StateTriggers>
@@ -83,7 +83,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <ListView x:Name="lvUpdates"
                   Grid.Row="0" Grid.RowSpan="2"
                   ItemsSource="{x:Bind ViewModel.Updates, Mode=OneWay}"
@@ -181,29 +181,6 @@
                         QuerySubmitted="Search_QuerySubmitted" RequestedTheme="Light" />
 
         <ProgressRing x:Name="pRingUpdates" Grid.Column="0" IsActive="{x:Bind ViewModel.Updates.IsLoading, Mode=OneWay}" Height="50" Width="50"/>
-        
-    </Grid>
 
-    <!--<common:PageBase.TopBarContent>
-        <CommandBar x:Name="tabletBar" d:IsHidden="True"  Visibility="Visible" Foreground="{StaticResource DarkText}" Background="{StaticResource LightBrown}" VerticalAlignment="Stretch">
-            <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="abbReading" Click="abbReading_Click" Foreground="{StaticResource DarkText}" Label="Currently Reading" Visibility="Collapsed">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE82D;"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
-    </common:PageBase.TopBarContent>
-    <common:PageBase.BottomAppBar>
-        <CommandBar x:Name="phoneBar" Visibility="Collapsed" Foreground="{StaticResource DarkText}" Background="{StaticResource LightBrown}" ClosedDisplayMode="Minimal" VerticalAlignment="Stretch">
-            <CommandBar.PrimaryCommands>
-                <AppBarButton Foreground="{StaticResource DarkText}" Click="abbReading_Click" Label="Currently Reading">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE82D;"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
-    </common:PageBase.BottomAppBar>-->
+    </Grid>
 </common:PageBase>
