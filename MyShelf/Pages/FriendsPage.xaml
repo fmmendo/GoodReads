@@ -1,4 +1,4 @@
-﻿<common:BasePage
+﻿<common:PageBase
     x:Class="MyShelf.Pages.FriendsPage"
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:MyShelf.ViewModels"
     mc:Ignorable="d"
+    EnableTitleBarBackButton="True"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
@@ -50,4 +51,4 @@
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
     </Grid>
-</common:BasePage>
+</common:PageBase>

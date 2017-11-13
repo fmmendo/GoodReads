@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MyShelf.Pages
 {
-    public sealed partial class SettingsPage : BasePage
+    public sealed partial class SettingsPage : PageBase
     {
         public SettingsPage()
         {

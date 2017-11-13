@@ -1,4 +1,4 @@
-﻿<common:BasePage
+﻿<common:PageBase
     x:Class="MyShelf.Pages.SettingsPage"
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,8 +6,9 @@
     xmlns:local="using:MyShelf.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    EnableTitleBarBackButton="True"
     mc:Ignorable="d">
-    <common:BasePage.Resources>
+    <common:PageBase.Resources>
         <Style x:Key="ToggleSwitchStyle" TargetType="ToggleSwitch">
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -220,7 +221,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </common:BasePage.Resources>
+    </common:PageBase.Resources>
 
     <Grid>
     <StackPanel Padding="24">
@@ -246,4 +247,4 @@
             <Image MaxHeight="48" Margin="0" Stretch="Uniform" Source="ms-appx:///Assets/logo-goodreads.png"/>
         </StackPanel>
     </Grid>
-</common:BasePage>
+</common:PageBase>

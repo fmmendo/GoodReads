@@ -190,7 +190,7 @@ namespace MyShelf
                 titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 //titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
-                //titleBar.ButtonForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
+                titleBar.ButtonForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
                 //titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 244, 241, 234);
                 //titleBar.ForegroundColor = Windows.UI.Color.FromArgb(255, 51, 51, 51);
             }

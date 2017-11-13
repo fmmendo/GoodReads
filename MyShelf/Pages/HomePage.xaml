@@ -1,4 +1,4 @@
-﻿<common:BasePage 
+﻿<common:PageBase 
     x:Class="MyShelf.Pages.HomePage"    
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,6 +10,7 @@
     xmlns:data="using:MyShelf.ViewModels"
     xmlns:triggers="using:WindowsStateTriggers"
     mc:Ignorable="d"
+    EnableTitleBarBackButton="True"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
@@ -183,7 +184,7 @@
         
     </Grid>
 
-    <!--<common:BasePage.TopBarContent>
+    <!--<common:PageBase.TopBarContent>
         <CommandBar x:Name="tabletBar" d:IsHidden="True"  Visibility="Visible" Foreground="{StaticResource DarkText}" Background="{StaticResource LightBrown}" VerticalAlignment="Stretch">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Name="abbReading" Click="abbReading_Click" Foreground="{StaticResource DarkText}" Label="Currently Reading" Visibility="Collapsed">
@@ -193,8 +194,8 @@
                 </AppBarButton>
             </CommandBar.PrimaryCommands>
         </CommandBar>
-    </common:BasePage.TopBarContent>
-    <common:BasePage.BottomAppBar>
+    </common:PageBase.TopBarContent>
+    <common:PageBase.BottomAppBar>
         <CommandBar x:Name="phoneBar" Visibility="Collapsed" Foreground="{StaticResource DarkText}" Background="{StaticResource LightBrown}" ClosedDisplayMode="Minimal" VerticalAlignment="Stretch">
             <CommandBar.PrimaryCommands>
                 <AppBarButton Foreground="{StaticResource DarkText}" Click="abbReading_Click" Label="Currently Reading">
@@ -204,5 +205,5 @@
                 </AppBarButton>
             </CommandBar.PrimaryCommands>
         </CommandBar>
-    </common:BasePage.BottomAppBar>-->
-</common:BasePage>
+    </common:PageBase.BottomAppBar>-->
+</common:PageBase>

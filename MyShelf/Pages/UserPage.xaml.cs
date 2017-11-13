@@ -10,7 +10,7 @@ namespace MyShelf.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UserPage : BasePage
+    public sealed partial class UserPage : PageBase
     {
         public UserViewModel ViewModel { get; set; }
 

@@ -1,4 +1,4 @@
-﻿<common:BasePage
+﻿<common:PageBase
     x:Class="MyShelf.Pages.MyBooksPage"
     xmlns:common="using:Mendo.UWP.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,8 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:datatype="using:MyShelf.ViewModels"
     mc:Ignorable="d"
+    EnableTitleBarBackButton="True"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <common:BasePage.Resources>
+    <common:PageBase.Resources>
         <Style x:Key="PivotStyle" TargetType="Pivot">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="0"/>
@@ -215,7 +216,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </common:BasePage.Resources>
+    </common:PageBase.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -279,4 +280,4 @@
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"/>
         </Border>
     </Grid>
-</common:BasePage>
+</common:PageBase>
