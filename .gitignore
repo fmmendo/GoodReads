@@ -231,3 +231,4 @@ $RECYCLE.BIN/
 *.msp
 /.vs/GoodReads/v15/Server/sqlite3
 .vs/GoodReads/v15/sqlite3/
+.vs/GoodReads/v15/sqlite3/storage.ide
